@@ -3,17 +3,31 @@
 # CRUD operations
 # Returning model objects
 
-from abc import ABC, abstractmethod
+import os
+import psycopg
+from dotenv import load_dotenv
 
-class DatabaseConnection(ABC):
-    @abstractmethod
+load_dotenv()
+
+class DatabaseConnection:
+    def __init__(self):
+        self.connection = None
+
     def connect(self):
-        pass
+        if self.connection is None:
+            self.connection = psycopg.connect(
+                host=os.getenv("DB_HOST"),
+                port=os.getenv("DB_PORT"),
+                dbname=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD")
+            )
+        return self.connection
 
-    @abstractmethod
     def disconnect(self):
-        pass
+        if self.connection is not None:
+            self.connection.close()
+            self.connection = None
 
-    @abstractmethod
     def get_connection(self):
-        pass
+        return self.connect()
