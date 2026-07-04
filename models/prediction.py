@@ -1,13 +1,14 @@
 from dataclasses import dataclass
 from models.flight import Flight
+from datetime import datetime
 
 @dataclass
 class Prediction:
-    prediction_id: int
-    user_id: int
-    flight: Flight
-    predicted_fare: float
-    prediction_time: str
+    prediction_id: int | None = None
+    user_id: int = 0
+    flight_id: int = 0
+    predicted_fare: float = 0.0
+    prediction_time: datetime | None = None
 
     def display_prediction(self):
         self.flight.display_details()
