@@ -17,10 +17,10 @@ class RegexValidation:
 
     @staticmethod
     def validate_city(city: str) -> tuple[bool, str]:
-        pattern = r"^[A-Za-z ]{2,40}$"
+        pattern = r"^[A-Za-z ]{2,30}$"
         if re.fullmatch(pattern, city):
             return True, ""
-        return False, "City name should contain only alphabets and spaces (2-40 characters)."
+        return False, "City name should contain only alphabets and spaces (2-30 characters)."
 
     @staticmethod
     def validate_airline(airline: str) -> tuple[bool, str]:
@@ -48,7 +48,7 @@ class RegexValidation:
         if 0 <= stops <= 5:
             return True, ""
         return False, "Total stops must be between 0 and 5."
-    
+
 # How to use the validation:
 # 1.
 # is_valid, message = RegexValidation.validate_username(username)
