@@ -40,9 +40,7 @@ class UserRepository:
                 user.user_id = result[0]
                 user.created_at = result[1]
                 ApplicationLogger.info(f"User '{user.username}' created successfully.")
-
                 return user
-
         except Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to create user: {error}")
@@ -56,63 +54,92 @@ class UserRepository:
                 if row:
                     return self._map_row_to_user(row)
                 return None
-
         except Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to retrieve user: {error}")
 
     # Retrieve all registered users
     def get_all_users(self) -> list[User]:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(GET_ALL_USERS)
+                rows = db.cursor.fetchall()
+                return [self._map_row_to_user(row) for row in rows]
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to retrieve users: {error}")
 
     # Update user details
     def update_user(self, user: User) -> bool:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(UPDATE_USER, (user.username, user.password, user.role, user.user_id))
+                if db.cursor.rowcount == 0:
+                    return False
+                ApplicationLogger.info(f"User '{user.username}' updated successfully.")
+                return True
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to update user: {error}")
 
     # Delete a user from the database
     def delete_user(self, user_id: int) -> bool:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(DELETE_USER, (user_id,))
+                if db.cursor.rowcount == 0:
+                    return False
+                ApplicationLogger.info(f"User ID {user_id} deleted successfully.")
+                return True
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to delete user: {error}")
 
     # Retrieve a user using the username
     def get_user_by_username(self, username: str) -> User | None:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(GET_USER_BY_USERNAME, (username,))
+                row = db.cursor.fetchone()
+                if row:
+                    return self._map_row_to_user(row)
+                return None
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to retrieve user: {error}")
 
     # Update the password of an existing user
     def update_password(self, user_id: int, new_password: str) -> bool:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(UPDATE_PASSWORD, (new_password, user_id))
+                if db.cursor.rowcount == 0:
+                    return False
+                ApplicationLogger.info(f"Password updated for user ID {user_id}.")
+                return True
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to update password: {error}")
 
     # allow user to login
     def authenticate_user(self, username: str, password: str) -> User | None:
-        pass
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(AUTHENTICATE_USER, (username, password))
+                row = db.cursor.fetchone()
+                if row:
+                    return self._map_row_to_user(row)
+                return None
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Authentication failed: {error}")
 
     # check for duplicate users by username
     def exists_by_username(self, username: str) -> bool:
-        pass
-
-
-
-# allows access to:
-# db.connection
-# db.cursor
-
-# insert(user)
-# find_by_id(user_id)
-# find_by_username(username)
-# find_all()
-# update(user)
-# update_password(user_id, new_password)
-# delete(user_id)
-# authenticate(username, password)
-# exists(username)
-
-# use RETURNING for create_user()
-# INSERT INTO users(username, password, role)
-# VALUES (%s, %s, %s)
-# RETURNING user_id, created_at;
-
-# raise RuntimeError(f"Unable to create user: {error}")
-
-# db.cursor.execute(
-#     GET_USER_BY_ID,
-#     (user_id,)
-# )
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(EXISTS_BY_USERNAME, (username,))
+                return db.cursor.fetchone()[0]
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to verify username: {error}")
