@@ -1,3 +1,8 @@
+# PostgreSQL connection
+# Executing SQL queries
+# CRUD operations
+# Returning model objects
+
 from abc import ABC, abstractmethod
 
 class DatabaseConnection(ABC):

@@ -268,3 +268,35 @@ ___________________________
     User Repo     Flight Repo    Prediction Repo
 
 ------------------------------------------------------
+Controllers
+Controllers simply coordinate:
+View
+    │
+    ▼
+Controller
+    │
+    ▼
+Service
+------------------------------------------------------
+
+application_controller.py
+
+This orchestrates the application.
+index.py
+      │
+      ▼
+ApplicationController
+      │
+      ▼
+Authentication
+      │
+      ▼
+Admin/User Controllers
+
+------------------------------------------------------
+
+ML-specific work still pending
+------------------------------------------------------
+
+PostgreSQL work still pending
+You also need to design and create the database schema.
