@@ -1,0 +1,270 @@
+Project Files Flow:
+
+index.py
+    ▼
+ApplicationController
+    ▼
+AuthenticationService
+    │
+    ├── AdminController
+    └── UserController
+
+------------------------------------------------------
+Application Flow:
+
+Application Starts
+    ▼
+Display Welcome Banner
+    ▼
+Main Menu
+    │
+    ├── Login
+    │       ▼
+    │ AuthenticationService
+    │       ▼
+    │ AdminController/UserController
+    │
+    └── Exit
+
+------------------------------------------------------
+
+Build the project flow:
+
+models/                         ✅
+    ↓
+validation/                     ✅
+    ↓
+utilities/                      ✅
+    ↓
+services/                       🚧 interfaces complete, implementations not
+    ↓
+database/                       🚧 interfaces complete, implementations not
+    ↓
+views/                          ✅
+    ↓
+controllers/                    🚧
+    ↓
+application_controller.py       
+    ↓
+index.py                        
+
+------------------ Project file information ------------------
+model Note:
+
+Inheritance:
+
+User
+▲
+Admin
+
+
+User
+│ 1
+▼
+Prediction
+│ contains
+▼
+Flight
+------------------------------------------------------
+validation/
+
+Is the data valid before the application processes it?
+
+regex validation:
+1. Username
+2. Password
+3. Date
+4. Time
+5. Airline name
+6. City name
+7. Stops
+These validations happen before creating a Flight object or a User.
+
+dataset validation:
+Before training begins,
+check
+Is the dataset usable?
+
+USER INPUT
+
+Username
+Password
+Date
+Time
+City
+Stops
+▼
+RegexValidation
+────────────────
+DATASET
+
+flights.csv
+        ▼
+DatasetValidation
+        ▼
+TrainingService
+
+------------------------------------------------------
+utilities/
+Purpose: The utilities package contains reusable helper components that are shared across the entire application.
+These files do not contain business logic; instead, they provide common functionality used by services, controllers, and other modules.
+
+utilities/
+│
+├── constants.py
+├── file_handler.py
+├── helper.py
+└── logger.py
+
+utilities
+│
+├── constants.py
+│       ↑
+│       │
+│   Used by all services
+│
+├── file_handler.py
+│       ↑
+│       │
+│   Used by preprocessing,
+│   training,
+│   prediction,
+│   reports
+│
+├── helper.py
+│       ↑
+│       │
+│   Used throughout project
+│
+└── logger.py
+        ↑
+        │
+    Used throughout project
+
+------------------------------------------------------
+services/
+
+Files which needs to perform file operations:
+
+| Service               | Reads CSV | Writes CSV | Pickle | Checks Files | Creates Directory |
+| --------------------- | :-------: | :--------: | :----: | :----------: | :---------------: |
+| AuthenticationService |     ❌     |      ❌     |    ❌   |     Maybe    |         ❌         |
+| PreprocessingService  |     ✅     |      ✅     |    ❌   |       ✅      |         ❌         |
+| TrainingService       |     ✅     |      ❌     |    ✅   |       ✅      |         ❌         |
+| PredictionService     |     ❌     |      ✅     |    ✅   |       ✅      |         ❌         |
+| VisualizationService  |     ✅     |      ❌     |    ❌   |       ❌      |         ✅         |
+| ReportService         |     ✅     |      ✅     |    ❌   |       ✅      |         ✅         |
+
+                Controllers
+                      │
+                      ▼
+                Services Layer
+                      │
+        ┌─────────────┼─────────────┐
+        ▼             ▼             ▼
+ FileHandler      Logger      Constants
+        │
+        ▼
+ Operating System
+
+The services never directly talk to:
+1. pickle
+2. os
+3. pandas.read_csv()
+
+Instead they always go through FileHandler
+
+Building services flow:
+
+services/
+│
+├── preprocessing_service.py
+│      • load_dataset()
+│      • validate_dataset()
+│      • clean_dataset()
+│      • feature_engineering()
+│      • save_cleaned_dataset()
+│      • save_feature_dataset()
+│
+├── training_service.py
+│      • load_feature_dataset()
+│      • split_dataset()
+│      • train_linear_regression()
+│      • train_decision_tree()
+│      • train_random_forest()
+│      • evaluate_models()
+│      • save_best_model()
+│
+├── prediction_service.py
+│      • load_model()
+│      • encode_input()
+│      • predict_fare()
+│      • save_prediction()
+│      • prediction_history()
+│
+├── visualization_service.py
+│      • load_dataset()
+│      • airline_distribution()
+│      • source_distribution()
+│      • destination_distribution()
+│      • fare_distribution()
+│      • correlation_analysis()
+│      • save_graphs()
+│
+├── report_service.py
+│      • generate_metrics_report()
+│      • generate_prediction_report()
+│      • export_metrics_csv()
+│      • generate_project_report()
+│      • view_reports()
+│
+└── authentication_service.py
+       • admin_login()
+       • user_login()
+       • guest_login()
+       • logout()
+       • change_password()
+       • create_user()
+       • view_users()
+       • delete_user()
+       • validate_credentials()
+
+------------------------------------------------------
+
+Database flow:
+
+    AuthenticationService
+                ▼
+        UserRepository
+                ▼
+    DatabaseConnection
+                ▼
+        PostgreSQL
+
+
+        PredictionService
+                ▼
+    PredictionRepository
+                ▼
+    DatabaseConnection
+                ▼
+        PostgreSQL
+
+
+    TrainingService
+                ▼
+    FlightRepository
+                ▼
+    DatabaseConnection
+                ▼
+        PostgreSQL
+___________________________
+
+                BaseRepository
+                       ▲
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+    User Repo     Flight Repo    Prediction Repo
+
+------------------------------------------------------

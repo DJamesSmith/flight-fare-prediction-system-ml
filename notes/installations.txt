@@ -1,0 +1,49 @@
+Step 1.
+For mac/Linux:
+python3 -m venv flight_fare_env
+
+Activate it:
+source flight_fare_env/bin/activate
+
+For Windows:
+flight_fare_env\Scripts\activate
+
+Step 2.
+Then install the required libraries
+Start with:
+pip install pandas numpy matplotlib scikit-learn
+
+Note: Pandas depends on NumPy, so if you install only pandas that'll install numpy too automatically.
+
+Later, if you decide to use XGBoost:
+pip install xgboost
+
+Generate requirements.txt
+Once everything is installed:
+pip freeze > requirements.txt
+
+Your requirements.txt will look something like:
+numpy==...
+pandas==...
+matplotlib==...
+scikit-learn==...
+
+You don't need to type versions manually—pip freeze will generate them.
+
+FlightFarePrediction/
+│
+├── flight_fare_env/
+│
+├── dataset/
+├── models/
+├── services/
+├── validation/
+├── utilities/
+├── controllers/
+├── views/
+├── reports/
+├── trained_models/
+│
+├── index.py
+│
+└── requirements.txt

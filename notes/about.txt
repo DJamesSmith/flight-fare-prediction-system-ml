@@ -1,0 +1,469 @@
+Project 2
+Title: Flight Fare Prediction System Using Machine Learning
+
+https://chatgpt.com/c/6a428d6f-485c-83e8-a124-e4badc992b24
+----------------------------------------------------------------------------------------------------
+
+Project Summary
+
+The Flight Fare Prediction System is a machine learning application designed to estimate airline ticket prices based
+on historical flight information. The system analyzes several factors such as airline company, source city, destination
+city, journey date, departure time, arrival time, number of stops, and flight duration to predict the expected ticket fare.
+
+The project demonstrates how machine learning can assist travelers in estimating airfare before booking tickets,
+enabling informed travel planning and cost optimization. The application highlights the complete machine learning workflow,
+including data preprocessing, feature encoding, model training, prediction, and evaluation.
+
+The project follows Object-Oriented Programming concepts, modular architecture, separation of concerns, and
+proper validation techniques to ensure maintainability and scalability.
+
+1. the admin manages datasets, model training, evaluation, reports, and users;
+2. the user only performs predictions and views their own history;
+3. every major stage of the ML pipeline is encapsulated in its own service;
+4. reports, trained models, and prediction history are persisted to files (and optionally a database).
+
+----------------------------------------------------------------------------------------------------
+
+Business Problem
+
+Airline ticket prices fluctuate continuously due to demand, seasonality, holidays, airline competition, and booking time.
+This project helps users estimate ticket prices before booking, allowing them to compare options and make informed travel decisions.
+
+----------------------------------------------------------------------------------------------------
+Machine Learning Algorithm used:
+Supervised Learning → Regression problem
+
+Reason:
+Inputs (features):
+1. Airline
+2. Source
+3. Destination
+4. Journey Date
+5. Departure Time
+6. Arrival Time
+7. Duration
+8. Stops
+
+Output (target): Fare = ₹5,420
+
+The fare is a continuous numeric value.
+----------------------------------------------------------------------------------------------------
+
+Dataset Features:
+
+1. Airline
+2. Source
+3. Destination
+4. Journey Date
+5. Departure Time
+6. Arrival Time
+7. Duration
+8. Total Stops
+9. Additional Information
+
+----------------------------------------------------------------------------------------------------
+
+Libraries involved:
+1. Pandas
+2. NumPy
+3. Matplotlib
+4. Scikit-Learn
+5. Pickle
+
+----------------------------------------------------------------------------------------------------
+
+FlightFarePrediction/
+|
+├── data/
+│      cleaned_dataset.csv
+│      feature_dataset.csv
+│
+├── dataset/
+│      flights.csv
+│
+├── database/
+|       db_connection.py
+|       user_repository.py
+|       prediction_repository.py
+|       flight_repository.py
+│
+├── models/
+│       user.py
+│       admin.py
+│       flight.py
+│
+├── services/
+│       authentication_service.py
+│       preprocessing_service.py
+│       training_service.py
+│       prediction_service.py
+│       visualization_service.py
+│       report_service.py
+│
+├── validation/
+│       regex_validation.py
+│       dataset_validation.py
+│
+├── utilities/
+│       file_handler.py
+│       logger.py
+│       constants.py
+│       helper.py
+│
+├── trained_models/
+│       flight_model.pkl
+│       encoder.pkl
+│
+├── reports/
+│       graphs/
+│       metrics.csv
+│       prediction_history.csv
+│       project_report.pdf
+│
+├── controllers/
+│       admin_controller.py
+│       user_controller.py
+│
+├── views/
+│       admin_view.py
+│       user_view.py
+│       menu_view.py
+│
+├── index.py
+│
+└── requirements.txt
+
+----------------------------------------------------------------------------------------------------
+
+Database tables:
+User:
+    1. user_id (PK)
+    2. username
+    3. password
+    4. role
+
+Prediction:
+    1. prediction_id (PK)
+    2. user_id (FK)
+    3. airline
+    4. source
+    5. destination
+    6. departure
+    7. arrival
+    8. duration
+    9. stops
+    10. predicted_fare
+    11. prediction_time
+
+ModelHistory:
+    1. model_id (PK)
+    2. algorithm
+    3. accuracy
+    4. rmse
+    5. mae
+    6. training_date
+
+----------------------------------------------------------------------------------------------------
+
+One-to-Many Relationship:
+    One User
+        |
+        + ---- Prediction 1
+        |
+        + ---- Prediction 2
+        |
+        + ---- Prediction 3
+so, one user can generate many predictions.
+
+----------------------------------------------------------------------------------------------------
+
+OOP concepts covered in the project:
+
+---------------------|------------------------------------------------
+| Concept            | Where used                                    |
+| ------------------ | --------------------------------------------- |
+| Encapsulation      | Every model class                             |
+| Inheritance        | `Admin(User)`                                 |
+| Polymorphism       | Report generation or prediction interfaces    |
+| Abstract Class     | Base service/model class                      |
+| Method Overriding  | Admin-specific functionality                  |
+| Composition        | `TrainingService` uses `PreprocessingService` |
+| Exception Handling | Dataset validation                            |
+| File Handling      | CSV, PKL, PDF, TXT                            |
+| Regex              | Login, usernames, dates                       |
+| Collections        | Dictionaries, lists                           |
+| Iterators          | Dataset traversal                             |
+| Generators         | Batch prediction processing                   |
+| Decorators         | Logging or timing methods (optional)          |
+| Static Methods     | Validators, utility functions                 |
+| Class Methods      | Factory methods (optional)                    |
+---------------------|------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+
+Project workflow:
+
+          Historical Flight Dataset (CSV)               |
+                       ▼                                |
+                 Data Cleaning                          |
+                       ▼                                |
+               Feature Engineering                      |               Phase 1: TRAINING Phase
+                       ▼                                |
+                Train ML Model                          |
+                       ▼                                |
+             Save trained_model.pkl                     |
+           ───────────────────────────
+                       ▼
+              User enters NEW flight                    |
+                       ▼                                |
+            Load trained_model.pkl                      |               Phase 2: PREDICTION Phase
+                       ▼                                |
+               Predict Flight Fare                      |
+                       ▼                                |
+               Display Prediction                       |
+
+
+Phase 1:
+        Admin input: flight_data.csv
+        Output:
+        1. trained_model.pkl
+        2. evaluation_report.pdf
+        3. metrics.csv
+        4. graphs
+
+Phase 2:
+        Airline : Indigo
+        Source : Kolkata
+        Destination : Delhi
+        Journey Date : 12/10/2026
+        Departure : 10:15
+        Arrival : 12:45
+        Stops : 0
+
+        Model prediction output:
+        Predicted Fare: ₹5234
+
+The user does NOT upload another historical CSV.
+Instead, the user provides one new flight record.
+
+----------------------------------------------------------------------------------------------------
+
+File I/O:
+Input:
+dataset/
+        flight_data.csv
+System trains.
+
+Output:
+reports/
+        cleaned_dataset.csv
+        feature_dataset.csv
+        prediction_history.csv
+        model_metrics.csv
+        feature_importance.csv
+        confusion... (Actually regression doesn't use confusion matrix)
+        RMSE
+        MAE
+        R² Score
+
+----------------------------------------------------------------------------------------------------
+
+MENU Workflow:
+
+User manually enters:
+Airline:
+Source:
+Destination:
+Date:
+Stops:
+
+----------------------------------------------------------------------------------------------------
+
+ML Workflow:
+
+1. Load Dataset
+        ↓
+2. Validate Dataset
+        ↓
+3. Clean Missing Values
+        ↓
+4. Remove Duplicates
+        ↓
+5. Encode Categorical Columns
+        ↓
+6. Feature Engineering
+        ↓
+7. Visualization
+        ↓
+8. Train/Test Split
+        ↓
+9. Train Algorithms
+        ↓
+10. Compare Algorithms
+        ↓
+11. Select Best Model
+        ↓
+12. Evaluate
+        ↓
+13. Save Model
+        ↓
+14. User Prediction
+        ↓
+15. Save Prediction History
+        ↓
+16. Generate Reports
+
+This sequence mirrors a typical end-to-end regression project.
+Only the admin ever sees the dataset.
+The user never interacts with flight_data.csv.
+Instead, the user interacts with the trained model, which is how machine learning systems are typically deployed.
+
+
+----------------------------------------------------------------------------------------------------
+
+Interactive Prediction System - Instead of processing an entire CSV every time, the system behaves like software that predicts fares on demand.
+
+    Login
+        ▼ 
+    Choose Prediction
+        ▼
+    Enter Flight Details
+        ▼
+    Load Trained Model
+        ▼
+    Predict Fare
+        ▼
+    Store Prediction History
+
+Example:
+
+Airline: Indigo
+Source: Kolkata
+Destination: Delhi
+Departure: 09:30
+Arrival: 11:45
+Stops: 0
+    ↓
+Predicted Fare
+₹5,842
+
+----------------------------------------------------------------------------------------------------
+
+1. Historical Flight Dataset (CSV)
+
+Sample dataset used to teach the machine learning model:
+
+| Airline   | Source  | Destination | Stops | Duration | Fare |
+| --------- | ------- | ----------- | ----- | -------- | ---- |
+| Indigo    | Kolkata | Delhi       | 0     | 2h 15m   | 5200 |
+| Air India | Mumbai  | Chennai     | 1     | 4h 30m   | 6800 |
+| SpiceJet  | Delhi   | Goa         | 0     | 2h       | 4900 |
+
+----------------------------------------
+
+2. Data Cleaning
+Real-world datasets are rarely perfect. Data cleaning prepares the dataset before training.
+
+Before cleaning
+| Airline | Duration | Fare |
+| ------- | -------- | ---- |
+| Indigo  | 2h       | 5200 |
+| NULL    | 3h       | 6100 |
+| Indigo  | 2h       | 5200 |
+
+Problems:
+1. Missing airline name
+2. Duplicate record
+3. Invalid values
+4. Extra spaces
+5. Incorrect date formats
+
+After cleaning:
+| Airline | Duration | Fare |
+| ------- | -------- | ---- |
+| Indigo  | 2h       | 5200 |
+
+----------------------------------------
+3. Train ML Model
+
+Input validation:
+Clean data
+Features
+Correct flight fares
+
+The algorithm studies the relationship between them.
+For example, it may learn:
+
+1. Longer flights usually cost more.
+2. Non-stop flights are often more expensive.
+3. Flights during holidays have higher fares.
+4. Certain airlines tend to charge more.
+
+Sole purpose of this training process is to discover patterns that can later be used to predict fares for new flights.
+
+----------------------------------------
+4. Save trained_model.pkl
+
+Once the model has learned, it is saved to disk.
+Example:
+trained_model.pkl
+
+A .pkl (pickle) file stores the trained model so it can be reused later.
+Without saving it, the model would need to retrain every time the application starts, which is inefficient.
+
+This is to preserve the trained model for future predictions.
+
+End of Admin Training Model.
+----------------------------------------
+
+5. User Enters a NEW Flight
+The user provides details of a flight that was not part of the training dataset.
+Input of Airline, Indigo, Source, Kolkata, Destination, Delhi, Departure, 09:30, Arrival, 11:45, Stops, 0
+
+----------------------------------------
+
+6. Load trained_model.pkl
+Instead of training again, the application simply loads the saved model from the .pkl file.
+
+Conceptually:
+Open trained_model.pkl
+↓
+Restore trained model into memory
+↓
+Ready to predict
+
+This process is very fast and avoids unnecessary retraining.
+Helps to reuse the previously trained model for making predictions.
+
+----------------------------------------
+8. Predict Flight Fare
+The user's flight details are passed to the loaded model.
+The model compares the new flight with the patterns it learned during training.
+
+Example reasoning (simplified):
+This looks similar to previous Indigo flights...
+Non-stop...
+2-hour duration...
+October travel...
+Expected fare...
+₹5,480
+
+This prediction is generated by the algorithm based on learned relationships in the data.
+
+----------------------------------------------------------------------------------------------------
+
+index.py
+
+Application Starts
+        ▼
+Display Welcome Banner
+        ▼
+Main Menu
+        │
+        ├── Login
+        │       ▼
+        │ AuthenticationService
+        │       ▼
+        │ AdminController/UserController
+        │
+        └── Exit
