@@ -47,8 +47,7 @@ def create_tables():
         db.cursor.execute(CREATE_USERS_TABLE)
         db.cursor.execute(CREATE_FLIGHTS_TABLE)
         db.cursor.execute(CREATE_PREDICTIONS_TABLE)
-
-    print("All database tables are ready.")
+    ApplicationLogger.info("All database tables are ready.")
 
 # Custom Context Manager responsible only for opening and closing PostgreSQL connections
 class DatabaseConnection:
@@ -69,7 +68,7 @@ class DatabaseConnection:
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
-            ApplicationLogger.error(f"Transaction rolled back: {exc_value}")
+            ApplicationLogger.warning(f"Database Transaction rolled back: {exc_value}")
             self.connection.rollback()
         else:
             self.connection.commit()

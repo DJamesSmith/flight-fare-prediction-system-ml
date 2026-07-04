@@ -5,7 +5,7 @@
 # ✔ Update Password
 # ✔ Delete User
 
-from psycopg2 import Error
+import psycopg2
 from utilities.logger import ApplicationLogger
 from database.db_connection import DatabaseConnection
 from models.user import User
@@ -22,9 +22,6 @@ from database.queries import (
 )
 
 class UserRepository:
-    def __init__(self):
-        pass
-
     # "_map_row_to_user" -> convention for a private helper method, intended for internal use within the class
     # Only the repository should know how a database row maps to a User object.
     # The service layer should never call this method directly.
@@ -41,7 +38,7 @@ class UserRepository:
                 user.created_at = result[1]
                 ApplicationLogger.info(f"User '{user.username}' created successfully.")
                 return user
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to create user: {error}")
 
@@ -54,7 +51,7 @@ class UserRepository:
                 if row:
                     return self._map_row_to_user(row)
                 return None
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to retrieve user: {error}")
 
@@ -65,7 +62,7 @@ class UserRepository:
                 db.cursor.execute(GET_ALL_USERS)
                 rows = db.cursor.fetchall()
                 return [self._map_row_to_user(row) for row in rows]
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to retrieve users: {error}")
 
@@ -78,7 +75,7 @@ class UserRepository:
                     return False
                 ApplicationLogger.info(f"User '{user.username}' updated successfully.")
                 return True
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to update user: {error}")
 
@@ -91,7 +88,7 @@ class UserRepository:
                     return False
                 ApplicationLogger.info(f"User ID {user_id} deleted successfully.")
                 return True
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to delete user: {error}")
 
@@ -104,7 +101,7 @@ class UserRepository:
                 if row:
                     return self._map_row_to_user(row)
                 return None
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to retrieve user: {error}")
 
@@ -117,7 +114,7 @@ class UserRepository:
                     return False
                 ApplicationLogger.info(f"Password updated for user ID {user_id}.")
                 return True
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to update password: {error}")
 
@@ -130,7 +127,7 @@ class UserRepository:
                 if row:
                     return self._map_row_to_user(row)
                 return None
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Authentication failed: {error}")
 
@@ -140,6 +137,6 @@ class UserRepository:
             with DatabaseConnection() as db:
                 db.cursor.execute(EXISTS_BY_USERNAME, (username,))
                 return db.cursor.fetchone()[0]
-        except Error as error:
+        except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to verify username: {error}")

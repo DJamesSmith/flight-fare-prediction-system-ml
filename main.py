@@ -44,6 +44,6 @@ if __name__ == "__main__":
 
 
 # db_connection.py
-# user.py
-# user_repository.py
+# flight.py
+# flight_repository.py
 # queries.py

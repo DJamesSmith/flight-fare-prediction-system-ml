@@ -4,27 +4,45 @@
 # ✔ Delete Flight
 
 from database.db_connection import DatabaseConnection
-
+from models.flight import Flight
 class FlightRepository():
-    def __init__(self):
-        self.database = DatabaseConnection()
+    def _map_row_to_flight(self, row: tuple) -> Flight:
+        return Flight(
+            flight_id = row[0],
+            airline = row[1],
+            source = row[2],
+            destination = row[3],
+            journey_date = row[4],
+            departure_time = row[5],
+            arrival_time = row[6],
+            duration = row[7],
+            total_stops = row[8],
+            additional_information = row[9],
+            fare = row[10], # should this be included ?
+        )
 
     # Insert a flight record
-    def insert(self, flight):
+    def create_flight(self, flight: Flight) -> Flight:
         pass
 
     # Retrieve a flight using the flight ID
-    def find_by_id(self, flight_id):
+    def get_flight_by_id(self, flight_id: int) -> Flight | None:
         pass
 
     # Retrieve all flight records
-    def find_all(self):
+    def get_all_flights(self) -> list[Flight]:
         pass
 
     # Update flight details
-    def update(self, flight):
+    def update_flight(self, flight: Flight) -> bool:
         pass
 
     # Delete a flight record
-    def delete(self, flight_id):
+    def delete_flight(self, flight_id: int) -> bool:
         pass
+
+    # def search_flights(airline=None, source=None, destination=None):
+    def search_flights(self, airline: str | None = None, source: str | None = None, destination: str | None = None, journey_date: str | None = None) -> list[Flight]:
+        pass
+
+# Exception query for SEARCH_FLIGHTS which will be dynamic

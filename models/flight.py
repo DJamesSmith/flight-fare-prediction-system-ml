@@ -2,15 +2,16 @@ from dataclasses import dataclass
 
 @dataclass
 class Flight:
-    airline: str
-    source: str
-    destination: str
-    journey_date: str
-    departure_time: str
-    arrival_time: str
-    duration: str
-    total_stops: int
-    additional_information: str
+    flight_id: int | None = None
+    airline: str = ""
+    source: str = ""
+    destination: str = ""
+    journey_date: str = ""
+    departure_time: str = ""
+    arrival_time: str = ""
+    duration: str = ""
+    total_stops: str = ""
+    additional_information: str = ""
     fare: float | None = None
 
     def display_details(self):
@@ -35,3 +36,7 @@ class Flight:
 # display()
 # to_dictionary()
 # useful for pandas
+
+# Dataclass fields
+# Constructor
+# Types

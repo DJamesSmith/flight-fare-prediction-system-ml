@@ -56,7 +56,11 @@ AUTHENTICATE_USER = """SELECT user_id, username, password, role, created_at FROM
 
 
 # -------------- FLIGHT queries --------------
-
+# INSERT_FLIGHT
+# GET_FLIGHT_BY_ID
+# GET_ALL_FLIGHTS
+# UPDATE_FLIGHT
+# DELETE_FLIGHT
 
 
 # ------------ PREDICTION queries ------------
