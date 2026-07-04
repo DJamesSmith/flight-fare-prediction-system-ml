@@ -59,11 +59,11 @@ AUTHENTICATE_USER = """SELECT * FROM users WHERE username = %s AND password = %s
 INSERT_FLIGHT = """
     INSERT INTO flights (airline, source, destination, journey_date, departure_time, arrival_time, duration, total_stops, additional_information)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-    RETURNING flight_id;
-    """
-GET_FLIGHT_BY_ID = """ SELECT * FROM flights WHERE flight_id = %s;"""
+    RETURNING flight_id;"""
+GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
-UPDATE_FLIGHT = """UPDATE flights
+UPDATE_FLIGHT = """
+    UPDATE flights
     SET airline = %s,
         source = %s,
         destination = %s,
@@ -73,8 +73,7 @@ UPDATE_FLIGHT = """UPDATE flights
         duration = %s,
         total_stops = %s,
         additional_information = %s
-    WHERE flight_id = %s;
-    """
+    WHERE flight_id = %s;"""
 DELETE_FLIGHT = """DELETE FROM flights WHERE flight_id = %s;"""
 
 # ------------ PREDICTION queries ------------
