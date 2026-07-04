@@ -18,7 +18,6 @@ class FlightRepository():
             duration = row[7],
             total_stops = row[8],
             additional_information = row[9],
-            fare = row[10], # should this be included ?
         )
 
     # Insert a flight record

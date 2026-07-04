@@ -27,16 +27,9 @@ class Flight:
         if self.fare is not None:
             print(f"Fare : ₹{self.fare}")
 
-# fare: float | None = None
-# because:
-# During training: Fare exists.
-# During prediction: Fare is unknown.
+    # When the ML pipeline is implemented, a pandas DataFrame from Flight objects is to be created
+    def to_dictionary(self) -> dict:
+        # df = pd.DataFrame([flight.to_dictionary()])
+        ...
 
-# Possible helper methods
-# display()
-# to_dictionary()
-# useful for pandas
-
-# Dataclass fields
-# Constructor
-# Types
+# Possible helper method: to_dictionary()

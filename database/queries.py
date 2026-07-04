@@ -45,22 +45,36 @@ CREATE TABLE IF NOT EXISTS predictions(
 
 # --------------- USER queries ---------------
 INSERT_USER = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s) RETURNING user_id, created_at;"""
-GET_USER_BY_ID = """SELECT user_id, username, password, role, created_at FROM users WHERE user_id = %s;"""
-GET_USER_BY_USERNAME = """SELECT user_id, username, password, role, created_at FROM users WHERE username = %s;"""
-GET_ALL_USERS = """SELECT user_id, username, password, role, created_at FROM users ORDER BY user_id;"""
+GET_USER_BY_ID = """SELECT * FROM users WHERE user_id = %s;"""
+GET_USER_BY_USERNAME = """SELECT * FROM users WHERE username = %s;"""
+GET_ALL_USERS = """SELECT * FROM users ORDER BY user_id;"""
 UPDATE_USER = """UPDATE users SET username = %s, password = %s, role = %s WHERE user_id = %s;"""
 UPDATE_PASSWORD = """UPDATE users SET password = %s WHERE user_id = %s;"""
 DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
 EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
-AUTHENTICATE_USER = """SELECT user_id, username, password, role, created_at FROM users WHERE username = %s AND password = %s;"""
+AUTHENTICATE_USER = """SELECT * FROM users WHERE username = %s AND password = %s;"""
 
 
 # -------------- FLIGHT queries --------------
-# INSERT_FLIGHT
-# GET_FLIGHT_BY_ID
-# GET_ALL_FLIGHTS
-# UPDATE_FLIGHT
-# DELETE_FLIGHT
-
+INSERT_FLIGHT = """
+    INSERT INTO flights (airline, source, destination, journey_date, departure_time, arrival_time, duration, total_stops, additional_information)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    RETURNING flight_id;
+    """
+GET_FLIGHT_BY_ID = """ SELECT * FROM flights WHERE flight_id = %s;"""
+GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
+UPDATE_FLIGHT = """UPDATE flights
+    SET airline = %s,
+        source = %s,
+        destination = %s,
+        journey_date = %s,
+        departure_time = %s,
+        arrival_time = %s,
+        duration = %s,
+        total_stops = %s,
+        additional_information = %s
+    WHERE flight_id = %s;
+    """
+DELETE_FLIGHT = """DELETE FROM flights WHERE flight_id = %s;"""
 
 # ------------ PREDICTION queries ------------
