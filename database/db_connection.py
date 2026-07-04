@@ -7,6 +7,7 @@ import os
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
+from utilities.logger import ApplicationLogger
 from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE
 
 load_dotenv()
@@ -68,7 +69,7 @@ class DatabaseConnection:
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
-            print(f"Database Error: {exc_value}")
+            ApplicationLogger.error(f"Transaction rolled back: {exc_value}")
             self.connection.rollback()
         else:
             self.connection.commit()

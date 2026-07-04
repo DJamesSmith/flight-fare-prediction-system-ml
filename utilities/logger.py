@@ -1,11 +1,14 @@
 import logging
 
 logging.basicConfig(
+    filename="flight_fare_prediction.log",
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    filemode="a",                       # Append to existing log file
+    datefmt="%d-%m-%Y %H:%M:%S"
 )
 
-class Logger:
+class ApplicationLogger:
     @staticmethod
     def info(message: str):
         logging.info(message)
@@ -19,14 +22,4 @@ class Logger:
         logging.error(message)
 
 # How to use:
-# Logger.info("Model trained successfully.")
-
-# ------------------------------------------------------------
-# Is it okay if add these in logging.basicConfig() ?
-# filename="audit.log",
-# filemode="a",                       # Append to existing log file
-# datefmt="%d-%m-%Y %H:%M:%S"
-
-
-# Can i add this too ? What does this do ?
-# logger = logging.getLogger(__name__)
+# ApplicationLogger.info("Model trained successfully.")

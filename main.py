@@ -41,3 +41,9 @@ class FlightFarePredictionApplication:
 if __name__ == "__main__":
     app: FlightFarePredictionApplication = FlightFarePredictionApplication()
     app.start()
+
+
+# db_connection.py
+# user.py
+# user_repository.py
+# queries.py
