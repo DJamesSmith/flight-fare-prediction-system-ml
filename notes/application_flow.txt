@@ -273,12 +273,10 @@ user_repository.py will include:
 2. database connection usage
 3. create_user()
 4. get_user_by_id()
-5. get_user_by_email()
 6. authenticate_user()
 7. get_all_users()
 8. update_user()
 9. delete_user()
-10. exists_by_email()
 11. proper exception handling
 12. commit/rollback
 13. conversion from database rows → User model
@@ -329,12 +327,22 @@ Authentication
       ▼
 Admin/User Controllers
 
-------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
 
 ML-specific work still pending
-------------------------------------------------------
 
 PostgreSQL work still pending
 You also need to design and create the database schema.
-------------------------------------------------------
 
+user_repository.py (complete implementation)
+flight_repository.py
+prediction_repository.py
+Services
+Controllers
+index.py
+Integration testing and bug fixing
+
+------------------------------------------------------

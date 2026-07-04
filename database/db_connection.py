@@ -42,10 +42,10 @@ def create_database():
 
 # Creates all required project tables
 def create_tables():
-    with DatabaseConnection() as cursor:
-        cursor.execute(CREATE_USERS_TABLE)
-        cursor.execute(CREATE_FLIGHTS_TABLE)
-        cursor.execute(CREATE_PREDICTIONS_TABLE)
+    with DatabaseConnection() as db:
+        db.cursor.execute(CREATE_USERS_TABLE)
+        db.cursor.execute(CREATE_FLIGHTS_TABLE)
+        db.cursor.execute(CREATE_PREDICTIONS_TABLE)
 
     print("All database tables are ready.")
 
@@ -64,7 +64,7 @@ class DatabaseConnection:
             port=DB_PORT
         )
         self.cursor = self.connection.cursor()
-        return self.cursor
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:

@@ -1,3 +1,4 @@
+
 CREATE_USERS_TABLE = """
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,
@@ -42,3 +43,21 @@ CREATE TABLE IF NOT EXISTS predictions(
         ON DELETE CASCADE
 );
 """
+
+# --------------- USER queries ---------------
+INSERT_USER = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s) RETURNING user_id, created_at;"""
+GET_USER_BY_ID = """SELECT user_id, username, password, role, created_at FROM users WHERE user_id = %s;"""
+GET_USER_BY_USERNAME = """SELECT user_id, username, password, role, created_at FROM users WHERE username = %s;"""
+GET_ALL_USERS = """SELECT user_id, username, password, role, created_at FROM users ORDER BY user_id;"""
+UPDATE_USER = """UPDATE users SET username = %s, password = %s, role = %s WHERE user_id = %s;"""
+UPDATE_PASSWORD = """UPDATE users SET password = %s WHERE user_id = %s;"""
+DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
+EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
+AUTHENTICATE_USER = """SELECT user_id, username, password, role, created_at FROM users WHERE username = %s AND password = %s;"""
+
+
+# -------------- FLIGHT queries --------------
+
+
+
+# ------------ PREDICTION queries ------------
