@@ -267,6 +267,42 @@ ___________________________
         ▼              ▼              ▼
     User Repo     Flight Repo    Prediction Repo
 
+
+user_repository.py will include:
+1. constructor
+2. database connection usage
+3. create_user()
+4. get_user_by_id()
+5. get_user_by_email()
+6. authenticate_user()
+7. get_all_users()
+8. update_user()
+9. delete_user()
+10. exists_by_email()
+11. proper exception handling
+12. commit/rollback
+13. conversion from database rows → User model
+14. parameterized SQL only (no SQL injection)
+15. full type hints
+16. docstrings
+
+flight_repository.py will include:
+1. save flight
+2. fetch flight by id
+3. fetch all flights
+4. search flights
+5. update flight
+6. delete flight
+7. model mapping
+
+prediction_repository.py will include:
+1. save prediction
+2. fetch prediction history
+3. fetch predictions by user
+4. fetch predictions by flight
+5. delete prediction
+6. statistics queries
+
 ------------------------------------------------------
 Controllers
 Controllers simply coordinate:
@@ -300,3 +336,5 @@ ML-specific work still pending
 
 PostgreSQL work still pending
 You also need to design and create the database schema.
+------------------------------------------------------
+

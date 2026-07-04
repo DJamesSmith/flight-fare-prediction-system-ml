@@ -1,7 +1,7 @@
 Project 2
 Title: Flight Fare Prediction System Using Machine Learning
 
-https://chatgpt.com/c/6a428d6f-485c-83e8-a124-e4badc992b24
+dion.manipal: https://chatgpt.com/c/6a428d6f-485c-83e8-a124-e4badc992b24
 ----------------------------------------------------------------------------------------------------
 
 Project Summary

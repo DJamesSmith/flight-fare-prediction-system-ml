@@ -3,39 +3,32 @@
 # ✔ Get Prediction History
 # ✔ Delete Prediction
 
-from abc import abstractmethod
+from database.db_connection import DatabaseConnection
 
-from database.base_repository import BaseRepository
+class PredictionRepository:
+    def __init__(self):
+        self.database = DatabaseConnection()
 
-
-class PredictionRepository(BaseRepository):
-
-    @abstractmethod
-    def insert(self):
-        # Save a prediction record.
+    # Save a prediction record
+    def insert(self, prediction):
         pass
 
-    @abstractmethod
-    def find_by_id(self):
-        # Retrieve a prediction using the prediction ID.
+    # Retrieve a prediction using the prediction ID
+    def find_by_id(self, prediction_id):
         pass
 
-    @abstractmethod
+    # Retrieve all prediction records
     def find_all(self):
-        # Retrieve all prediction records.
         pass
 
-    @abstractmethod
-    def update(self):
-        # Update an existing prediction record.
+    # Update an existing prediction record
+    def update(self, prediction):
         pass
 
-    @abstractmethod
-    def delete(self):
-        # Delete a prediction record.
+    # Delete a prediction record
+    def delete(self, prediction_id):
         pass
 
-    @abstractmethod
-    def find_by_user(self):
-        # Retrieve all predictions made by a specific user.
+    # Retrieve all predictions made by a specific user
+    def find_by_user(self, user_id):
         pass

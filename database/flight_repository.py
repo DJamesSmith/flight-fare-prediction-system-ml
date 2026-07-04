@@ -3,31 +3,28 @@
 # ✔ Get All Flights
 # ✔ Delete Flight
 
-from abc import abstractmethod
-from database.base_repository import BaseRepository
+from database.db_connection import DatabaseConnection
 
-class FlightRepository(BaseRepository):
-    @abstractmethod
-    def insert(self):
-        # Insert a flight record.
+class FlightRepository():
+    def __init__(self):
+        self.database = DatabaseConnection()
+
+    # Insert a flight record
+    def insert(self, flight):
         pass
 
-    @abstractmethod
-    def find_by_id(self):
-        # Retrieve a flight using the flight ID.
+    # Retrieve a flight using the flight ID
+    def find_by_id(self, flight_id):
         pass
 
-    @abstractmethod
+    # Retrieve all flight records
     def find_all(self):
-        # Retrieve all flight records.
         pass
 
-    @abstractmethod
-    def update(self):
-        # Update flight details.
+    # Update flight details
+    def update(self, flight):
         pass
 
-    @abstractmethod
-    def delete(self):
-        # Delete a flight record.
+    # Delete a flight record
+    def delete(self, flight_id):
         pass
