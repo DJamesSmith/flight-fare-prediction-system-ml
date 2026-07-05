@@ -6,9 +6,9 @@
 # ✔ Delete User
 
 import psycopg2
+from models.user import User
 from utilities.logger import ApplicationLogger
 from database.db_connection import DatabaseConnection
-from models.user import User
 from database.queries import (
     INSERT_USER,
     GET_USER_BY_ID,

@@ -30,7 +30,6 @@ class Flight:
 
     # When the ML pipeline is implemented, a pandas DataFrame from Flight objects is to be created
     def to_dictionary(self) -> dict[str, object]:
-        # df = pd.DataFrame([flight.to_dictionary()])
         return {
             "Airline": self.airline,
             "Source": self.source,
@@ -45,3 +44,5 @@ class Flight:
         }
 
 # Possible helper method: to_dictionary()
+
+# df = pd.DataFrame([flight.to_dictionary()])

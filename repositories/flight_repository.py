@@ -4,9 +4,9 @@
 # ✔ Delete Flight
 
 from psycopg2 import Error
-from database.db_connection import DatabaseConnection
 from models.flight import Flight
 from utilities.logger import ApplicationLogger
+from database.db_connection import DatabaseConnection
 from database.queries import (
     INSERT_FLIGHT,
     GET_FLIGHT_BY_ID,

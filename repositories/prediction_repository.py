@@ -4,9 +4,9 @@
 # ✔ Delete Prediction
 
 from psycopg2 import Error
-from database.db_connection import DatabaseConnection
 from models.prediction import Prediction
 from utilities.logger import ApplicationLogger
+from database.db_connection import DatabaseConnection
 from database.queries import (
     INSERT_PREDICTION,
     GET_PREDICTION_BY_ID,
