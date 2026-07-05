@@ -48,21 +48,3 @@ class RegexValidation:
         if 0 <= stops <= 5:
             return True, ""
         return False, "Total stops must be between 0 and 5."
-
-# How to use the validation:
-# 1.
-# is_valid, message = RegexValidation.validate_username(username)
-# if not is_valid:
-#     print(message)
-#     return
-
-# 2.
-# valid, error = RegexValidation.validate_date("12-10-2026")
-# if not valid:
-#     print(error)
-
-
-
-# validate_login_credentials(username, password):
-# validate_new_user(username, password, role):
-# validate_password_change(old_password, new_password):

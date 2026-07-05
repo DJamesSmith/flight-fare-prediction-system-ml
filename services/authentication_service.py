@@ -24,8 +24,12 @@ class AuthenticationService():
     """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
     Flow: validate_credentials() → authenticate_user() → store current_user → return User"""
     def login(self, username: str, password: str) -> User | None:
-        if not self.validate_credentials(username, password):
-            return None
+        # if role not in ("Admin", "User", "Guest"):
+        #     raise ValueError("Invalid user role.")
+        valid, message = RegexValidation.validate_username(username)
+        if not valid:
+            ApplicationLogger.warning(message)
+            return False
         user: User = self.user_repository.authenticate_user(username, password)
         if user is None:
             ApplicationLogger.warning(f"Failed login attempt for username '{username}'.")
@@ -47,7 +51,9 @@ class AuthenticationService():
             return False
         if user.password != old_password:
             return False
-        if len(new_password.strip()) < 6:
+        valid, message = RegexValidation.validate_password(new_password)
+        if not valid:
+            ApplicationLogger.warning(message)
             return False
         success: bool = self.user_repository.update_password(user_id, new_password)
         if success:
@@ -56,9 +62,22 @@ class AuthenticationService():
 
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
-        # implementation of validate_new_user(username, password, role)
+        valid, message = RegexValidation.validate_username(username)
+        if not valid:
+            ApplicationLogger.warning(message)
+            raise ValueError(message)
+
+        valid, message = RegexValidation.validate_password(password)
+        if not valid:
+            ApplicationLogger.warning(message)
+            raise ValueError(message)
+
+        if role not in ("Admin", "User", "Guest"):
+            raise ValueError("Role must be either 'Admin' or 'User'.")
+
         if self.user_repository.exists_by_username(username):
             raise ValueError("Username already exists.")
+
         new_user: User = User(username = username, password = password, role = role)
         created_user: User = self.user_repository.create_user(new_user)
         ApplicationLogger.info(f"User '{username}' created successfully.")
@@ -73,35 +92,3 @@ class AuthenticationService():
         if success:
             ApplicationLogger.info(f"User ID {user_id} deleted successfully.")
         return success
-
-    """validates input only. No talk to database.
-    The repository already checks whether the user exists.
-    This method checks whether the input is valid before accessing the database."""
-    def validate_credentials(self, username: str, password: str) -> bool:
-        # username empty?
-        # password empty?
-        # username too short?
-        # password too short?
-        # password whitespace?
-        # return True/False
-
-        # To be implemented in user_validation.py
-        # if role not in ("Admin", "User"):
-        #     raise ValueError("Invalid user role.")
-        valid, message = RegexValidation.validate_username(username)
-        if not valid:
-            return False, message
-        valid, message = RegexValidation.validate_password(password)
-        if not valid:
-            return False, message
-        return True, ""
-    
-
-# Where to implement this ?
-# valid, message = UserValidation.validate_login_credentials(
-#     username,
-#     password
-# )
-# if not valid:
-#     print(message)
-#     return None
