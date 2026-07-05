@@ -60,3 +60,9 @@ class RegexValidation:
 # valid, error = RegexValidation.validate_date("12-10-2026")
 # if not valid:
 #     print(error)
+
+
+
+# validate_login_credentials(username, password):
+# validate_new_user(username, password, role):
+# validate_password_change(old_password, new_password):

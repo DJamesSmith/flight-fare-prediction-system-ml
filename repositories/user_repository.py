@@ -1,9 +1,9 @@
-# ✔ Insert User
-# ✔ Get User By Username
-# ✔ Get User By ID
-# ✔ Get All Users
-# ✔ Update Password
-# ✔ Delete User
+"""Insert User
+Get User By Username
+Get User By ID
+Get All Users
+Update Password
+Delete User"""
 
 import psycopg2
 from models.user import User
@@ -21,7 +21,7 @@ from database.queries import (
     AUTHENTICATE_USER,
 )
 
-# Not using __init__ because it's better to use an active DatabaseConnection() than it's object.
+# Not using __init__() here because it's better to use an active DatabaseConnection() than use it's object.
 class UserRepository:
     # "_map_row_to_user" -> convention for a private helper method, intended for internal use within the class
     # Only the repository should know how a database row maps to a User object.
