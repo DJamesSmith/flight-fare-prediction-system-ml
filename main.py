@@ -43,9 +43,13 @@ if __name__ == "__main__":
     app.start()
 
 
+# Remaining:
+# base_repository class, parts that are common for all repos
+
 # authentication_service.py
 # prediction_service.py
 # preprocessing_service.py
 # report_service.py
 # training_service.py
 # visualization_service.py
+# model_service.py

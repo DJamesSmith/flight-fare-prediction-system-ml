@@ -4,25 +4,16 @@
 # ✔ Save prediction
 # ✔ View prediction history
 
-from abc import ABC, abstractmethod
 
-class PredictionService(ABC):
-    @abstractmethod
-    def load_model(self):
+class PredictionService():
+    def create_prediction(self):
         pass
 
-    @abstractmethod
-    def encode_input(self):
+    def get_prediction_by_id(self):
         pass
 
-    @abstractmethod
-    def predict_fare(self):
-        pass
-
-    @abstractmethod
-    def save_prediction(self):
-        pass
-
-    @abstractmethod
     def prediction_history(self):
+        pass
+
+    def delete_prediction(self):
         pass

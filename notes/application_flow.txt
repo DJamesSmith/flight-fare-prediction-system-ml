@@ -225,7 +225,7 @@ services/
 
 ------------------------------------------------------
 
-Database flow:
+Database Workflow:
 
     AuthenticationService
                 ▼
@@ -260,6 +260,9 @@ ___________________________
         ▼              ▼              ▼
     User Repo     Flight Repo    Prediction Repo
 
+------------------------------------------------------
+
+Repositories implementation flow:
 
 user_repository.py will include:
 1. constructor
@@ -295,7 +298,35 @@ prediction_repository.py will include:
 6. statistics queries
 
 ------------------------------------------------------
+
+Services Order of implementation:
+
+    Repositories                        ✔ Complete
+        ↓
+    AuthenticationServiceImpl           ✔ Authentication depends only on repositories.
+        ↓
+    ModelServiceImpl
+        ↓
+    PredictionServiceImpl               ✔ Prediction depends on authentication.
+        ↓
+    PreprocessingServiceImpl
+        ↓
+    TrainingServiceImpl                 ✔ Training depends on preprocessing.
+        ↓
+    VisualizationServiceImpl
+        ↓
+    ReportServiceImpl                   ✔ Reports depend on prediction and training.
+        ↓
+    Controllers
+        ↓
+      Menus
+        ↓
+    main.py
+
+------------------------------------------------------
+
 Controllers
+
 Controllers simply coordinate:
 View
     ▼
@@ -334,3 +365,4 @@ index.py
 Integration testing and bug fixing
 
 ------------------------------------------------------
+On completion of project, make this more organized for documentation purpose.
