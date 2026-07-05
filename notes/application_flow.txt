@@ -38,7 +38,7 @@ utilities/                      ✅
     ↓
 services/                       🚧 interfaces complete, implementations not
     ↓
-database/                       🚧 interfaces complete, implementations not
+database/                       ✅
     ↓
 views/                          ✅
     ↓
@@ -120,12 +120,10 @@ utilities
 │
 ├── constants.py
 │       ↑
-│       │
 │   Used by all services
 │
 ├── file_handler.py
 │       ↑
-│       │
 │   Used by preprocessing,
 │   training,
 │   prediction,
@@ -133,12 +131,10 @@ utilities
 │
 ├── helper.py
 │       ↑
-│       │
 │   Used throughout project
 │
 └── logger.py
         ↑
-        │
     Used throughout project
 
 ------------------------------------------------------
@@ -156,14 +152,12 @@ Files which needs to perform file operations:
 | ReportService         |     ✅     |      ✅     |    ❌   |       ✅      |         ✅         |
 
                 Controllers
-                      │
                       ▼
                 Services Layer
                       │
         ┌─────────────┼─────────────┐
         ▼             ▼             ▼
  FileHandler      Logger      Constants
-        │
         ▼
  Operating System
 
@@ -263,7 +257,6 @@ ___________________________
                 BaseRepository
                        ▲
         ┌──────────────┼──────────────┐
-        │              │              │
         ▼              ▼              ▼
     User Repo     Flight Repo    Prediction Repo
 
@@ -305,10 +298,8 @@ prediction_repository.py will include:
 Controllers
 Controllers simply coordinate:
 View
-    │
     ▼
 Controller
-    │
     ▼
 Service
 ------------------------------------------------------
@@ -317,13 +308,10 @@ application_controller.py
 
 This orchestrates the application.
 index.py
-      │
       ▼
 ApplicationController
-      │
       ▼
 Authentication
-      │
       ▼
 Admin/User Controllers
 

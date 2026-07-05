@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import date, time
 
 @dataclass
 class Flight:
@@ -6,9 +7,9 @@ class Flight:
     airline: str = ""
     source: str = ""
     destination: str = ""
-    journey_date: str = ""
-    departure_time: str = ""
-    arrival_time: str = ""
+    journey_date: date = ""
+    departure_time: time = ""
+    arrival_time: time = ""
     duration: str = ""
     total_stops: str = ""
     additional_information: str = ""

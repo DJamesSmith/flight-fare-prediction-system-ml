@@ -60,8 +60,13 @@ INSERT_FLIGHT = """
     INSERT INTO flights (airline, source, destination, journey_date, departure_time, arrival_time, duration, total_stops, additional_information)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     RETURNING flight_id;"""
-GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
-GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
+GET_FLIGHT_BY_ID = """
+    SELECT prediction_id, user_id, flight_id, predicted_fare, prediction_time
+    FROM flights
+    WHERE flight_id = %s;"""
+GET_ALL_FLIGHTS = """SELECT prediction_id, user_id, flight_id, predicted_fare, prediction_time
+    FROM flights
+    ORDER BY flight_id;"""
 UPDATE_FLIGHT = """
     UPDATE flights
     SET airline = %s,
