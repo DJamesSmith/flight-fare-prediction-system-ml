@@ -21,6 +21,7 @@ from database.queries import (
     AUTHENTICATE_USER,
 )
 
+# Not using __init__ because it's better to use an active DatabaseConnection() than it's object.
 class UserRepository:
     # "_map_row_to_user" -> convention for a private helper method, intended for internal use within the class
     # Only the repository should know how a database row maps to a User object.

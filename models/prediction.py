@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from models.flight import Flight
 from datetime import datetime
 
 @dataclass
@@ -11,7 +10,8 @@ class Prediction:
     prediction_time: datetime | None = None
 
     def display_prediction(self):
-        self.flight.display_details()
-        print("\nPrediction Details\n", "-" * 30)
+        print(f"Prediction ID : {self.prediction_id}")
+        print(f"User ID : {self.user_id}")
+        print(f"Flight ID : {self.flight_id}")
         print(f"Predicted Fare : ₹{self.predicted_fare}")
         print(f"Prediction Time : {self.prediction_time}")

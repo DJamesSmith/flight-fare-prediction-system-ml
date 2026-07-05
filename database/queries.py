@@ -77,3 +77,10 @@ UPDATE_FLIGHT = """
 DELETE_FLIGHT = """DELETE FROM flights WHERE flight_id = %s;"""
 
 # ------------ PREDICTION queries ------------
+
+INSERT_PREDICTION = """INSERT INTO predictions (user_id, flight_id, predicted_fare) VALUES (%s, %s, %s) RETURNING prediction_id, prediction_time;"""
+GET_PREDICTION_BY_ID = """SELECT * FROM predictions WHERE prediction_id = %s;"""
+GET_ALL_PREDICTIONS = """SELECT * FROM predictions ORDER BY prediction_time DESC;"""
+UPDATE_PREDICTION = """UPDATE predictions SET predicted_fare = %s WHERE prediction_id = %s;"""
+DELETE_PREDICTION = """DELETE FROM predictions WHERE prediction_id = %s;"""
+GET_PREDICTIONS_BY_USER = """SELECT * FROM predictions WHERE user_id = %s ORDER BY prediction_time DESC;"""
