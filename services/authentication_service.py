@@ -20,7 +20,7 @@ class AuthenticationService():
     How to use: current_user = authentication_service.get_current_user()"""
     def get_current_user(self) -> User | None:
         return self.current_user
-    
+
     def _require_login(self):
         if self.current_user is None:
             raise PermissionError("Login required.")
@@ -30,14 +30,7 @@ class AuthenticationService():
         if self.current_user.role != User.ADMIN:
             raise PermissionError("Administrator privileges required.")
 
-    def view_users(self) -> list[User]:
-        self._require_login()
-        self._require_admin()
-        return self.user_repository.get_all_users()
-
-    """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
-    Flow: validate_credentials() → authenticate_user() → store current_user → return User"""
-    def login(self, username: str, password: str) -> User | None:
+    def _validate_login_input(self, username: str, password: str):
         valid, message = RegexValidation.validate_username(username)
         if not valid:
             ApplicationLogger.warning(message)
@@ -46,6 +39,15 @@ class AuthenticationService():
         if not valid:
             ApplicationLogger.warning(message)
             return None
+
+    def view_users(self) -> list[User]:
+        self._require_admin()
+        return self.user_repository.get_all_users()
+
+    """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
+    Flow: validate_credentials() → authenticate_user() → store current_user → return User"""
+    def login(self, username: str, password: str) -> User | None:
+        self._validate_login_input(username, password)
         user: User = self.user_repository.authenticate_user(username, password)
         if user is None:
             ApplicationLogger.warning(f"Failed login attempt for username '{username}'.")
@@ -80,7 +82,6 @@ class AuthenticationService():
 
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
-        self._require_login()
         self._require_admin()
             # raise PermissionError("You are not authorized. Only administrators can create users.")
 
@@ -106,7 +107,6 @@ class AuthenticationService():
 
     # repository.delete_user() → True / False
     def delete_user(self, user_id: int) -> bool:
-        self._require_login()
         self._require_admin()
         success: bool = self.user_repository.delete_user(user_id)
         if success:
