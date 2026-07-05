@@ -1,3 +1,6 @@
+GET_ADMIN = """SELECT user_id FROM users WHERE username = %s;"""
+INSERT_DEFAULT_ADMIN = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s);"""
+
 CREATE_USERS_TABLE = """
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,

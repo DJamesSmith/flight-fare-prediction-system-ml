@@ -8,6 +8,7 @@ from views.menu_view import MenuView
 from services.authentication_service import AuthenticationService
 from controllers.admin_controller import AdminController
 from controllers.user_controller import UserController
+from database.db_connection import initialize_database
 
 class FlightFarePredictionApplication:
     def __init__(self):
@@ -40,6 +41,7 @@ class FlightFarePredictionApplication:
 
 if __name__ == "__main__":
     app: FlightFarePredictionApplication = FlightFarePredictionApplication()
+    initialize_database()
     app.start()
 
 

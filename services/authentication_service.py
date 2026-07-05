@@ -20,16 +20,32 @@ class AuthenticationService():
     How to use: current_user = authentication_service.get_current_user()"""
     def get_current_user(self) -> User | None:
         return self.current_user
+    
+    def _require_login(self):
+        if self.current_user is None:
+            raise PermissionError("Login required.")
+
+    def _require_admin(self):
+        self._require_login()
+        if self.current_user.role != User.ADMIN:
+            raise PermissionError("Administrator privileges required.")
+
+    def view_users(self) -> list[User]:
+        self._require_login()
+        self._require_admin()
+        return self.user_repository.get_all_users()
 
     """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
     Flow: validate_credentials() → authenticate_user() → store current_user → return User"""
     def login(self, username: str, password: str) -> User | None:
-        # if role not in ("Admin", "User", "Guest"):
-        #     raise ValueError("Invalid user role.")
         valid, message = RegexValidation.validate_username(username)
         if not valid:
             ApplicationLogger.warning(message)
-            return False
+            return None
+        valid, message = RegexValidation.validate_password(password)
+        if not valid:
+            ApplicationLogger.warning(message)
+            return None
         user: User = self.user_repository.authenticate_user(username, password)
         if user is None:
             ApplicationLogger.warning(f"Failed login attempt for username '{username}'.")
@@ -38,18 +54,20 @@ class AuthenticationService():
         ApplicationLogger.info(f"User '{user.username}' logged in successfully as {user.role}.")
         return user
 
-    # current_user = None → logger → return
-    def logout(self) -> None:
-        if self.current_user is not None:
-            ApplicationLogger.info(f"User '{self.current_user.username}' logged out.")
-        self.current_user = None
-
     # retrieve user → old password correct? → repository.update_password() → True / False
     def change_password(self, user_id: int, old_password: str, new_password: str) -> bool:
+        self._require_login()
+        if (self.current_user.role != User.ADMIN and self.current_user.user_id != user_id):
+            raise PermissionError("You are not authorized to change another user's password.")
+
         user: User = self.user_repository.get_user_by_id(user_id)
         if user is None:
             return False
         if user.password != old_password:
+            ApplicationLogger.warning("Current password is incorrect.")
+            return False
+        if old_password == new_password:
+            ApplicationLogger.warning("New password must be different from the current password.")
             return False
         valid, message = RegexValidation.validate_password(new_password)
         if not valid:
@@ -62,18 +80,21 @@ class AuthenticationService():
 
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
+        self._require_login()
+        self._require_admin()
+            # raise PermissionError("You are not authorized. Only administrators can create users.")
+
         valid, message = RegexValidation.validate_username(username)
         if not valid:
             ApplicationLogger.warning(message)
             raise ValueError(message)
-
         valid, message = RegexValidation.validate_password(password)
         if not valid:
             ApplicationLogger.warning(message)
             raise ValueError(message)
 
-        if role not in ("Admin", "User", "Guest"):
-            raise ValueError("Role must be either 'Admin' or 'User'.")
+        if not User.is_valid_role(role):
+            raise ValueError("Role must be either 'Admin', 'User' or 'Guest'.")
 
         if self.user_repository.exists_by_username(username):
             raise ValueError("Username already exists.")
@@ -83,12 +104,17 @@ class AuthenticationService():
         ApplicationLogger.info(f"User '{username}' created successfully.")
         return created_user
 
-    def view_users(self) -> list[User]:
-        return self.user_repository.get_all_users()
-
     # repository.delete_user() → True / False
     def delete_user(self, user_id: int) -> bool:
+        self._require_login()
+        self._require_admin()
         success: bool = self.user_repository.delete_user(user_id)
         if success:
             ApplicationLogger.info(f"User ID {user_id} deleted successfully.")
         return success
+
+    # current_user = None → logger → return
+    def logout(self) -> None:
+        if self.current_user is not None:
+            ApplicationLogger.info(f"User '{self.current_user.username}' logged out.")
+        self.current_user = None

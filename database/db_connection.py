@@ -7,8 +7,9 @@ import os
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
+from models.user import User
 from utilities.logger import ApplicationLogger
-from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE
+from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, GET_ADMIN, INSERT_DEFAULT_ADMIN
 
 load_dotenv()
 
@@ -48,6 +49,20 @@ def create_tables():
         db.cursor.execute(CREATE_FLIGHTS_TABLE)
         db.cursor.execute(CREATE_PREDICTIONS_TABLE)
     ApplicationLogger.info("All database tables are ready.")
+
+def create_default_admin():
+    with DatabaseConnection() as db:
+        db.cursor.execute(GET_ADMIN, ("admin",))
+        if db.cursor.fetchone() is None:
+            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", "admin123", User.ADMIN))
+            ApplicationLogger.info("Default administrator created.")
+        else:
+            ApplicationLogger.info("Default administrator already exists.")
+
+def initialize_database():
+    create_database()
+    create_tables()
+    create_default_admin()
 
 # Custom Context Manager responsible only for opening and closing PostgreSQL connections
 class DatabaseConnection:
