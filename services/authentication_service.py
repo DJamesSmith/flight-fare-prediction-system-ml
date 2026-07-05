@@ -56,6 +56,7 @@ class AuthenticationService():
 
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
+        # implementation of validate_new_user(username, password, role)
         if self.user_repository.exists_by_username(username):
             raise ValueError("Username already exists.")
         new_user: User = User(username = username, password = password, role = role)
@@ -94,3 +95,13 @@ class AuthenticationService():
         if not valid:
             return False, message
         return True, ""
+    
+
+# Where to implement this ?
+# valid, message = UserValidation.validate_login_credentials(
+#     username,
+#     password
+# )
+# if not valid:
+#     print(message)
+#     return None

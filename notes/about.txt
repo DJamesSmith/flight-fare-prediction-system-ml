@@ -92,7 +92,7 @@ FlightFarePrediction/
 │       admin.py
 │       flight.py
 │
-├── services/
+├── services/                                   # Business Logic
 │       authentication_service.py
 │       preprocessing_service.py
 │       training_service.py

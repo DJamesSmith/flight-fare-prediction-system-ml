@@ -58,7 +58,7 @@ flight-fare-prediction-system-ml/
 ├── validation/
 ├── views/
 ├── Flight Fare Prediction_SRS.pdf
-├── index.py
+├── main.py
 ├── requirements.txt
 ├── README.md
 ├── LICENSE
