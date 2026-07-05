@@ -1,3 +1,8 @@
+Actual implementation:
+main.py → views → validation → utilities → models → || database_connection → repositories → services → controllers
+
+------------------------------------------------------
+
 Project Files Flow:
 
 index.py
@@ -36,7 +41,7 @@ validation/                     ✅
     ↓
 utilities/                      ✅
     ↓
-services/                       🚧 interfaces complete, implementations not
+services/                       ✅ (business logic)
     ↓
 database/                       ✅
     ↓
@@ -262,7 +267,7 @@ ___________________________
 
 ------------------------------------------------------
 
-Repositories implementation flow:
+REPOSITORIES implementation flow:
 
 user_repository.py will include:
 1. constructor
@@ -299,7 +304,7 @@ prediction_repository.py will include:
 
 ------------------------------------------------------
 
-Services Order of implementation:
+SERVICES Order of implementation:
 
     Repositories                        ✔ Complete
         ↓
@@ -322,10 +327,63 @@ Services Order of implementation:
       Menus
         ↓
     main.py
+----------------------------
+Order of implementation in AuthenticationServiceImpl
+├── __init__()
+│
+├── login()
+│
+├── validate_credentials()
+│
+├── logout()
+│
+├── create_user()
+│
+├── view_users()
+│
+├── delete_user()
+│
+└── change_password()
+----------------------------
+Order of implementation in ModelServiceImpl
 
+
+
+
+----------------------------
+Order of implementation in PredictionServiceImpl
+
+
+
+
+----------------------------
+Order of implementation in PreprocessingServiceImpl
+
+
+
+
+----------------------------
+Order of implementation in TrainingServiceImpl
+
+
+
+
+----------------------------
+Order of implementation in VisualizationServiceImpl
+
+
+
+
+----------------------------
+Order of implementation in ReportServiceImpl
+
+
+
+
+----------------------------
 ------------------------------------------------------
 
-Controllers
+CONTROLLERS
 
 Controllers simply coordinate:
 View
@@ -356,13 +414,10 @@ ML-specific work still pending
 PostgreSQL work still pending
 You also need to design and create the database schema.
 
-user_repository.py (complete implementation)
-flight_repository.py
-prediction_repository.py
-Services
-Controllers
-index.py
-Integration testing and bug fixing
+Remaining:
+1. Controllers
+2. index.py
+3. Integration testing and bug fixing
 
 ------------------------------------------------------
 On completion of project, make this more organized for documentation purpose.
