@@ -472,25 +472,23 @@ A guest cannot:
 ------------------------------------------------------
 
 
-On completion of project, make this more organized for documentation purpose.
+On completion of project
+1. Make this txt file more organized for documentation purpose.
+2. Project Structure: Click a picture and extract text, paste here.
 
 I/O files:
 
 FLIGHT_FARE_PREDICTION/
 dataset/
     flights.csv
-
 data/
     cleaned_dataset.csv
     feature_dataset.csv
-
 trained_models/
     flight_model.pkl
     encoder.pkl
-
 reports/
     metrics.csv
     prediction_history.csv
     project_report.pdf
-
 graphs/
