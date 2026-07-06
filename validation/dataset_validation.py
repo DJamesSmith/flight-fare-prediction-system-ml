@@ -3,9 +3,10 @@ import pandas as pd
 
 REQUIRED_COLUMNS = [
     "Airline",
+    "Journey_Date",
     "Source",
     "Destination",
-    "Journey_Date",
+    "Route",
     "Departure_Time",
     "Arrival_Time",
     "Duration",

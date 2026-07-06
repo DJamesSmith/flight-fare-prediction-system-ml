@@ -21,14 +21,15 @@ class FlightRepository:
         return Flight(
             flight_id = row[0],
             airline = row[1],
-            source = row[2],
-            destination = row[3],
-            journey_date = row[4],
-            departure_time = row[5],
-            arrival_time = row[6],
-            duration = row[7],
-            total_stops = row[8],
-            additional_information = row[9],
+            journey_date = row[2],
+            source = row[3],
+            destination = row[4],
+            route = row[5],
+            departure_time = row[6],
+            arrival_time = row[7],
+            duration = row[8],
+            total_stops = row[9],
+            additional_information = row[10],
         )
 
     # Insert a flight into the database
@@ -37,9 +38,10 @@ class FlightRepository:
             with DatabaseConnection() as db:
                 db.cursor.execute(INSERT_FLIGHT, (
                     flight.airline, 
+                    flight.journey_date, 
                     flight.source, 
                     flight.destination, 
-                    flight.journey_date, 
+                    flight.route, 
                     flight.departure_time,
                     flight.arrival_time, 
                     flight.duration, 
@@ -84,9 +86,10 @@ class FlightRepository:
             with DatabaseConnection() as db:
                 db.cursor.execute(UPDATE_FLIGHT, (
                     flight.airline,
+                    flight.journey_date,
                     flight.source,
                     flight.destination,
-                    flight.journey_date,
+                    flight.route, 
                     flight.departure_time,
                     flight.arrival_time,
                     flight.duration,

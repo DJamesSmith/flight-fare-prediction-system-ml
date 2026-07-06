@@ -15,9 +15,10 @@ CREATE_FLIGHTS_TABLE = """
 CREATE TABLE IF NOT EXISTS flights(
     flight_id SERIAL PRIMARY KEY,
     airline VARCHAR(100) NOT NULL,
+    journey_date DATE NOT NULL,
     source VARCHAR(100) NOT NULL,
     destination VARCHAR(100) NOT NULL,
-    journey_date DATE NOT NULL,
+    route VARCHAR(100) NOT NULL,
     departure_time TIME NOT NULL,
     arrival_time TIME NOT NULL,
     duration VARCHAR(50) NOT NULL,
@@ -60,7 +61,7 @@ AUTHENTICATE_USER = """SELECT * FROM users WHERE username = %s AND password = %s
 
 # -------------- FLIGHT queries --------------
 INSERT_FLIGHT = """
-    INSERT INTO flights (airline, source, destination, journey_date, departure_time, arrival_time, duration, total_stops, additional_information)
+    INSERT INTO flights (airline, journey_date, source, destination, route, departure_time, arrival_time, duration, total_stops, additional_information)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     RETURNING flight_id;"""
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
@@ -68,9 +69,10 @@ GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
 UPDATE_FLIGHT = """
     UPDATE flights
     SET airline = %s,
+        journey_date = %s,
         source = %s,
         destination = %s,
-        journey_date = %s,
+        route = %s,
         departure_time = %s,
         arrival_time = %s,
         duration = %s,
