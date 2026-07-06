@@ -3,6 +3,10 @@ main.py → views → validation → utilities → models → || database_connec
 
 dataset imported from:
 https://www.kaggle.com/datasets/harshavarshney/flight-fare
+
+SRS Word document link (access to dion.manipal):
+https://1drv.ms/w/c/3c0a0883d055be70/IQCbgZOdh-6lTp8UHsDltZglAboy3WJN7KDP_kc_aMjw-hE?e=wnysrp
+
 ------------------------------------------------------
 
 Project Files Flow:
@@ -348,25 +352,25 @@ Order of implementation in AuthenticationServiceImpl
 │
 └── change_password()
 ----------------------------
-Order of implementation in ModelServiceImpl
-
-
-
-
-----------------------------
-Order of implementation in PredictionServiceImpl
-
-
-
-
-----------------------------
 Order of implementation in PreprocessingServiceImpl
+
 
 
 
 
 ----------------------------
 Order of implementation in TrainingServiceImpl
+
+
+
+
+----------------------------
+Order of implementation in ModelServiceImpl
+
+
+
+----------------------------
+Order of implementation in PredictionServiceImpl
 
 
 
@@ -383,7 +387,6 @@ Order of implementation in ReportServiceImpl
 
 
 
-----------------------------
 ------------------------------------------------------
 
 CONTROLLERS
@@ -457,6 +460,25 @@ A guest cannot:
 4. No prediction history.
 
 ------------------------------------------------------
+I/O files:
+
+FLIGHT_FARE_PREDICTION/
+    dataset/
+        flights.csv
+    data/
+        cleaned_dataset.csv
+        feature_dataset.csv
+    trained_models/
+        flight_model.pkl
+        encoder.pkl
+    reports/
+        metrics.csv
+        prediction_history.csv
+        project_report.pdf
+    graphs/
+
+----------------------------
+
     INPUT
         ▼
     dataset/
@@ -522,19 +544,3 @@ Remaining:
 On completion of project
     1. Make this txt file more organized for documentation purpose.
     2. Project Structure: Click a picture and extract text, paste here.
-
-I/O files:
-    FLIGHT_FARE_PREDICTION/
-    dataset/
-        flights.csv
-    data/
-        cleaned_dataset.csv
-        feature_dataset.csv
-    trained_models/
-        flight_model.pkl
-        encoder.pkl
-    reports/
-        metrics.csv
-        prediction_history.csv
-        project_report.pdf
-    graphs/
