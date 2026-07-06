@@ -44,3 +44,28 @@ class Flight:
         }
 
 # df = pd.DataFrame([flight.to_dictionary()])
+
+# Data_train.csv        Model
+# Airline               ✔ airline
+# Date_of_Journey       ✔ journey_date
+# Source                ✔ source
+# Destination           ✔ destination
+# Route                 ✔ 
+# Dep_Time              ✔ departure_time
+# Arrival_Time          ✔ arrival_time
+# Duration              ✔ duration
+# Total_Stops           ✔ total_stops
+# Additional_Info       ✔ additional_information
+# Price                 ✔ fare
+
+# Test_set.csv
+# Airline
+# Date_of_Journey
+# Source
+# Destination
+# Route
+# Dep_Time
+# Arrival_Time
+# Duration
+# Total_Stops
+# Additional_Info

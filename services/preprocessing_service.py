@@ -24,6 +24,20 @@
 
 
 class PreprocessingService():
+    def __init__(self):
+        pass
+
+    def rename_columns():
+        # | Kaggle Column   | Internal Column        |
+        # | --------------- | ---------------------- |
+        # | Date_of_Journey | Journey_Date           |
+        # | Dep_Time        | Departure_Time         |
+        # | Arrival_Time    | Arrival_Time           |
+        # | Price           | Fare                   |
+        # | Additional_Info | Additional_Information |
+
+        pass
+
     def load_dataset(self):
         pass
 

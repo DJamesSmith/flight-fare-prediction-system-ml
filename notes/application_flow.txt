@@ -78,13 +78,13 @@ validation/
 Is the data valid before the application processes it?
 
 regex validation:
-1. Username
-2. Password
-3. Date
-4. Time
-5. Airline name
-6. City name
-7. Stops
+    1. Username
+    2. Password
+    3. Date
+    4. Time
+    5. Airline name
+    6. City name
+    7. Stops
 These validations happen before creating a Flight object or a User.
 
 dataset validation:
@@ -272,37 +272,37 @@ ___________________________
 REPOSITORIES implementation flow:
 
 user_repository.py will include:
-1. constructor
-2. database connection usage
-3. create_user()
-4. get_user_by_id()
-6. authenticate_user()
-7. get_all_users()
-8. update_user()
-9. delete_user()
-11. proper exception handling
-12. commit/rollback
-13. conversion from database rows → User model
-14. parameterized SQL only (no SQL injection)
-15. full type hints
-16. docstrings
+    1. constructor
+    2. database connection usage
+    3. create_user()
+    4. get_user_by_id()
+    6. authenticate_user()
+    7. get_all_users()
+    8. update_user()
+    9. delete_user()
+    11. proper exception handling
+    12. commit/rollback
+    13. conversion from database rows → User model
+    14. parameterized SQL only (no SQL injection)
+    15. full type hints
+    16. docstrings
 
 flight_repository.py will include:
-1. save flight
-2. fetch flight by id
-3. fetch all flights
-4. search flights
-5. update flight
-6. delete flight
-7. model mapping
+    1. save flight
+    2. fetch flight by id
+    3. fetch all flights
+    4. search flights
+    5. update flight
+    6. delete flight
+    7. model mapping
 
 prediction_repository.py will include:
-1. save prediction
-2. fetch prediction history
-3. fetch predictions by user
-4. fetch predictions by flight
-5. delete prediction
-6. statistics queries
+    1. save prediction
+    2. fetch prediction history
+    3. fetch predictions by user
+    4. fetch predictions by flight
+    5. delete prediction
+    6. statistics queries
 
 ------------------------------------------------------
 
@@ -428,22 +428,9 @@ read_csv()
 internally uses Python file handling
 ↓
 closes file automatically
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-
-ML-specific work still pending
-
-PostgreSQL work still pending
-You also need to design and create the database schema.
-
-Remaining:
-1. Controllers
-2. index.py
-3. Integration testing and bug fixing
-
 ------------------------------------------------------
+
+Role operation:
 
 | Operation               | Admin |        User        |               Guest               |
 | ----------------------- | :---: | :----------------: | :-------------------------------: |
@@ -470,25 +457,84 @@ A guest cannot:
 4. No prediction history.
 
 ------------------------------------------------------
+    INPUT
+        ▼
+    dataset/
+        data_train.csv
+        ↓
+        load_dataset()
+        ↓
+        rename_columns()
+        ↓
+        clean_dataset()
+        ↓
+        feature_engineering()
+        ↓
+    Produces:
+        data/
+            cleaned_dataset.csv
+            feature_dataset.csv
+        ↓
+        Training Service
+        ↓
+    Produces:
+        trained_models/
+            flight_model.pkl
+            encoder.pkl
+        ↓
+        Prediction Service
+        ↓
+    Produces: prediction_history.csv
+        ↓
+        Report Service
+        ↓
+    Produces:
+        metrics.csv
+        project_report.pdf
+
+
+Files generated automatically:
+    1. cleaned_dataset.csv
+    2. feature_dataset.csv
+    3. flight_model.pkl
+    4. encoder.pkl
+    5. prediction_history.csv
+    6. metrics.csv
+    7. project_report.pdf
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+
+ML-specific work still pending
+
+PostgreSQL work still pending
+You also need to design and create the database schema.
+
+Remaining:
+    1. Controllers
+    2. index.py
+    3. Integration testing and bug fixing
+
+------------------------------------------------------
 
 
 On completion of project
-1. Make this txt file more organized for documentation purpose.
-2. Project Structure: Click a picture and extract text, paste here.
+    1. Make this txt file more organized for documentation purpose.
+    2. Project Structure: Click a picture and extract text, paste here.
 
 I/O files:
-
-FLIGHT_FARE_PREDICTION/
-dataset/
-    flights.csv
-data/
-    cleaned_dataset.csv
-    feature_dataset.csv
-trained_models/
-    flight_model.pkl
-    encoder.pkl
-reports/
-    metrics.csv
-    prediction_history.csv
-    project_report.pdf
-graphs/
+    FLIGHT_FARE_PREDICTION/
+    dataset/
+        flights.csv
+    data/
+        cleaned_dataset.csv
+        feature_dataset.csv
+    trained_models/
+        flight_model.pkl
+        encoder.pkl
+    reports/
+        metrics.csv
+        prediction_history.csv
+        project_report.pdf
+    graphs/
