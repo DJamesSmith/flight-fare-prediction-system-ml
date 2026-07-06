@@ -5,9 +5,10 @@ from datetime import date, time
 class Flight:
     flight_id: int | None = None
     airline: str = ""
+    journey_date: date = ""
     source: str = ""
     destination: str = ""
-    journey_date: date = ""
+    route: str = ""
     departure_time: time = ""
     arrival_time: time = ""
     duration: str = ""
@@ -16,14 +17,16 @@ class Flight:
     fare: float | None = None
 
     def display_details(self):
-        print(f"Airline : {self.airline}\n")
-        print(f"Source : {self.source}")
-        print(f"Destination : {self.destination}")
-        print(f"Journey Date : {self.journey_date}")
-        print(f"Departure Time : {self.departure_time}")
-        print(f"Arrival Time : {self.arrival_time}")
-        print(f"Duration : {self.duration}")
-        print(f"Stops : {self.total_stops}")
+        print(f"Airline : {self.airline}\n" \
+            "Journey Date : {self.journey_date}\n" \
+            "Source : {self.source}\n" \
+            "Destination : {self.destination}\n" \
+            "Route : {self.route}\n" \
+            "Departure Time : {self.departure_time}\n" \
+            "Arrival Time : {self.arrival_time}\n" \
+            "Duration : {self.duration}\n" \
+            "Stops : {self.total_stops}\n" \
+            "Additional Information: {additional_information}")
 
         if self.fare is not None:
             print(f"Fare : ₹{self.fare}")
@@ -32,9 +35,10 @@ class Flight:
     def to_dictionary(self) -> dict[str, object]:
         return {
             "Airline": self.airline,
+            "Journey_Date": self.journey_date,
             "Source": self.source,
             "Destination": self.destination,
-            "Journey_Date": self.journey_date,
+            "Route": self.route,
             "Departure_Time": self.departure_time,
             "Arrival_Time": self.arrival_time,
             "Duration": self.duration,

@@ -544,3 +544,4 @@ Remaining:
 On completion of project
     1. Make this txt file more organized for documentation purpose.
     2. Project Structure: Click a picture and extract text, paste here.
+    3. Know how to explain it with the workflow. Know the sequence in selecting menu options.

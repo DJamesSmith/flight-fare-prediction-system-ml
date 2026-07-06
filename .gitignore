@@ -49,3 +49,6 @@ Thumbs.db
 
 # dataset PKL (Pickle files)
 *.pkl
+
+# selected pdf files (output generated)
+project_report.pdf

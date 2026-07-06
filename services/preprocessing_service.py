@@ -27,7 +27,10 @@ class PreprocessingService():
     def __init__(self):
         pass
 
-    def rename_columns():
+    def load_dataset(self):
+        pass
+
+    def rename_columns(self):
         # | Kaggle Column   | Internal Column        |
         # | --------------- | ---------------------- |
         # | Date_of_Journey | Journey_Date           |
@@ -38,26 +41,35 @@ class PreprocessingService():
 
         pass
 
-    def load_dataset(self):
-        pass
-
     def validate_dataset(self):
         pass
 
+    # -------------------- DATA CLEANING --------------------
     # orchestrate smaller cleaning steps.
     def clean_dataset(self):
         pass
 
-    def handle_missing_values():
+    def handle_missing_values(self):
         pass
 
-    def remove_duplicates():
+    def remove_duplicates(self):
         pass
 
-    def standardize_columns():
+    def trim_whitespace(self):
         pass
 
+    def standardize_columns(self):
+        pass
+
+    def convert_data_types(self):
+        pass
+
+    # -------------------------------------------------------
     def feature_engineering(self):
+        # From: Journey_Date
+        # create:
+        #     Journey_Day
+        #     Journey_Month
         pass
 
     def save_cleaned_dataset(self):
