@@ -30,11 +30,18 @@ class PreprocessingService():
     def validate_dataset(self):
         pass
 
+    # orchestrate smaller cleaning steps.
     def clean_dataset(self):
         pass
 
-    # def preprocess_input():
-    #     pass
+    def handle_missing_values():
+        pass
+
+    def remove_duplicates():
+        pass
+
+    def standardize_columns():
+        pass
 
     def feature_engineering(self):
         pass
@@ -44,3 +51,7 @@ class PreprocessingService():
 
     def save_feature_dataset(self):
         pass
+
+
+# pd.read_csv() - internally opens the file, reads it, parses it, and closes it automatically.
+# df.to_csv() - opens, writes, flushes, and closes the file.

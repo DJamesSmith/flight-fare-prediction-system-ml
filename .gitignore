@@ -43,3 +43,9 @@ dist/
 
 # OS files
 Thumbs.db
+
+# dataset CSV
+*.csv
+
+# dataset PKL (Pickle files)
+*.pkl

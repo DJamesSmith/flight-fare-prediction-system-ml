@@ -43,6 +43,4 @@ class Flight:
             "Fare": self.fare,
         }
 
-# Possible helper method: to_dictionary()
-
 # df = pd.DataFrame([flight.to_dictionary()])

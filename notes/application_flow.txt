@@ -1,6 +1,8 @@
 Actual implementation:
 main.py → views → validation → utilities → models → || database_connection → repositories → services → controllers
 
+dataset imported from:
+https://www.kaggle.com/datasets/harshavarshney/flight-fare
 ------------------------------------------------------
 
 Project Files Flow:
@@ -310,13 +312,13 @@ SERVICES Order of implementation:
         ↓
     AuthenticationServiceImpl           ✔ Authentication depends only on repositories.
         ↓
-    ModelServiceImpl
-        ↓
-    PredictionServiceImpl               ✔ Prediction depends on authentication.
-        ↓
     PreprocessingServiceImpl
         ↓
     TrainingServiceImpl                 ✔ Training depends on preprocessing.
+        ↓
+    ModelServiceImpl
+        ↓
+    PredictionServiceImpl               ✔ Prediction depends on authentication.
         ↓
     VisualizationServiceImpl
         ↓
@@ -327,6 +329,7 @@ SERVICES Order of implementation:
       Menus
         ↓
     main.py
+
 ----------------------------
 Order of implementation in AuthenticationServiceImpl
 ├── __init__()
@@ -404,6 +407,27 @@ Authentication
       ▼
 Admin/User Controllers
 
+------------------------------------------------------
+How Pandas library works:
+
+Context Manager:
+Python
+↓
+open()
+↓
+Context Manager
+↓
+CSV module
+----------------------------
+
+Pandas:
+Pandas
+↓
+read_csv()
+↓
+internally uses Python file handling
+↓
+closes file automatically
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
@@ -449,3 +473,24 @@ A guest cannot:
 
 
 On completion of project, make this more organized for documentation purpose.
+
+I/O files:
+
+FLIGHT_FARE_PREDICTION/
+dataset/
+    flights.csv
+
+data/
+    cleaned_dataset.csv
+    feature_dataset.csv
+
+trained_models/
+    flight_model.pkl
+    encoder.pkl
+
+reports/
+    metrics.csv
+    prediction_history.csv
+    project_report.pdf
+
+graphs/

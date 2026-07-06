@@ -29,9 +29,6 @@ class FileHandler:
     def create_directory(directory_path: str):
         os.makedirs(directory_path, exist_ok=True)
 
-# We're using pandas for file handling or we should've used custom context managers for file handling ?
-# How should I frame the question for you to understand ?
-# Is pandas for file handling an alternative for custom context managers ?
 
 # ------------------------------------------------------------------------
 
