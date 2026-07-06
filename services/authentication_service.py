@@ -34,11 +34,11 @@ class AuthenticationService():
         valid, message = RegexValidation.validate_username(username)
         if not valid:
             ApplicationLogger.warning(message)
-            return None
+            raise ValueError(message)
         valid, message = RegexValidation.validate_password(password)
         if not valid:
             ApplicationLogger.warning(message)
-            return None
+            raise ValueError(message)
 
     def view_users(self) -> list[User]:
         self._require_admin()
@@ -83,16 +83,7 @@ class AuthenticationService():
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
         self._require_admin()
-            # raise PermissionError("You are not authorized. Only administrators can create users.")
-
-        valid, message = RegexValidation.validate_username(username)
-        if not valid:
-            ApplicationLogger.warning(message)
-            raise ValueError(message)
-        valid, message = RegexValidation.validate_password(password)
-        if not valid:
-            ApplicationLogger.warning(message)
-            raise ValueError(message)
+        self._validate_login_input(username, password)
 
         if not User.is_valid_role(role):
             raise ValueError("Role must be either 'Admin', 'User' or 'Guest'.")

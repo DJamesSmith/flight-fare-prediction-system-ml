@@ -9,5 +9,6 @@ class UserView:
             "2. Upload CSV for Batch Prediction\n" \
             "3. View Prediction History\n" \
             "4. Export Prediction Report\n" \
-            "14. Logout")
+            "5. Change Password\n" \
+            "6. Logout")
         print("-" * 40)

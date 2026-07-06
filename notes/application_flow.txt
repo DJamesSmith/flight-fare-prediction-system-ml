@@ -420,4 +420,32 @@ Remaining:
 3. Integration testing and bug fixing
 
 ------------------------------------------------------
+
+| Operation               | Admin |        User        |               Guest               |
+| ----------------------- | :---: | :----------------: | :-------------------------------: |
+| Login                   |   ✅   |          ✅         |        No (uses Guest mode)       |
+| Guest Login             |   ❌   |          ❌         |                 ✅                 |
+| Logout                  |   ✅   |          ✅         |                 ✅                 |
+| Change own password     |   ✅   |          ✅         |                 ❌                 |
+| View users              |   ✅   |          ❌         |                 ❌                 |
+| Create users            |   ✅   |          ❌         |                 ❌                 |
+| Delete users            |   ✅   |          ❌         |                 ❌                 |
+| Search flights          |   ✅   |          ✅         |                 ✅                 |
+| Predict fare            |   ✅   |          ✅         |                 ✅                 |
+| Save prediction history |   ✅   |          ✅         |                 ❌                 |
+| View prediction history |   ✅   |          ✅         |                 ❌                 |
+| Train ML model          |   ✅   |          ❌         |                 ❌                 |
+| Preprocess dataset      |   ✅   |          ❌         |                 ❌                 |
+| Visualizations          |   ✅   |          ✅         | ✅ *(or Admin only if you prefer)* |
+| Reports                 |   ✅   | User's own reports  |                 ❌                 |
+
+A guest cannot:
+1. No INSERT.
+2. No UPDATE.
+3. No DELETE.
+4. No prediction history.
+
+------------------------------------------------------
+
+
 On completion of project, make this more organized for documentation purpose.

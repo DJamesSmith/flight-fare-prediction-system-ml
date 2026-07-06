@@ -1,0 +1,60 @@
+========== INITIAL MENU ==========
+
+1. Administrator Login
+2. User Login
+3. Continue as Guest
+4. Exit
+
+========== ADMIN MENU ==========
+
+1. Upload Dataset
+2. Validate Dataset
+3. Clean Dataset
+4. Perform Feature Engineering
+
+5. Visualize Dataset
+
+6. Train Linear Regression
+7. Train Decision Tree
+8. Train Random Forest
+9. Compare Models
+10. Save Best Model
+
+11. Predict Flight Fare
+12. Batch Prediction
+13. View Prediction History
+
+14. Generate Reports
+
+15. Create User
+16. View Users
+17. Delete User
+
+18. Change Password
+19. Logout
+
+
+========== USER MENU ==========
+
+1. Predict Flight Fare
+2. Batch Prediction
+3. View Prediction History
+4. Export Prediction Report
+5. Change Password
+6. Logout
+
+========== Guest Menu ==========
+
+========== GUEST MENU ==========
+
+1. Predict Flight Fare
+2. Batch Prediction
+3. View Dataset Visualizations
+
+4. Logout
+Guest cannot:
+1. create users
+2. delete users
+3. save predictions
+4. see history
+5. change password
