@@ -14,7 +14,7 @@ from validation.dataset_validation import DatasetValidation
 
 class PreprocessingService():
     def __init__(self):
-        pass
+        self.dataframe = pd.DataFrame()
 
     def load_dataset(self):
         ApplicationLogger.info("Loading dataset.")
@@ -113,7 +113,3 @@ class PreprocessingService():
     def save_feature_dataset(self):
         FileHandler.save_csv(self.dataframe, FEATURE_DATASET_PATH)
         ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")
-
-
-# pd.read_csv() - internally opens the file, reads it, parses it, and closes it automatically.
-# df.to_csv() - opens, writes, flushes, and closes the file.

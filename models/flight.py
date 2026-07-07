@@ -18,15 +18,15 @@ class Flight:
 
     def display_details(self):
         print(f"Airline : {self.airline}\n" \
-            "Journey Date : {self.journey_date}\n" \
-            "Source : {self.source}\n" \
-            "Destination : {self.destination}\n" \
-            "Route : {self.route}\n" \
-            "Departure Time : {self.departure_time}\n" \
-            "Arrival Time : {self.arrival_time}\n" \
-            "Duration : {self.duration}\n" \
-            "Stops : {self.total_stops}\n" \
-            "Additional Information: {additional_information}")
+            f"Journey Date : {self.journey_date}\n" \
+            f"Source : {self.source}\n" \
+            f"Destination : {self.destination}\n" \
+            f"Route : {self.route}\n" \
+            f"Departure Time : {self.departure_time}\n" \
+            f"Arrival Time : {self.arrival_time}\n" \
+            f"Duration : {self.duration}\n" \
+            f"Stops : {self.total_stops}\n" \
+            f"Additional Information: {self.additional_information}")
 
         if self.fare is not None:
             print(f"Fare : ₹{self.fare}")
