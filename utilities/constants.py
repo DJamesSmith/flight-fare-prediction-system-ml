@@ -5,6 +5,7 @@ DATASET_PATH = os.path.join(BASE_DIR, "dataset", "data_train.csv")              
 TEST_DATASET_PATH = os.path.join(BASE_DIR, "dataset", "test_set.csv")
 CLEANED_DATASET_PATH = os.path.join(BASE_DIR, "data", "cleaned_dataset.csv")
 FEATURE_DATASET_PATH = os.path.join(BASE_DIR, "data", "feature_dataset.csv")
+
 MODEL_PATH = os.path.join(BASE_DIR, "trained_models", "flight_model.pkl")
 ENCODER_PATH = os.path.join(BASE_DIR, "trained_models", "encoder.pkl")
 METRICS_REPORT_PATH = os.path.join(BASE_DIR, "reports", "metrics.csv")

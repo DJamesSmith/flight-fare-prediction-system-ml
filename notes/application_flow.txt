@@ -354,9 +354,24 @@ Order of implementation in AuthenticationServiceImpl
 ----------------------------
 Order of implementation in PreprocessingServiceImpl
 
-
-
-
+load_dataset()
+        ▼
+rename_columns()
+        ▼
+validate_dataset()
+        ▼
+clean_dataset()
+        ├── handle_missing_values()
+        ├── remove_duplicates()
+        ├── trim_whitespace()
+        ├── standardize_columns()
+        └── convert_data_types()
+        ▼
+save_cleaned_dataset()
+        ▼
+feature_engineering()
+        ▼
+save_feature_dataset()
 
 ----------------------------
 Order of implementation in TrainingServiceImpl
