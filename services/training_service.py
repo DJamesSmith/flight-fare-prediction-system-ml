@@ -9,6 +9,7 @@
 
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OrdinalEncoder
 from sklearn.base import RegressorMixin
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -26,7 +27,7 @@ class TrainingService:
         self.x_test: pd.DataFrame | None = None
         self.y_train: pd.Series | None = None
         self.y_test: pd.Series | None = None
-        self.encoder: dict[str, LabelEncoder] = {}
+        self.encoder: OrdinalEncoder | None = None
         self.models: dict[str, RegressorMixin] = {}
         self.best_model: RegressorMixin | None = None
         self.metrics: pd.DataFrame = pd.DataFrame()
@@ -38,10 +39,8 @@ class TrainingService:
 
     def encode_features(self):
         categorical_columns: list[str] = ["Airline", "Source", "Destination", "Route", "Additional_Information"]
-        for column in categorical_columns:
-            encoder = LabelEncoder()
-            self.dataframe[column] = encoder.fit_transform(self.dataframe[column])
-            self.encoder[column] = encoder
+        self.encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
+        self.dataframe[categorical_columns] = self.encoder.fit_transform(self.dataframe[categorical_columns])
         ApplicationLogger.info("Categorical features encoded successfully.")
 
     def split_dataset(self):
@@ -100,11 +99,10 @@ class TrainingService:
         ApplicationLogger.info("Best model saved successfully.")
 
     def save_encoder(self):
-        encoder_data = {
-            "encoders": self.encoder,
-            "feature_columns": self.feature_columns
-        }
-        FileHandler.save_pickle(encoder_data, ENCODER_PATH)
+        FileHandler.save_pickle({
+                "encoder": self.encoder,
+                "feature_columns": self.feature_columns
+            }, ENCODER_PATH)
         ApplicationLogger.info("Encoders and feature schema saved successfully.")
 
 
