@@ -471,3 +471,6 @@ Main Menu
 ----------------------------------------------------------------------------------------------------
 
 On completion of project, make this more organized for documentation purpose.
+
+dion.manipal account access
+Application Flow document URL: https://docs.google.com/document/d/1x_Yua5uF1hhR0zBuqt6vXcHLsmtJTP4mUcojd2UWToA/edit?usp=sharing

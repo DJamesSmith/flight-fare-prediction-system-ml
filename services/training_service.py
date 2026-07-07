@@ -10,6 +10,11 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.base import RegressorMixin
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 class TrainingService:
     def __init__(self):
