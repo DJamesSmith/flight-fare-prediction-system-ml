@@ -26,6 +26,7 @@ class TrainingService:
         self.encoder: dict[str, LabelEncoder] = {}
         self.models: dict[str, RegressorMixin] = {}
         self.best_model: RegressorMixin | None = None
+        self.metrics: pd.DataFrame = pd.DataFrame()
 
     def load_feature_dataset(self):
         pass
