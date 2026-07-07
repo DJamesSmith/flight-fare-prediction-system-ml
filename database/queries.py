@@ -62,7 +62,7 @@ AUTHENTICATE_USER = """SELECT * FROM users WHERE username = %s AND password = %s
 # -------------- FLIGHT queries --------------
 INSERT_FLIGHT = """
     INSERT INTO flights (airline, journey_date, source, destination, route, departure_time, arrival_time, duration, total_stops, additional_information)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     RETURNING flight_id;"""
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
