@@ -5,7 +5,7 @@
 # ✔ View prediction history
 
 
-class PredictionService():
+class PredictionService:
     def create_prediction(self):
         pass
 

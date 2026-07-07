@@ -9,7 +9,7 @@
 # scikit-learn
 
 
-class AuthenticationService():
+class ModelService:
     def load_model(self):
         pass
 

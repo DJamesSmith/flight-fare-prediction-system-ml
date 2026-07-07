@@ -5,7 +5,7 @@
 # ✔ View reports
 
 
-class ReportService():
+class ReportService:
     def generate_metrics_report(self):
         pass
 

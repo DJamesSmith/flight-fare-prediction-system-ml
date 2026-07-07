@@ -7,9 +7,25 @@
 # ✔ Evaluate Models
 # ✔ Save Best Model
 
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.base import RegressorMixin
 
-class TrainingService():
+class TrainingService:
+    def __init__(self):
+        self.dataframe: pd.DataFrame = pd.DataFrame()
+        self.x_train: pd.DataFrame | None = None
+        self.x_test: pd.DataFrame | None = None
+        self.y_train: pd.Series | None = None
+        self.y_test: pd.Series | None = None
+        self.encoder: dict[str, LabelEncoder] = {}
+        self.models: dict[str, RegressorMixin] = {}
+        self.best_model: RegressorMixin | None = None
+
     def load_feature_dataset(self):
+        pass
+
+    def encode_features(self):
         pass
 
     def split_dataset(self):
@@ -28,4 +44,7 @@ class TrainingService():
         pass
 
     def save_best_model(self):
+        pass
+
+    def save_encoder(self):
         pass

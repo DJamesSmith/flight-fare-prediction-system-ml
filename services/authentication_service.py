@@ -11,7 +11,7 @@ from utilities.logger import ApplicationLogger
 from validation.regex_validation import RegexValidation
 from repositories.user_repository import UserRepository
 
-class AuthenticationService():
+class AuthenticationService:
     def __init__(self):
         self.user_repository: UserRepository = UserRepository()
         self.current_user: User | None = None

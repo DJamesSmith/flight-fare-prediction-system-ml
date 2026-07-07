@@ -7,7 +7,7 @@
 # ✔ Save generated graphs
 
 
-class VisualizationService():
+class VisualizationService:
     def load_dataset(self):
         pass
 

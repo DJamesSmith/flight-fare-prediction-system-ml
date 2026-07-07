@@ -376,7 +376,23 @@ save_feature_dataset()
 ----------------------------
 Order of implementation in TrainingServiceImpl
 
-
+load_feature_dataset()
+        ↓
+encode_features()
+        ↓
+split_dataset()
+        ↓
+train_linear_regression()
+        ↓
+train_decision_tree()
+        ↓
+train_random_forest()
+        ↓
+evaluate_models()
+        ↓
+save_best_model()
+        ↓
+save_encoder()
 
 
 ----------------------------

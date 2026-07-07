@@ -12,11 +12,11 @@ from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
 from validation.dataset_validation import DatasetValidation
 
-class PreprocessingService():
+class PreprocessingService:
     def __init__(self):
-        self.dataframe = pd.DataFrame()
+        self.dataframe: pd.DataFrame = pd.DataFrame()
 
-    def load_dataset(self):
+    def load_dataset(self) -> pd.DataFrame:
         ApplicationLogger.info("Loading dataset.")
         self.dataframe = FileHandler.read_csv(DATASET_PATH)
         ApplicationLogger.info(f"Dataset loaded successfully. Records: {len(self.dataframe)}")
