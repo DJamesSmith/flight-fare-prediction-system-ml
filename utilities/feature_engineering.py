@@ -5,20 +5,24 @@ class FeatureTransformer:
     def __init__(self):
         pass
 
-    def feature_transform(self, df: pd.DataFrame):
+    @staticmethod
+    def feature_transform(dataframe: pd.DataFrame) -> pd.DataFrame:
         # From: Journey_Date - create: Journey_Day, Journey_Month
-        self.dataframe["Journey_Day"] = (self.dataframe["Journey_Date"].dt.day)
-        self.dataframe["Journey_Month"] = (self.dataframe["Journey_Date"].dt.month)
-        self.dataframe["Departure_Hour"] = (self.dataframe["Departure_Time"].dt.hour)
-        self.dataframe["Departure_Minute"] = (self.dataframe["Departure_Time"].dt.minute)
-        self.dataframe["Arrival_Hour"] = (self.dataframe["Arrival_Time"].dt.hour)
-        self.dataframe["Arrival_Minute"] = (self.dataframe["Arrival_Time"].dt.minute)
+        dataframe["Journey_Day"] = (dataframe["Journey_Date"].dt.day)
+        dataframe["Journey_Month"] = (dataframe["Journey_Date"].dt.month)
+
+        dataframe["Departure_Hour"] = (dataframe["Departure_Time"].dt.hour)
+        dataframe["Departure_Minute"] = (dataframe["Departure_Time"].dt.minute)
+
+        dataframe["Arrival_Hour"] = (dataframe["Arrival_Time"].dt.hour)
+        dataframe["Arrival_Minute"] = (dataframe["Arrival_Time"].dt.minute)
+
         duration = (
-            self.dataframe["Duration"]
+            dataframe["Duration"]
             .str.extract(r"(?:(\d+)h)?\s*(?:(\d+)m)?")
             .fillna(0)
             .astype(int))
-        self.dataframe["Duration_Minutes"] = (duration[0] * 60 + duration[1])
+        dataframe["Duration_Minutes"] = (duration[0] * 60 + duration[1])
 
         stop_mapping: dict[str, int] = {
             "Non-Stop": 0,
@@ -27,8 +31,24 @@ class FeatureTransformer:
             "3 Stops": 3,
             "4 Stops": 4
         }
-        self.dataframe["Total_Stops"] = (self.dataframe["Total_Stops"].replace(stop_mapping))
+        dataframe["Total_Stops"] = (dataframe["Total_Stops"].replace(stop_mapping))
 
         transformed_columns: list = ["Journey_Date", "Departure_Time", "Arrival_Time", "Duration"]          # Drop transformed columns
-        self.dataframe.drop(columns=transformed_columns, inplace=True)
+        dataframe.drop(columns=transformed_columns, inplace=True)
         ApplicationLogger.info("Feature engineering completed successfully.")
+        return dataframe
+    
+# How to use:
+# self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
+
+# 1. airline
+# 2. journey_date
+# 3. source
+# 4. destination
+# 5. route
+# 6. departure_time
+# 7. arrival_time
+# 8. duration
+# 9. total_stops
+# 10. additional_information
+# 11. fare

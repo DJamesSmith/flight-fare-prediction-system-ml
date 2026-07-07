@@ -70,8 +70,7 @@ class PreprocessingService:
         ApplicationLogger.info("Categorical columns standardized.")
 
     def convert_data_types(self):
-        self.dataframe["Journey_Date"] = pd.to_datetime(
-        self.dataframe["Journey_Date"], dayfirst=True)
+        self.dataframe["Journey_Date"] = pd.to_datetime(self.dataframe["Journey_Date"], dayfirst=True)
         self.dataframe["Departure_Time"] = pd.to_datetime(self.dataframe["Departure_Time"], format="%H:%M")
         self.dataframe["Arrival_Time"] = pd.to_datetime(self.dataframe["Arrival_Time"], format="mixed", dayfirst=True)
         self.dataframe["Fare"] = self.dataframe["Fare"].astype(float)
