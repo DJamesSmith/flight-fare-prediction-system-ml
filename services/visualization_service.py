@@ -6,6 +6,7 @@
 # ✔ Generate correlation analysis
 # ✔ Save generated graphs
 
+# VisualizationService only needs access to the processed dataset (typically feature_dataset.csv) and the evaluation metrics to generate charts,
 
 class VisualizationService:
     def load_dataset(self):
