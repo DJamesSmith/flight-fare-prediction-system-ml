@@ -5,18 +5,23 @@ class AdminView:
     @staticmethod
     def display_admin_menu():
         print("-" * 10, "ADMIN MENU", "-" * 10, "\n" \
-            "1. Upload Dataset\n" \
-            "2. Validate Dataset\n" \
-            "3. Clean Dataset\n" \
-            "4. Feature Engineering\n" \
-            "5. Data Visualization\n" \
-            "6. Train Model\n" \
-            "7. Compare Algorithms\n" \
-            "8. Evaluate Model\n" \
-            "9. Save Model\n" \
-            "10. Batch Prediction\n" \
-            "11. View Prediction History\n" \
-            "12. Generate Reports\n" \
-            "13. Manage Users\n" \
-            "14. Logout")
+            "1. Create User\n" \
+            "2. View Users\n" \
+            "3. Update User\n" \
+            "4. Delete User\n" \
+
+            "5. Prepare Training Dataset\n" \
+            "6. Train ML Models\n" \
+            "7. Compare Model Performance\n" \
+            "8. Save Best Model\n" \
+
+            "9. View Flights\n" \
+            "10. Search Flights\n" \
+
+            "11. Generate Visualizations\n" \
+            "12. View Evaluation Metrics\n" \
+            "13. Export Prediction History\n" \
+            "14. Generate Project PDF Report\n" \
+
+            "15. Logout")
         print("-" * 40)

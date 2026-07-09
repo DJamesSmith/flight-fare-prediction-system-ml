@@ -11,3 +11,5 @@ class GuestView:
             "4. Login\n" \
             "5. Exit\n")
         print("-" * 40)
+
+# No access to prediction history because there is no authenticated identity associated with them.

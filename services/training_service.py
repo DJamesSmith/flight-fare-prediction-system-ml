@@ -20,6 +20,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from utilities.constants import FEATURE_DATASET_PATH, MODEL_PATH, ENCODER_PATH, METRICS_REPORT_PATH
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
+
 class TrainingService:
     def __init__(self):
         self.dataframe: pd.DataFrame = pd.DataFrame()
