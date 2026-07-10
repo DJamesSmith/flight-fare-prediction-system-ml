@@ -24,3 +24,4 @@ class User:
     @classmethod
     def is_valid_role(cls, role):
         return role in cls.VALID_ROLES
+    

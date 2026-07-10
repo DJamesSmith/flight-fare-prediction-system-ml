@@ -58,26 +58,8 @@ DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
 EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
 
 # -------------- FLIGHT queries --------------
-INSERT_FLIGHT = """
-    INSERT INTO flights (airline, journey_date, source, destination, route, departure_time, arrival_time, duration, total_stops, additional_information)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    RETURNING flight_id;"""
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
-UPDATE_FLIGHT = """
-    UPDATE flights
-    SET airline = %s,
-        journey_date = %s,
-        source = %s,
-        destination = %s,
-        route = %s,
-        departure_time = %s,
-        arrival_time = %s,
-        duration = %s,
-        total_stops = %s,
-        additional_information = %s
-    WHERE flight_id = %s;"""
-DELETE_FLIGHT = """DELETE FROM flights WHERE flight_id = %s;"""
 
 # ------------ PREDICTION queries ------------
 

@@ -18,6 +18,7 @@ class AdminView:
             "9. View Flights\n" \
             "10. Search Flights\n" \
 
+            # Reports (pdf)
             "11. Generate Visualizations\n" \
             "12. View Evaluation Metrics\n" \
             "13. Export Prediction History\n" \
@@ -25,3 +26,5 @@ class AdminView:
 
             "15. Logout")
         print("-" * 40)
+
+# Option 5 calls PreprocessingService, not FlightService.
