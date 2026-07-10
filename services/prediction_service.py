@@ -7,6 +7,7 @@
 import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.preprocessing import OrdinalEncoder
+from models.user import User
 from models.flight import Flight
 from models.prediction import Prediction
 from repositories.prediction_repository import PredictionRepository
@@ -43,8 +44,15 @@ class PredictionService:
     def get_prediction_by_id(self, prediction_id: int) -> Prediction | None:
         return (self.prediction_repository.get_prediction_by_id(prediction_id))
 
-    def prediction_history(self, user_id: int) -> list[Prediction]:
+    def get_prediction_history(self, user_id: int) -> list[Prediction]:
         return (self.prediction_repository.get_predictions_by_user(user_id))
 
-    def delete_prediction(self, prediction_id: int) -> bool:
-        return (self.prediction_repository.delete_prediction(prediction_id))
+    def delete_prediction(self, current_user: User, prediction_id: int) -> bool:
+        prediction: Prediction | None = self.get_prediction_by_id(prediction_id)
+        if prediction is None:
+            return False
+
+        # Ownership check for deleting predictions. Normal users may delete only their own predictions.
+        if (current_user.role != User.ADMIN and prediction.user_id != current_user.user_id):
+            raise PermissionError("You cannot delete another user's prediction.")
+        return self.prediction_repository.delete_prediction(prediction_id)

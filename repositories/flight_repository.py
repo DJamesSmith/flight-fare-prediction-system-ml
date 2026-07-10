@@ -56,25 +56,24 @@ class FlightRepository:
     # Search flights using optional filters - dynamic search - no constant query - depending on input given by user
     def search_flights(self, airline: str | None = None, source: str | None = None, destination: str | None = None, journey_date: str | None = None) -> list[Flight]:
         try:
-            query = "SELECT * FROM flights WHERE 1=1"
             parameters = []
 
             if airline:
-                query += " AND airline = %s"
+                SEARCH_FLIGHTS += " AND airline = %s"
                 parameters.append(airline)
             if source:
-                query += " AND source = %s"
+                SEARCH_FLIGHTS += " AND source = %s"
                 parameters.append(source)
             if destination:
-                query += " AND destination = %s"
+                SEARCH_FLIGHTS += " AND destination = %s"
                 parameters.append(destination)
             if journey_date:
-                query += " AND journey_date = %s"
+                SEARCH_FLIGHTS += " AND journey_date = %s"
                 parameters.append(journey_date)
-            query += " ORDER BY journey_date;"
+            SEARCH_FLIGHTS += " ORDER BY journey_date;"
 
             with DatabaseConnection() as db:
-                db.cursor.execute(query, tuple(parameters))
+                db.cursor.execute(SEARCH_FLIGHTS, tuple(parameters))
                 rows = db.cursor.fetchall()
                 return [self._map_row_to_flight(row) for row in rows]
         except Error as error:

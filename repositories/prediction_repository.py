@@ -11,7 +11,6 @@ from database.queries import (
     INSERT_PREDICTION,
     GET_PREDICTION_BY_ID,
     GET_ALL_PREDICTIONS,
-    UPDATE_PREDICTION,
     DELETE_PREDICTION,
     GET_PREDICTIONS_BY_USER,
 )
@@ -64,19 +63,6 @@ class PredictionRepository:
         except Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to retrieve predictions: {error}")
-
-    # Update an existing prediction record
-    def update_prediction(self, prediction: Prediction) -> bool:
-        try:
-            with DatabaseConnection() as db:
-                db.cursor.execute(UPDATE_PREDICTION, (prediction.predicted_fare, prediction.prediction_id,))
-                if db.cursor.rowcount == 0:
-                    return False
-                ApplicationLogger.info(f"Prediction ID {prediction.prediction_id} updated successfully.")
-                return True
-        except Error as error:
-            ApplicationLogger.error(str(error))
-            raise RuntimeError(f"Unable to update prediction: {error}")
 
     # Delete a prediction record
     def delete_prediction(self, prediction_id: int) -> bool:

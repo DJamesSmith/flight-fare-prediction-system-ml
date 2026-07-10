@@ -6,7 +6,6 @@
 from models.flight import Flight
 from services.flight_service import FlightService
 
-
 class FlightController:
     def __init__(self) -> None:
         self.flight_service: FlightService = FlightService()
