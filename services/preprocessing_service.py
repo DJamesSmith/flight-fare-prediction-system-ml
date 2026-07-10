@@ -10,6 +10,7 @@ import pandas as pd
 from utilities.constants import DATASET_PATH, CLEANED_DATASET_PATH, FEATURE_DATASET_PATH
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
+from utilities.feature_engineering import FeatureTransformer
 from validation.dataset_validation import DatasetValidation
 
 class PreprocessingService:
@@ -83,5 +84,6 @@ class PreprocessingService:
         ApplicationLogger.info(f"Cleaned dataset saved to {CLEANED_DATASET_PATH}")
 
     def save_feature_dataset(self):
+        self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
         FileHandler.save_csv(self.dataframe, FEATURE_DATASET_PATH)
         ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")

@@ -48,7 +48,9 @@ class TrainingService:
         x = self.dataframe.drop(columns=["Fare"])
         y = self.dataframe["Fare"]
         # "self.feature_columns" contains the list of string values from model data ["Airline", "Source",..., "Journey_Day", "Journey_Month", ...., "Duration_Minutes"]
-        self.feature_columns = list(x.columns)(self.x_train, self.x_test, self.y_train, self.y_test) = train_test_split(x, y, test_size=0.2, random_state=42)
+        self.feature_columns = list(x.columns)
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
         ApplicationLogger.info("Dataset split into train and test.")
 
     def train_linear_regression(self):

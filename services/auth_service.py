@@ -114,7 +114,7 @@ class AuthService:
         return success
 
     # current_user = None → logger → return
-    def logout(self) -> None:
+    def logout(self):
         if self.current_user is not None:
             ApplicationLogger.info(f"User '{self.current_user.username}' logged out.")
         self.current_user = None

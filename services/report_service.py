@@ -51,6 +51,11 @@ class ReportService:
 
     # Using ReportLab
     def generate_project_report(self):
+        if self.metrics.empty:
+            self.generate_metrics_report()
+        if self.predictions.empty:
+            self.generate_prediction_report()
+
         document = SimpleDocTemplate(PROJECT_REPORT_PATH)
         styles = getSampleStyleSheet()
         elements = []

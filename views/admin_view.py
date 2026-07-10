@@ -27,4 +27,18 @@ class AdminView:
             "15. Logout")
         print("-" * 40)
 
-# Option 5 calls PreprocessingService, not FlightService.
+# Calls made to following methods:
+# 1.
+# 2.
+# 3.
+# 4.
+# 5. PreprocessingService, not FlightService.
+# 6. 
+# 7. 
+# 8. 
+# 9. 
+# 10. 
+# 11. VisualizationController.generate_visualizations()
+# 12. ReportController.generate_metrics_report()
+# 13. ReportController.export_prediction_history_csv()
+# 14. ReportController.generate_project_report()
