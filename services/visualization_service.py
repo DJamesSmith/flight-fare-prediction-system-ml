@@ -22,10 +22,10 @@ from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
 
 class VisualizationService:
-    def __init__(self) -> None:
+    def __init__(self):
         self.dataframe: pd.DataFrame = pd.DataFrame()
 
-    def load_dataset(self) -> None:
+    def load_dataset(self):
         self.dataframe = FileHandler.read_csv(FEATURE_DATASET_PATH)
         ApplicationLogger.info("Feature dataset loaded.")
 

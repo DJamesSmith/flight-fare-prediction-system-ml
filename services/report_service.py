@@ -54,7 +54,7 @@ class ReportService:
         document = SimpleDocTemplate(PROJECT_REPORT_PATH)
         styles = getSampleStyleSheet()
         elements = []
-        elements.append(Paragraph("Flight Fare Prediction Project Report", styles["Heading1"]))             # Similar to -> print("Training Report") in pdf docs
+        elements.append(Paragraph("Flight Fare Prediction Project Report", styles["Heading1"]))             # similar to -> print("Training Report") in pdf docs
         elements.append(Spacer(1, 20))
         elements.append(Paragraph("<b>Model Evaluation</b>", styles["Heading2"]))
         for _, row in self.metrics.iterrows():
