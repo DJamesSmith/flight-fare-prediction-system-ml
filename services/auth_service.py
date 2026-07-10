@@ -11,7 +11,7 @@ from utilities.logger import ApplicationLogger
 from validation.regex_validation import RegexValidation
 from repositories.user_repository import UserRepository
 
-class AuthenticationService:
+class AuthService:
     def __init__(self):
         self.user_repository: UserRepository = UserRepository()
         self.current_user: User | None = None
@@ -57,7 +57,8 @@ class AuthenticationService:
         return user
 
     # retrieve user → old password correct? → repository.update_password() → True / False
-    def change_password(self, user_id: int, old_password: str, new_password: str) -> bool:
+    def change_password(self, old_password: str, new_password: str) -> bool:
+        user_id: int = self.current_user.user_id
         self._require_login()
         if (self.current_user.role != User.ADMIN and self.current_user.user_id != user_id):
             raise PermissionError("You are not authorized to change another user's password.")

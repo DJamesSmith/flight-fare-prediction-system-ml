@@ -1,57 +1,45 @@
-# Start the application.
-# Display the main menu.
-# Accept the user's menu choice.
-# Delegate the request to the appropriate controller.
-# Exit the application.
+# Start application.
+# Display main menu.
+# Accept user's menu choice.
+# Delegate request to appropriate controller.
+# Exit application.
 
-from views.menu_view import MenuView
-from services.authentication_service import AuthenticationService
-from controllers.admin_controller import AdminController
-from controllers.user_controller import UserController
+from controllers.application_controller import ApplicationController
 from database.db_connection import initialize_database
 
-class FlightFarePredictionApplication:
-    def __init__(self):
-        self.menu_view: MenuView = MenuView()
-        self.authentication_service: AuthenticationService = AuthenticationService()
-        self.admin_controller: AdminController = AdminController()
-        self.user_controller: UserController = UserController()
-
-    def start(self):
-        while True:
-            self.menu_view.display_main_menu()
-            ch: int = int(input("Enter your choice: "))
-
-            match ch:
-                case 1:
-                    user = self.authentication_service.login()
-                    if user is None:
-                        continue
-
-                    if user.role.lower() == "admin":
-                        self.admin_controller.start(user)
-                    else:
-                        self.user_controller.start(user)
-                    self.admin_view.display_user_menu()
-                case 2:
-                    print("\nThank you for using Flight Fare Prediction System.")
-                    break
-                case _:
-                    print("\nInvalid choice. Please try again.")
-
 if __name__ == "__main__":
-    app: FlightFarePredictionApplication = FlightFarePredictionApplication()
     initialize_database()
-    app.start()
 
+    app: ApplicationController = ApplicationController()
+    app.start_app()
 
+# ___________________________________
 # Remaining:
 # base_repository class, parts that are common for all repos
+# ___________________________________
+# Need to contain these folders in single directory, suitable name?
+# 1. data
+# 2. dataset
+# 3. graphs
+# 4. reports
+# 5. trained_models
+# ___________________________________
+# Date-range reports
 
-# authentication_service.py
-# prediction_service.py
-# preprocessing_service.py
-# report_service.py
-# training_service.py
-# visualization_service.py
-# model_service.py
+# ADMIN MENU
+# 13. Export Prediction History
+# Enter Start Date: YYYY-MM-DD
+# Enter End Date: YYYY-MM-DD
+
+# SELECT *
+# FROM predictions
+# WHERE prediction_time
+# BETWEEN %s
+# AND %s
+# ORDER BY prediction_time;
+
+# Then in ReportService -> export_prediction_history_csv(start_date,end_date)
+# ___________________________________
+#  Future prospect in bookings:
+# Admin can check for a selected flight, given date range, where total stops > 2, how many users were booked or something along those lines.
+# For this you'll need JOINs, GROUP BY and other clauses

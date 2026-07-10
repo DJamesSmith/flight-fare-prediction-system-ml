@@ -54,7 +54,7 @@ class Flight:
 # Date_of_Journey       ✔ journey_date
 # Source                ✔ source
 # Destination           ✔ destination
-# Route                 ✔ 
+# Route                 ✔ route
 # Dep_Time              ✔ departure_time
 # Arrival_Time          ✔ arrival_time
 # Duration              ✔ duration

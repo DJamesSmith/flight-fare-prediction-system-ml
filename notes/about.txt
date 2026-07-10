@@ -93,7 +93,7 @@ FlightFarePrediction/
 │       flight.py
 │
 ├── services/                                   # Business Logic
-│       authentication_service.py
+│       auth_service.py
 │       preprocessing_service.py
 │       training_service.py
 │       prediction_service.py
@@ -182,7 +182,7 @@ OOP concepts covered in the project:
 ---------------------|------------------------------------------------
 | Concept            | Where used                                    |
 | ------------------ | --------------------------------------------- |
-| Encapsulation      | Every model class                             |
+| Encapsulation      | Repositories                                  |
 | Inheritance        | `Admin(User)`                                 |
 | Polymorphism       | Report generation or prediction interfaces    |
 | Abstract Class     | Base service/model class                      |
@@ -462,7 +462,7 @@ Main Menu
         │
         ├── Login
         │       ▼
-        │ AuthenticationService
+        │ AuthService
         │       ▼
         │ AdminController/UserController
         │
