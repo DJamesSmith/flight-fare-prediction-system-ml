@@ -20,7 +20,7 @@ class AuthController:
             print(error)
             return None
 
-    def create_user(self) -> None:
+    def create_user(self):
         username: str = input("Username : ").strip()
         password: str = input("Password : ").strip()
         role: str = input("Role (Admin/User/Guest) : ").strip()
@@ -31,7 +31,7 @@ class AuthController:
         except Exception as error:
             print(error)
 
-    def view_users(self) -> None:
+    def view_users(self):
         try:
             users = self.auth_service.view_users()
             if not users:
@@ -43,7 +43,7 @@ class AuthController:
         except Exception as error:
             print(error)
 
-    def delete_user(self) -> None:
+    def delete_user(self):
         try:
             user_id: int = int(input("User ID : "))
             success: bool = self.auth_service.delete_user(user_id)
@@ -54,12 +54,11 @@ class AuthController:
         except Exception as error:
             print(error)
 
-    def change_password(self) -> None:
+    def change_password(self):
         try:
-            user_id: int = int(input("User ID : "))
             old_password: str = input("Current Password : ")
             new_password: str = input("New Password : ")
-            success: bool = self.auth_service.change_password(user_id, old_password, new_password)
+            success: bool = self.auth_service.change_password(old_password, new_password)
             if success:
                 print("\nPassword updated.")
             else:
@@ -67,6 +66,6 @@ class AuthController:
         except Exception as error:
             print(error)
 
-    def logout(self) -> None:
+    def logout(self):
         self.auth_service.logout()
         print("\nLogged out successfully.")

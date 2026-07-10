@@ -17,8 +17,7 @@ from database.queries import (
     UPDATE_USER,
     UPDATE_PASSWORD,
     DELETE_USER,
-    EXISTS_BY_USERNAME,
-    AUTHENTICATE_USER,
+    EXISTS_BY_USERNAME
 )
 
 # Not using __init__() here because it's better to use an active DatabaseConnection() than use it's object.
@@ -118,19 +117,6 @@ class UserRepository:
         except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to update password: {error}")
-
-    # allow user to login
-    def authenticate_user(self, username: str, password: str) -> User | None:
-        try:
-            with DatabaseConnection() as db:
-                db.cursor.execute(AUTHENTICATE_USER, (username, password))
-                row = db.cursor.fetchone()
-                if row:
-                    return self._map_row_to_user(row)
-                return None
-        except psycopg2.Error as error:
-            ApplicationLogger.error(str(error))
-            raise RuntimeError(f"Authentication failed: {error}")
 
     # check for duplicate users by username
     def exists_by_username(self, username: str) -> bool:

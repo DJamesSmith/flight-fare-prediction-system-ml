@@ -56,8 +56,6 @@ UPDATE_USER = """UPDATE users SET username = %s, password = %s, role = %s WHERE 
 UPDATE_PASSWORD = """UPDATE users SET password = %s WHERE user_id = %s;"""
 DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
 EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
-AUTHENTICATE_USER = """SELECT * FROM users WHERE username = %s AND password = %s;"""
-
 
 # -------------- FLIGHT queries --------------
 INSERT_FLIGHT = """

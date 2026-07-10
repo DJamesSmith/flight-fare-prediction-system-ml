@@ -8,6 +8,7 @@
 
 from models.user import User
 from utilities.logger import ApplicationLogger
+from utilities.password_hasher import HashPassword
 from validation.regex_validation import RegexValidation
 from repositories.user_repository import UserRepository
 
@@ -45,13 +46,18 @@ class AuthService:
         return self.user_repository.get_all_users()
 
     """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
-    Flow: validate_credentials() → authenticate_user() → store current_user → return User"""
+    Flow: validate_credentials() → get_user_by_username() → store current_user → return User"""
     def login(self, username: str, password: str) -> User | None:
         self._validate_login_input(username, password)
-        user: User = self.user_repository.authenticate_user(username, password)
+        user: User = self.user_repository.get_user_by_username(username)
+
         if user is None:
             ApplicationLogger.warning(f"Failed login attempt for username '{username}'.")
             return None
+        if not HashPassword.verify_password(password, user.password):
+            ApplicationLogger.warning(f"Invalid password for username '{username}'.")
+            return None
+
         self.current_user = user
         ApplicationLogger.info(f"User '{user.username}' logged in successfully as {user.role}.")
         return user
@@ -66,7 +72,7 @@ class AuthService:
         user: User = self.user_repository.get_user_by_id(user_id)
         if user is None:
             return False
-        if user.password != old_password:
+        if not HashPassword.verify_password(old_password, user.password):
             ApplicationLogger.warning("Current password is incorrect.")
             return False
         if old_password == new_password:
@@ -76,7 +82,8 @@ class AuthService:
         if not valid:
             ApplicationLogger.warning(message)
             return False
-        success: bool = self.user_repository.update_password(user_id, new_password)
+        hashed_password: str = HashPassword.hash_password(new_password)
+        success: bool = self.user_repository.update_password(user_id, hashed_password)
         if success:
             ApplicationLogger.info(f"Password updated for user '{user.username}'.")
         return success
@@ -92,7 +99,8 @@ class AuthService:
         if self.user_repository.exists_by_username(username):
             raise ValueError("Username already exists.")
 
-        new_user: User = User(username = username, password = password, role = role)
+        hashed_password: str = HashPassword.hash_password(password)
+        new_user: User = User(username = username, password = hashed_password, role = role)
         created_user: User = self.user_repository.create_user(new_user)
         ApplicationLogger.info(f"User '{username}' created successfully.")
         return created_user

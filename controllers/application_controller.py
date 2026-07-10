@@ -1,7 +1,6 @@
 from controllers.auth_controller import AuthController
 from controllers.admin_controller import AdminController
 from controllers.user_controller import UserController
-from models.user import User
 from utilities.logger import ApplicationLogger
 
 class ApplicationController:
