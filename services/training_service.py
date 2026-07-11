@@ -53,18 +53,21 @@ class TrainingService:
 
         ApplicationLogger.info("Dataset split into train and test.")
 
+    @log_execution_time
     def train_linear_regression(self):
         model: LinearRegression = LinearRegression()
         model.fit(self.x_train, self.y_train )
         self.models["Linear Regression"] = model
         ApplicationLogger.info( "Linear Regression trained." )
 
+    @log_execution_time
     def train_decision_tree(self):
         model: DecisionTreeRegressor = DecisionTreeRegressor(random_state=42)
         model.fit(self.x_train, self.y_train)
         self.models["Decision Tree"] = model
         ApplicationLogger.info("Decision Tree trained.")
 
+    @log_execution_time
     def train_random_forest(self):
         model: RandomForestRegressor = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(self.x_train, self.y_train )
@@ -168,3 +171,14 @@ class TrainingService:
 # Fastest Training: Linear Regression
 # ---------------------------------------------------------------------------------------------------------
 
+# @log_execution_time -> returns structured data
+# {
+#     "train_linear_regression": 0.18,
+#     "train_decision_tree": 0.07,
+#     "train_random_forest": 1.84
+# }
+
+# Model                 Train Time
+# Linear Regression      0.18 sec
+# Decision Tree          0.07 sec
+# Random Forest          1.84 sec

@@ -8,7 +8,7 @@ class UserView:
             "1. Search Flights\n" \
             "2. Predict Flight Fare\n" \
             "3. View Prediction History\n" \
-            "4. Export Prediction History Report\n" \
+            "4. Export Prediction History Report & CSV data\n" \
             "5. Delete Prediction\n" \
             "6. Change Password\n" \
             "7. Logout")
