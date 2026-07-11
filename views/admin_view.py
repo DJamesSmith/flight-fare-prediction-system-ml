@@ -44,8 +44,8 @@ class AdminView:
 # 5. 
 # 6. 
 # 7. 
-# 8. PreprocessingService, not FlightService.
-# 9. 
+# 8. PreprocessingService, not FlightService. The preprocessing service only defines methods. They aren't executed until the admin selects Prepare Training Dataset.
+# 9. training doesn't begin until Train ML Models is chosen.
 # 10. 
 # 11. 
 # 12. 
