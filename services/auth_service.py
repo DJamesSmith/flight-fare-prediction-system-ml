@@ -88,6 +88,28 @@ class AuthService:
             ApplicationLogger.info(f"Password updated for user '{user.username}'.")
         return success
 
+    def update_user(self, user_id: int, username: str, password: str, role: str) -> bool:
+        self._require_admin()
+        self._validate_login_input(username, password)
+        if not User.is_valid_role(role):
+            raise ValueError("Invalid role.")
+
+        existing_user: User | None = self.user_repository.get_user_by_id(user_id)
+        if existing_user is None:
+            return False
+
+        duplicate_user: User | None = self.user_repository.get_user_by_username(username)
+        if (duplicate_user is not None and duplicate_user.user_id != user_id):
+            raise ValueError("Username already exists.")
+
+        hashed_password: str = HashPassword.hash_password(password)
+        updated_user: User = User(user_id=user_id, username=username, password=hashed_password, role=role)
+        success: bool = self.user_repository.update_user(updated_user)
+        if success:
+            ApplicationLogger.info(f"User '{username}' updated successfully.")
+
+        return success
+
     # validate username → exists_by_username() → create User object → repository.create_user() → return created user
     def create_user(self, username: str, password: str, role: str) -> User:
         self._require_admin()

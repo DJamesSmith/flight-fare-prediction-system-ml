@@ -43,6 +43,20 @@ class AuthController:
         except Exception as error:
             print(error)
 
+    def update_user(self):
+        try:
+            user_id: int = int(input("User ID : "))
+            username: str = input("Username : ").strip()
+            password: str = input("Password : ").strip()
+            role: str = input("Role (Admin/User/Guest) : ").strip()
+            success: bool = self.auth_service.update_user(user_id=user_id, username=username, password=password, role=role)
+            if success:
+                print("\nUser updated successfully.")
+            else:
+                print("\nUser not found.")
+        except Exception as error:
+            print(error)
+
     def delete_user(self):
         try:
             user_id: int = int(input("User ID : "))

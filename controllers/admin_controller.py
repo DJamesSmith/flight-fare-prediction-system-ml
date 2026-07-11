@@ -15,14 +15,14 @@ from views.admin_view import AdminView
 
 class AdminController:
     def __init__(self, auth_controller: AuthController):
-        self.admin_view = AdminView()
-        self.auth_controller = auth_controller
-        self.flight_controller = FlightController()
-        self.prediction_controller = PredictionController()
-        self.preprocessing_controller = PreprocessingController()
-        self.training_controller = TrainingController()
-        self.visualization_controller = VisualizationController()
-        self.report_controller = ReportController()
+        self.admin_view: AdminView = AdminView()
+        self.auth_controller: AuthController = auth_controller
+        self.flight_controller: FlightController = FlightController()
+        self.prediction_controller: PredictionController = PredictionController()
+        self.preprocessing_controller: PreprocessingController = PreprocessingController()
+        self.training_controller: TrainingController = TrainingController()
+        self.visualization_controller: VisualizationController = VisualizationController()
+        self.report_controller: ReportController = ReportController()
 
     def start(self, user: User):
         while True:

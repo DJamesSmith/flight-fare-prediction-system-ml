@@ -6,8 +6,8 @@ from utilities.logger import ApplicationLogger
 class ApplicationController:
     def __init__(self):
         self.auth_controller: AuthController = AuthController()
-        self.admin_controller: AdminController = AdminController()
-        self.user_controller: UserController = UserController()
+        self.admin_controller: AdminController = AdminController(self.auth_controller)
+        self.user_controller: UserController = UserController(self.auth_controller)
 
     def start_app(self):
         while True:
