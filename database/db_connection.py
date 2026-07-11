@@ -54,7 +54,7 @@ def create_default_admin():
     with DatabaseConnection() as db:
         db.cursor.execute(GET_ADMIN, ("admin",))
         if db.cursor.fetchone() is None:
-            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", "admin123", User.ADMIN))
+            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", "Admin@123", User.ADMIN))
             ApplicationLogger.info("Default administrator created.")
         else:
             ApplicationLogger.info("Default administrator already exists.")

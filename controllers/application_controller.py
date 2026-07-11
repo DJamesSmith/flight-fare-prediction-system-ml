@@ -11,12 +11,11 @@ class ApplicationController:
 
     def start_app(self):
         while True:
-            print("-" * 60, "" \
-                "\t\tFlight Fare Prediction System" \
-                "-" * 60, "" \
-                "1. Login\n" \
-                "2. Exit\n" \
-                "-" * 60)
+            print("-" * 60)
+            print("Flight Fare Prediction System")
+            print("-" * 60)
+            print("1. Login\n2. Exit\n")
+            print("-" * 60)
 
             try:
                 ch: int = int(input("Enter your choice : "))
