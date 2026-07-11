@@ -53,7 +53,7 @@ class AdminController:
                 case 11: self.prediction_controller.prediction_history(user)
                 case 12: self.prediction_controller.delete_prediction(user)
                 # ---------- Visualizations ----------
-                case 13: self.visualization_controller.generate_visualizations()
+                case 13: self.visualization_controller.generate_visualizations()    # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
                 # ---------- Reports ----------
                 case 14: self.report_controller.generate_metrics_report()
                 case 15: self.report_controller.generate_prediction_report()

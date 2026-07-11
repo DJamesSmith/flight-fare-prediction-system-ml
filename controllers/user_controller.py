@@ -35,28 +35,16 @@ class UserController:
                 continue
 
             match choice:
-                # ---------- Account ----------
-                case 1: self.auth_controller.change_password()
-
                 # ---------- Flights ----------
-                case 2: self.flight_controller.view_flights()
-                case 3: self.flight_controller.view_flight_by_id()
-                case 4: self.flight_controller.search_flights()
-
+                case 1: self.flight_controller.search_flights()
                 # ---------- Prediction ----------
-                case 5: self.prediction_controller.predict_fare(user)
-                case 6: self.prediction_controller.prediction_history(user)
-                case 7: self.prediction_controller.delete_prediction(user)
-
-                # ---------- Visualization ----------
-                case 8: self.visualization_controller.generate_visualizations()
-
-                # ---------- Reports ----------
-                case 9: self.report_controller.generate_prediction_report()
-                case 10: self.report_controller.view_reports()
-
-                # ---------- Logout ----------
-                case 11:
+                case 2: self.prediction_controller.predict_fare(user)
+                case 3: self.prediction_controller.view_prediction_history(user)
+                case 4: self.report_controller.export_prediction_history_csv()
+                case 5: self.prediction_controller.delete_prediction(user)
+                # ---------- Account ----------
+                case 6: self.auth_controller.change_password()
+                case 7:
                     self.auth_controller.logout()
                     print("\nLogged out successfully.")
                     break

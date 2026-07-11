@@ -148,9 +148,23 @@ class TrainingService:
 # | Random Forest     |      1.82 sec |
 
 
-# B. Prediction Accuracy (Model Performance)
+# B. Prediction Accuracy (Model Performance) - evaluate_models()
 # | Model             |  MAE | RMSE |   R² |
 # | ----------------- | ---- | ---- | ---- |
 # | Linear Regression | 1287 | 1834 | 0.74 |
 # | Decision Tree     |  932 | 1412 | 0.82 |
 # | Random Forest     |  701 | 1130 | 0.91 |
+
+# -----------------------------------------------------
+# MODEL COMPARISON
+
+# Model                  MAE      RMSE     R²      Train Time
+# ------------------------------------------------------------
+# Linear Regression      1210     1720     0.81    0.02 sec
+# Decision Tree           842     1218     0.89    0.08 sec
+# Random Forest           705     1031     0.93    1.76 sec
+
+# Best Accuracy: Random Forest
+# Fastest Training: Linear Regression
+# ---------------------------------------------------------------------------------------------------------
+
