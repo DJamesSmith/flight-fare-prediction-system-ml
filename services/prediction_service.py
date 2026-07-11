@@ -19,10 +19,23 @@ from utilities.logger import ApplicationLogger
 class PredictionService:
     def __init__(self):
         self.prediction_repository: PredictionRepository = PredictionRepository()
-        self.model: RegressorMixin = FileHandler.load_pickle(MODEL_PATH)
+        self.model: RegressorMixin | None = None
+        self.encoder: OrdinalEncoder | None = None
+        self.feature_columns: list[str] = []
+
+    def _load_model(self):
+        if self.model is not None:
+            return
+
+        if not FileHandler.file_exists(MODEL_PATH):
+            raise FileNotFoundError("No trained model found.\nPlease train a model first.\nAdmin Menu -> Train ML Models")
+        if not FileHandler.file_exists(ENCODER_PATH):
+            raise FileNotFoundError("Encoder not found.\nPlease train a model first.")
+
+        self.model = FileHandler.load_pickle(MODEL_PATH)
         encoder_data: dict[str, object] = FileHandler.load_pickle(ENCODER_PATH)
-        self.encoder: OrdinalEncoder = encoder_data["encoder"]
-        self.feature_columns: list[str] = encoder_data["feature_columns"]
+        self.encoder = encoder_data["encoder"]
+        self.feature_columns = encoder_data["feature_columns"]
 
     # No categorical_columns to loop through, encoder handles all the columns
     def encode_features(self, dataframe: pd.DataFrame) -> pd.DataFrame:
@@ -31,6 +44,7 @@ class PredictionService:
         return dataframe
 
     def create_prediction(self, user_id: int, flight: Flight) -> Prediction:
+        self._load_model()
         dataframe = pd.DataFrame([flight.to_dictionary()])
         dataframe = FeatureTransformer.feature_transform(dataframe)
         dataframe = self.encode_features(dataframe)
