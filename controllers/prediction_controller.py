@@ -21,13 +21,17 @@ class PredictionController:
     def predict_fare(self, current_user: User):
         try:
             flight_id: int = int(input("Enter Flight ID : "))
+
             flight: Flight | None = self.flight_service.get_flight_by_id(flight_id)
             if flight is None:
                 print("\nFlight not found.")
                 return
+
             prediction: Prediction = self.prediction_service.create_prediction(current_user.user_id, flight)
             print("\nPrediction Generated Successfully\n")
             prediction.display_prediction()
+        except FileNotFoundError:
+            print("\nNo trained model found.\nPlease train a model first.\nAdmin Menu -> Train ML Models")
         except Exception as error:
             print(error)
 

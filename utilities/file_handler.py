@@ -9,12 +9,12 @@ class FileHandler:
 
     @staticmethod
     def save_csv(dataframe: pd.DataFrame, file_path: str):
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        FileHandler.create_directory(os.path.dirname(file_path))
         dataframe.to_csv(file_path, index=False)
 
     @staticmethod
     def save_pickle(obj: object, file_path: str):
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        FileHandler.create_directory(os.path.dirname(file_path))
         with open(file_path, "wb") as file:
             pickle.dump(obj, file)
 
