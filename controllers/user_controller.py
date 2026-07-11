@@ -46,7 +46,6 @@ class UserController:
                 case 6: self.auth_controller.change_password()
                 case 7:
                     self.auth_controller.logout()
-                    print("\nLogged out successfully.")
                     break
                 case _:
                     print("\nInvalid choice.")

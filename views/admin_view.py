@@ -9,18 +9,18 @@ class AdminView:
             "2. View Users\n" \
             "3. Update User\n" \
             "4. Delete User\n" \
-            "5. Change Password\n" \
+            "5. Change Password\n\n" \
 
             "6. View Flights\n" \
-            "7. Search Flights\n" \
+            "7. Search Flights\n\n" \
 
             "8. Prepare Training Dataset\n" \
             "9. Train ML Models\n" \
             "10. Compare Model Performance\n" \
-            "11. Predict Flight Fare\n" \
+            "11. Predict Flight Fare\n\n" \
 
             "12. View Prediction History\n" \
-            "13. Delete Prediction\n" \
+            "13. Delete Prediction\n\n" \
 
             # Reports (pdf)
             "14. Generate Visualizations\n" \
@@ -29,7 +29,7 @@ class AdminView:
             "17. Export Metrics CSV\n" \
             "18. Export Prediction History CSV\n" \
             "19. Generate Project PDF Report\n" \
-            "20. View Reports\n" \
+            "20. View Reports\n\n" \
 
             "21. Logout\n", "" \
             "-" * 40)
