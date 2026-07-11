@@ -8,10 +8,10 @@
 from services.preprocessing_service import PreprocessingService
 
 class PreprocessingController:
-    def __init__(self) -> None:
+    def __init__(self):
         self.preprocessing_service: PreprocessingService = PreprocessingService()
 
-    def preprocess_dataset(self) -> None:
+    def preprocess_dataset(self):
         try:
             print("\nLoading dataset...")
             self.preprocessing_service.load_dataset()

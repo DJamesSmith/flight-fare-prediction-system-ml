@@ -11,10 +11,10 @@ from services.training_service import TrainingService
 
 
 class TrainingController:
-    def __init__(self) -> None:
+    def __init__(self):
         self.training_service: TrainingService = TrainingService()
 
-    def train_models(self) -> None:
+    def train_models(self):
         try:
             print("\nLoading feature dataset...")
             self.training_service.load_feature_dataset()

@@ -14,7 +14,7 @@ from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
 
 class ReportService:
-    def __init__(self) -> None:
+    def __init__(self):
         self.prediction_repository: PredictionRepository = PredictionRepository()
         self.metrics: pd.DataFrame = pd.DataFrame()
         self.predictions: pd.DataFrame = pd.DataFrame()

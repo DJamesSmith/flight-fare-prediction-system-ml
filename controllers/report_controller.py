@@ -7,11 +7,11 @@
 from services.report_service import ReportService
 
 class ReportController:
-    def __init__(self) -> None:
+    def __init__(self):
         self.report_service: ReportService = ReportService()
 
     # Model Evaluation Report
-    def generate_metrics_report(self) -> None:
+    def generate_metrics_report(self):
         try:
             metrics = self.report_service.generate_metrics_report()
             if metrics.empty:
@@ -23,7 +23,7 @@ class ReportController:
             print(error)
 
     # Prediction History Report
-    def generate_prediction_report(self) -> None:
+    def generate_prediction_report(self):
         try:
             predictions = self.report_service.generate_prediction_report()
             if predictions.empty:
@@ -35,7 +35,7 @@ class ReportController:
             print(error)
 
     # Export Evaluation Metrics
-    def export_metrics_csv(self) -> None:
+    def export_metrics_csv(self):
         try:
             self.report_service.generate_metrics_report()
             self.report_service.export_metrics_csv()
@@ -44,7 +44,7 @@ class ReportController:
             print(error)
 
     # Export Prediction History
-    def export_prediction_history_csv(self) -> None:
+    def export_prediction_history_csv(self):
         try:
             self.report_service.generate_prediction_report()
             self.report_service.export_prediction_history_csv()
@@ -53,7 +53,7 @@ class ReportController:
             print(error)
 
     # Generate Project PDF
-    def generate_project_report(self) -> None:
+    def generate_project_report(self):
         try:
             self.report_service.generate_metrics_report()
             self.report_service.generate_prediction_report()
@@ -63,7 +63,7 @@ class ReportController:
             print(error)
 
     # View Available Reports
-    def view_reports(self) -> None:
+    def view_reports(self):
         try:
             self.report_service.view_reports()
         except Exception as error:

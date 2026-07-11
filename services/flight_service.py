@@ -7,7 +7,7 @@ from models.flight import Flight
 from repositories.flight_repository import FlightRepository
 
 class FlightService:
-    def __init__(self) -> None:
+    def __init__(self):
         self.flight_repository: FlightRepository = FlightRepository()
 
     def get_flight_by_id(self, flight_id: int) -> Flight | None:

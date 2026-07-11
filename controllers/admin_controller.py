@@ -24,7 +24,7 @@ class AdminController:
         self.visualization_controller = VisualizationController()
         self.report_controller = ReportController()
 
-    def start(self, user: User) -> None:
+    def start(self, user: User):
         while True:
             self.admin_view.display_admin_menu()
 

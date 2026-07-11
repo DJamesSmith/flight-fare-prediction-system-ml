@@ -16,7 +16,7 @@ from controllers.report_controller import ReportController
 from views.user_view import UserView
 
 class UserController:
-    def __init__(self, auth_controller: AuthController) -> None:
+    def __init__(self, auth_controller: AuthController):
         self.user_view = UserView()
         self.auth_controller = auth_controller
         self.flight_controller = FlightController()
@@ -24,7 +24,7 @@ class UserController:
         self.visualization_controller = VisualizationController()
         self.report_controller = ReportController()
 
-    def start(self, user: User) -> None:
+    def start(self, user: User):
         while True:
             self.user_view.display_user_menu()
 

@@ -6,10 +6,10 @@
 from services.visualization_service import VisualizationService
 
 class VisualizationController:
-    def __init__(self) -> None:
+    def __init__(self):
         self.visualization_service: VisualizationService = VisualizationService()
 
-    def generate_visualizations(self) -> None:
+    def generate_visualizations(self):
         try:
             self.visualization_service.load_dataset()
             self.visualization_service.save_graphs()

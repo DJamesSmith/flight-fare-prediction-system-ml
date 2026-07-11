@@ -13,7 +13,7 @@ from services.prediction_service import PredictionService
 
 
 class PredictionController:
-    def __init__(self) -> None:
+    def __init__(self):
         self.flight_service: FlightService = FlightService()
         self.prediction_service: PredictionService = PredictionService()
 
@@ -50,7 +50,7 @@ class PredictionController:
             print(error)
 
     # Delete Prediction
-    def delete_prediction(self, current_user: User) -> None:
+    def delete_prediction(self, current_user: User):
         try:
             prediction_id: int = int(input("Prediction ID : "))
             success: bool = self.prediction_service.delete_prediction(current_user, prediction_id)
