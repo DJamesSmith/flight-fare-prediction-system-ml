@@ -17,7 +17,7 @@ class AuthController:
         try:
             return self.auth_service.login(username, password)
         except Exception as error:
-            print(error)
+            print("hello exception", error)
             return None
 
     def create_user(self):

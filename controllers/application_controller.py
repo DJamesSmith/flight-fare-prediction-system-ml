@@ -15,7 +15,6 @@ class ApplicationController:
             print("Flight Fare Prediction System")
             print("-" * 60)
             print("1. Login\n2. Exit\n")
-            print("-" * 60)
 
             try:
                 ch: int = int(input("Enter your choice : "))
@@ -28,6 +27,7 @@ class ApplicationController:
                     user = self.auth_controller.login()
                     if user is None:
                         continue
+
                     ApplicationLogger.info(f"{user.role} '{user.username}' logged in successfully.")
 
                     if user.role.lower() == "admin":

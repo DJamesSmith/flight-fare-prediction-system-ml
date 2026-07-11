@@ -9,6 +9,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
 from models.user import User
 from utilities.logger import ApplicationLogger
+from utilities.password_hasher import HashPassword
 from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, GET_ADMIN, INSERT_DEFAULT_ADMIN
 
 load_dotenv()
@@ -54,7 +55,8 @@ def create_default_admin():
     with DatabaseConnection() as db:
         db.cursor.execute(GET_ADMIN, ("admin",))
         if db.cursor.fetchone() is None:
-            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", "Admin@123", User.ADMIN))
+            hashed_password: str = HashPassword.hash_password("Admin@123")
+            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", hashed_password, User.ADMIN))
             ApplicationLogger.info("Default administrator created.")
         else:
             ApplicationLogger.info("Default administrator already exists.")
