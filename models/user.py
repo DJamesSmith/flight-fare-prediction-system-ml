@@ -1,12 +1,13 @@
 from dataclasses import dataclass
+from typing import ClassVar
 from datetime import datetime
 
 @dataclass
 class User:
-    ADMIN = "Admin"
-    USER = "User"
-    GUEST = "Guest"
-    VALID_ROLES: set[str] = {ADMIN, USER, GUEST}
+    ADMIN: ClassVar[str] = "Admin"
+    USER: ClassVar[str] = "User"
+    GUEST: ClassVar[str] = "Guest"
+    VALID_ROLES: ClassVar[set[str]] = {ADMIN, USER, GUEST}      # VALID_ROLES is not a dataclass field. It is a class constant. Hence, ClassVar.
 
     user_id: int | None = None
     username: str = ""

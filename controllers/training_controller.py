@@ -40,6 +40,9 @@ class TrainingController:
             print("\nModel Evaluation\n")
             print(metrics.to_string(index=False))
 
+            print("Comparing models...")
+            self.training_service.compare_models()
+
             print("\nSaving best model...")
             self.training_service.save_best_model()
 

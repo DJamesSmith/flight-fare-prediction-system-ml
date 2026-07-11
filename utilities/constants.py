@@ -2,15 +2,14 @@ import os
 
 BASE_DIR                    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_DIRECTORY = os.path.join(BASE_DIR, "outputs")
-
-# input data
-DATASET_PATH                = os.path.join(BASE_DIR, "dataset", "data_train.csv")                         # training feed
-TEST_DATASET_PATH           = os.path.join(BASE_DIR, "dataset", "test_set.csv")                           # for testing the trained model data (unused)
-
 DATA_DIRECTORY = os.path.join(OUTPUT_DIRECTORY, "data")
 MODEL_DIRECTORY = os.path.join(OUTPUT_DIRECTORY, "trained_models")
 REPORT_DIRECTORY = os.path.join(OUTPUT_DIRECTORY, "reports")
 GRAPH_DIRECTORY = os.path.join(OUTPUT_DIRECTORY, "graphs")
+
+# input data
+DATASET_PATH                = os.path.join(BASE_DIR, "dataset", "data_train.csv")                         # training feed
+TEST_DATASET_PATH           = os.path.join(BASE_DIR, "dataset", "test_set.csv")                           # for testing the trained model data (unused)
 
 CLEANED_DATASET_PATH = os.path.join(DATA_DIRECTORY, "cleaned_dataset.csv")
 FEATURE_DATASET_PATH = os.path.join(DATA_DIRECTORY, "feature_dataset.csv")

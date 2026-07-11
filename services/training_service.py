@@ -17,6 +17,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+from decorators.execution_time import log_execution_time, MODEL_EXECUTION_TIMES
 from utilities.constants import FEATURE_DATASET_PATH, MODEL_PATH, ENCODER_PATH, METRICS_REPORT_PATH
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
@@ -97,6 +98,25 @@ class TrainingService:
         FileHandler.save_csv(self.metrics, METRICS_REPORT_PATH)
         ApplicationLogger.info("Model evaluation completed.")
         return self.metrics
+
+    def compare_models(self):
+        if self.metrics.empty:
+            raise ValueError("Models have not been evaluated.")
+
+        comparison = self.metrics.copy()
+        comparison["Training Time (sec)"] = [
+            MODEL_EXECUTION_TIMES.get("train_linear_regression", 0),
+            MODEL_EXECUTION_TIMES.get("train_decision_tree", 0),
+            MODEL_EXECUTION_TIMES.get("train_random_forest", 0),
+        ]
+
+        print("\nModel Comparison\n")
+        print(comparison.to_string(index=False))
+
+        best_model = comparison.loc[comparison["R2 Score"].idxmax(), "Model"]
+        fastest_model = comparison.loc[comparison["Training Time (sec)"].idxmin(), "Model"]
+        print(f"\nBest Accuracy : {best_model}")
+        print(f"Fastest Training : {fastest_model}")
 
     def save_best_model(self):
         if self.best_model is None:

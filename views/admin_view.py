@@ -16,21 +16,22 @@ class AdminView:
 
             "8. Prepare Training Dataset\n" \
             "9. Train ML Models\n" \
-            "10. Predict Flight Fare\n" \
+            "10. Compare Model Performance\n" \
+            "11. Predict Flight Fare\n" \
 
-            "11. View Prediction History\n" \
-            "12. Delete Prediction\n" \
+            "12. View Prediction History\n" \
+            "13. Delete Prediction\n" \
 
             # Reports (pdf)
-            "13. Generate Visualizations\n" \
-            "14. View Evaluation Metrics\n" \
-            "15. View Prediction Report\n" \
-            "16. Export Metrics CSV\n" \
-            "17. Export Prediction History CSV\n" \
-            "18. Generate Project PDF Report\n" \
-            "19. View Reports\n" \
+            "14. Generate Visualizations\n" \
+            "15. View Evaluation Metrics\n" \
+            "16. View Prediction Report\n" \
+            "17. Export Metrics CSV\n" \
+            "18. Export Prediction History CSV\n" \
+            "19. Generate Project PDF Report\n" \
+            "20. View Reports\n" \
 
-            "20. Logout\n", "" \
+            "21. Logout\n", "" \
             "-" * 40)
 
             # ". Compare Model Performance\n" \
