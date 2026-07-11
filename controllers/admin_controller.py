@@ -43,27 +43,26 @@ class AdminController:
                 case 5: self.auth_controller.change_password()
                 # ---------- Flights ----------
                 case 6: self.flight_controller.view_flights()
-                case 7: self.flight_controller.view_flight_by_id()
-                case 8: self.flight_controller.search_flights()
+                case 7: self.flight_controller.search_flights()
                 # ---------- Dataset ----------
-                case 9: self.preprocessing_controller.preprocess_dataset()
+                case 8: self.preprocessing_controller.preprocess_dataset()
                 # ---------- Model ----------
-                case 10: self.training_controller.train_models()
+                case 9: self.training_controller.train_models()
                 # ---------- Prediction ----------
-                case 11: self.prediction_controller.predict_fare(user)
-                case 12: self.prediction_controller.prediction_history(user)
-                case 13: self.prediction_controller.delete_prediction(user)
+                case 10: self.prediction_controller.predict_fare(user)
+                case 11: self.prediction_controller.prediction_history(user)
+                case 12: self.prediction_controller.delete_prediction(user)
                 # ---------- Visualizations ----------
-                case 14: self.visualization_controller.generate_visualizations()
+                case 13: self.visualization_controller.generate_visualizations()
                 # ---------- Reports ----------
-                case 15: self.report_controller.generate_metrics_report()
-                case 16: self.report_controller.generate_prediction_report()
-                case 17: self.report_controller.export_metrics_csv()
-                case 18: self.report_controller.export_prediction_history_csv()
-                case 19: self.report_controller.generate_project_report()
-                case 20: self.report_controller.view_reports()
+                case 14: self.report_controller.generate_metrics_report()
+                case 15: self.report_controller.generate_prediction_report()
+                case 16: self.report_controller.export_metrics_csv()
+                case 17: self.report_controller.export_prediction_history_csv()
+                case 18: self.report_controller.generate_project_report()
+                case 19: self.report_controller.view_reports()
                 # ---------- Logout ----------
-                case 21:
+                case 20:
                     self.auth_controller.logout()
                     print("\nLogged out successfully.")
                     break

@@ -109,6 +109,7 @@ class TrainingService:
         ApplicationLogger.info("Encoders and feature schema saved successfully.")
 
 
+# ---------------------------------------------------------------------------------------------------------
 # From save_encoder(), the file "encoder.pkl" will contain dictionary data.
 # {
 #     "encoders": {
@@ -138,3 +139,18 @@ class TrainingService:
 # In prediction, we'll do:
 # encoders = encoder_data["encoders"]
 # feature_columns = encoder_data["feature_columns"]
+# ---------------------------------------------------------------------------------------------------------
+# A. Training Time (Performance)
+# | Model             | Training Time |
+# | ----------------- | ------------: |
+# | Linear Regression |      0.04 sec |
+# | Decision Tree     |      0.11 sec |
+# | Random Forest     |      1.82 sec |
+
+
+# B. Prediction Accuracy (Model Performance)
+# | Model             |  MAE | RMSE |   R² |
+# | ----------------- | ---- | ---- | ---- |
+# | Linear Regression | 1287 | 1834 | 0.74 |
+# | Decision Tree     |  932 | 1412 | 0.82 |
+# | Random Forest     |  701 | 1130 | 0.91 |

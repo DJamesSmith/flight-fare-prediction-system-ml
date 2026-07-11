@@ -6,11 +6,10 @@ class UserView:
     def display_user_menu():
         print("-" * 10, "USER MENU", "-" * 10, "\n" \
             "1. Search Flights\n" \
-            "2. Predict Single Flight Fare\n" \
-            "3. Upload CSV for Batch Prediction\n" \
-            "4. View Prediction History\n" \
-            "5. Export Prediction History Report\n" \
-            "6. Delete Prediction\n" \
-            "7. Change Password\n" \
-            "8. Logout")
+            "2. Predict Flight Fare\n" \
+            "3. View Prediction History\n" \
+            "4. Export Prediction History Report\n" \
+            "5. Delete Prediction\n" \
+            "6. Change Password\n" \
+            "7. Logout")
         print("-" * 40)

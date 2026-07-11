@@ -9,36 +9,50 @@ class AdminView:
             "2. View Users\n" \
             "3. Update User\n" \
             "4. Delete User\n" \
+            "5. Change Password\n" \
 
-            "5. Prepare Training Dataset\n" \
-            "6. Train ML Models\n" \
-            "7. Compare Model Performance\n" \
-            "8. Save Best Model\n" \
+            "6. View Flights\n" \
+            "7. Search Flights\n" \
 
-            "9. View Flights\n" \
-            "10. Search Flights\n" \
+            "8. Prepare Training Dataset\n" \
+            "9. Train ML Models\n" \
+            "10. Predict Flight Fare\n" \
+
+            "11. View Prediction History\n" \
+            "12. Delete Prediction\n" \
 
             # Reports (pdf)
-            "11. Generate Visualizations\n" \
-            "12. View Evaluation Metrics\n" \
-            "13. Export Prediction History\n" \
-            "14. Generate Project PDF Report\n" \
+            "13. Generate Visualizations\n" \
+            "14. View Evaluation Metrics\n" \
+            "15. View Prediction Report\n" \
+            "16. Export Metrics CSV\n" \
+            "17. Export Prediction History CSV\n" \
+            "18. Generate Project PDF Report\n" \
+            "19. View Reports\n" \
 
-            "15. Logout")
-        print("-" * 40)
+            "20. Logout\n", "" \
+            "-" * 40)
+
+            # ". Compare Model Performance\n" \
 
 # Calls made to following methods:
 # 1.
 # 2.
 # 3.
 # 4.
-# 5. PreprocessingService, not FlightService.
+# 5. 
 # 6. 
 # 7. 
-# 8. 
+# 8. PreprocessingService, not FlightService.
 # 9. 
 # 10. 
-# 11. VisualizationController.generate_visualizations()
-# 12. ReportController.generate_metrics_report()
-# 13. ReportController.export_prediction_history_csv()
-# 14. ReportController.generate_project_report()
+# 11. 
+# 12. 
+# 13. VisualizationController.generate_visualizations()
+# 14. ReportController.generate_metrics_report()
+# 15. 
+# 16. 
+# 17. ReportController.export_prediction_history_csv()
+# 18. ReportController.generate_project_report()
+# 19. 
+# 20. Logout
