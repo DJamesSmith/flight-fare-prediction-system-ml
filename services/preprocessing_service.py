@@ -12,11 +12,13 @@ from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
 from utilities.feature_engineering import FeatureTransformer
 from validation.dataset_validation import DatasetValidation
+from decorators.execution_time import log_execution_time
 
 class PreprocessingService:
     def __init__(self):
         self.dataframe: pd.DataFrame = pd.DataFrame()
 
+    @log_execution_time
     def load_dataset(self) -> pd.DataFrame:
         ApplicationLogger.info("Loading dataset.")
         self.dataframe = FileHandler.read_csv(DATASET_PATH)
@@ -34,6 +36,7 @@ class PreprocessingService:
         self.dataframe.rename(columns=column_mapping, inplace=True)
         ApplicationLogger.info("Dataset columns renamed successfully.")
 
+    @log_execution_time
     def validate_dataset(self):
         DatasetValidation.validate_dataset_exists(DATASET_PATH)
         DatasetValidation.validate_empty_dataset(self.dataframe)
@@ -44,6 +47,7 @@ class PreprocessingService:
 
     # -------------------- DATA CLEANING --------------------
     # orchestrates smaller cleaning steps
+    @log_execution_time
     def clean_dataset(self):
         self.handle_missing_values()
         self.remove_duplicates()
@@ -83,6 +87,7 @@ class PreprocessingService:
         FileHandler.save_csv(self.dataframe, CLEANED_DATASET_PATH)
         ApplicationLogger.info(f"Cleaned dataset saved to {CLEANED_DATASET_PATH}")
 
+    @log_execution_time
     def save_feature_dataset(self):
         self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
         FileHandler.save_csv(self.dataframe, FEATURE_DATASET_PATH)

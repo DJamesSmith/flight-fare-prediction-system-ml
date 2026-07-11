@@ -10,3 +10,5 @@ def admin_only(view_func: object) -> object:
             raise PermissionError("Administrator access required.")
         return view_func(self, *args, **kwargs)
     return wrapper
+
+# AuthService: use @admin_only instead of _require_admin

@@ -16,6 +16,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.base import RegressorMixin
 
 from decorators.execution_time import log_execution_time, MODEL_EXECUTION_TIMES
 from utilities.constants import FEATURE_DATASET_PATH, MODEL_PATH, ENCODER_PATH, METRICS_REPORT_PATH
@@ -45,6 +46,7 @@ class TrainingService:
         self.dataframe[categorical_columns] = self.encoder.fit_transform(self.dataframe[categorical_columns])
         ApplicationLogger.info("Categorical features encoded successfully.")
 
+    @log_execution_time
     def split_dataset(self):
         x = self.dataframe.drop(columns=["Fare"])
         y = self.dataframe["Fare"]
@@ -75,6 +77,7 @@ class TrainingService:
         self.models["Random Forest"] = model
         ApplicationLogger.info("Random Forest trained." )
 
+    @log_execution_time
     def evaluate_models(self) -> pd.DataFrame:
         report: list = []
         best_score: float = float("-inf")
@@ -113,11 +116,12 @@ class TrainingService:
         print("\nModel Comparison\n")
         print(comparison.to_string(index=False))
 
-        best_model = comparison.loc[comparison["R2 Score"].idxmax(), "Model"]
-        fastest_model = comparison.loc[comparison["Training Time (sec)"].idxmin(), "Model"]
+        best_model: RegressorMixin | None = comparison.loc[comparison["R2 Score"].idxmax(), "Model"]
+        fastest_model: RegressorMixin | None = comparison.loc[comparison["Training Time (sec)"].idxmin(), "Model"]
         print(f"\nBest Accuracy : {best_model}")
         print(f"Fastest Training : {fastest_model}")
 
+    @log_execution_time
     def save_best_model(self):
         if self.best_model is None:
             raise ValueError("No trained model available.")
@@ -189,6 +193,9 @@ class TrainingService:
 
 # Best Accuracy: Random Forest
 # Fastest Training: Linear Regression
+
+# R² / MAE / RMSE → predictive quality.
+# Execution time → computational efficiency.
 # ---------------------------------------------------------------------------------------------------------
 
 # @log_execution_time -> returns structured data

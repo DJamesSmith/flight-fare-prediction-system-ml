@@ -20,6 +20,7 @@ from utilities.constants import (
 )
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
+from decorators.execution_time import log_execution_time
 
 class VisualizationService:
     def __init__(self):
@@ -61,6 +62,7 @@ class VisualizationService:
         plt.close()
         ApplicationLogger.info("Fare distribution graph generated.")
 
+    @log_execution_time
     def correlation_analysis(self):
         correlation = self.dataframe.corr(numeric_only=True)
         plt.figure(figsize=(10, 8))
@@ -74,6 +76,7 @@ class VisualizationService:
         ApplicationLogger.info("Correlation analysis graph generated.")
         pass
 
+    @log_execution_time
     def save_graphs(self):
         self.airline_distribution()
         self.source_distribution()

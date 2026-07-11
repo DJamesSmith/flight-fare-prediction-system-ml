@@ -12,6 +12,7 @@ from repositories.prediction_repository import PredictionRepository
 from utilities.constants import METRICS_REPORT_PATH, PREDICTION_HISTORY_PATH, PROJECT_REPORT_PATH
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
+from decorators.execution_time import log_execution_time
 
 class ReportService:
     def __init__(self):
@@ -50,6 +51,7 @@ class ReportService:
         ApplicationLogger.info("Prediction history exported.")
 
     # Using ReportLab
+    @log_execution_time
     def generate_project_report(self):
         if self.metrics.empty:
             self.generate_metrics_report()
