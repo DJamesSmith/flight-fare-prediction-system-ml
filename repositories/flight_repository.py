@@ -8,9 +8,10 @@ from models.flight import Flight
 from utilities.logger import ApplicationLogger
 from database.db_connection import DatabaseConnection
 from database.queries import (
+    INSERT_FLIGHT,
     GET_FLIGHT_BY_ID,
     GET_ALL_FLIGHTS,
-    INSERT_FLIGHT,
+    SEARCH_FLIGHTS,
     DELETE_ALL_FLIGHTS
 )
 
@@ -87,13 +88,13 @@ class FlightRepository:
             parameters: list = []
 
             if airline:
-                query += " AND airline = %s"
+                query += " AND LOWER(airline) = LOWER(%s)"
                 parameters.append(airline)
             if source:
-                query += " AND source = %s"
+                query += " AND LOWER(source) = LOWER(%s)"
                 parameters.append(source)
             if destination:
-                query += " AND destination = %s"
+                query += " AND LOWER(destination) = LOWER(%s)"
                 parameters.append(destination)
             if journey_date:
                 query += " AND journey_date = %s"
