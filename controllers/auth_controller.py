@@ -57,13 +57,22 @@ class AuthController:
 
     def view_users(self):
         try:
-            users = self.auth_service.view_users()
+            users: list[User] = self.auth_service.view_users()
             if not users:
                 print("\nNo users found.")
                 return
+
+            print("\n", "-" * 60)
+            print(f"{'ID':<5}{'Username':<20}{'Role':<10}{'Created At':<30}")
+            print("-" * 60)
             for user in users:
-                print("-" * 40)
-                user.display_details()
+                print(
+                    f"{user.user_id:<5}"
+                    f"{user.username:<20}"
+                    f"{user.role:<10}"
+                    f"{str(user.created_at):<30}"
+                )
+            print("-" * 60)
         except Exception as error:
             print(error)
 
