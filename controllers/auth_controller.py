@@ -50,7 +50,7 @@ class AuthController:
 
         try:
             user: User = self.auth_service.create_user(username=username, password=password, role=role)
-            print("\nUser created successfully.\n")
+            print(f"\n{role} created successfully.\n")
             user.display_details()
         except Exception as error:
             print(error)
