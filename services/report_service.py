@@ -26,6 +26,10 @@ class ReportService:
         ApplicationLogger.info("Metrics report loaded.")
         return self.metrics
 
+    def export_metrics_csv(self):
+        FileHandler.save_csv(self.metrics, METRICS_REPORT_PATH)
+        ApplicationLogger.info("Metrics exported successfully.")
+
     # Prediction history comes directly from PostgreSQL
     def generate_prediction_report(self) -> pd.DataFrame:
         predictions = (self.prediction_repository.get_all_predictions())
@@ -41,10 +45,6 @@ class ReportService:
         ])
         ApplicationLogger.info("Prediction report generated.")
         return self.predictions
-
-    def export_metrics_csv(self):
-        FileHandler.save_csv(self.metrics, METRICS_REPORT_PATH)
-        ApplicationLogger.info("Metrics exported successfully.")
 
     def export_prediction_history_csv(self):
         FileHandler.save_csv(self.predictions, PREDICTION_HISTORY_PATH)

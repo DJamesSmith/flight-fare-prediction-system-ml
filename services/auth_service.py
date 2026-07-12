@@ -115,6 +115,9 @@ class AuthService:
         self._require_admin()
         self._validate_login_input(username, password)
 
+        if role == User.ADMIN and self.user_repository.exists_admin():
+            raise ValueError("Administrator already exists.")
+
         if not User.is_valid_role(role):
             raise ValueError("Role must be either 'Admin', 'User' or 'Guest'.")
 

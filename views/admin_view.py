@@ -6,8 +6,8 @@ class AdminView:
     def display_admin_menu():
         print("-" * 10, "ADMIN MENU", "-" * 10, "\n" \
             "1. User Management\n" \
-            "2. Flight Explorer\n" \
-            "3. Data Preparation Pipeline\n" \
+            "2. Data Preparation Pipeline\n" \
+            "3. Flight Explorer\n" \
             "4. Visualization\n" \
             "5. Train Models\n" \
             "6. Predictions\n" \

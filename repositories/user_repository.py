@@ -17,7 +17,8 @@ from database.queries import (
     UPDATE_USER,
     UPDATE_PASSWORD,
     DELETE_USER,
-    EXISTS_BY_USERNAME
+    EXISTS_BY_USERNAME,
+    EXISTS_ADMIN
 )
 
 # Not using __init__() here because it's better to use an active DatabaseConnection() than use it's object.
@@ -127,3 +128,12 @@ class UserRepository:
         except psycopg2.Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to verify username: {error}")
+
+    def exists_admin(self) -> bool:
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(EXISTS_ADMIN)
+                return db.cursor.fetchone()[0]
+        except psycopg2.Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to verify administrator: {error}")

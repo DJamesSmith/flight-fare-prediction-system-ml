@@ -3,6 +3,7 @@
 # 2. Read Choice
 # 3. Delegate
 
+import os
 from models.user import User
 from controllers.auth_controller import AuthController
 from controllers.flight_controller import FlightController
@@ -12,7 +13,7 @@ from controllers.training_controller import TrainingController
 from controllers.visualization_controller import VisualizationController
 from controllers.report_controller import ReportController
 from views.admin_view import AdminView
-# from utilities.constants import METRICS_REPORT_PATH, PREDICTION_HISTORY_PATH, PROJECT_REPORT_PATH
+from utilities.constants import METRICS_REPORT_PATH, PREDICTION_HISTORY_PATH, PROJECT_REPORT_PATH
 
 class AdminController:
     def __init__(self, auth_controller: AuthController):
@@ -37,8 +38,8 @@ class AdminController:
 
             match ch:
                 case 1: self.user_management()
-                case 2: self.flight_explorer()
-                case 3: self.preprocessing_controller.preprocess_dataset()              # collected execution
+                case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution
+                case 3: self.flight_explorer()
                 case 4: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
                 case 5: self.training_controller.train_models()                         # collected execution
                 case 6: self.predictions(user)
@@ -105,25 +106,37 @@ class AdminController:
                     print("\nInvalid choice.")
 
     def generate_reports(self):
-        print("\nGenerating metrics report...")
-        self.report_controller.generate_metrics_report()
-        # print(f"Path: {METRICS_REPORT_PATH}")
+        # print("\nGenerating prediction history CSV...")
+        # self.report_controller.export_prediction_history_csv()
         
-        print("\nGenerating prediction report...")
-        self.report_controller.generate_prediction_report()
-        # print(f"Path: {METRICS_REPORT_PATH}")
+        # print("\nGenerating project report...")
+        # self.report_controller.generate_project_report()
         
-        print("\nGenerating metrics CSV...")
-        self.report_controller.export_metrics_csv()
-        # print(f"Path: {METRICS_REPORT_PATH}")
-        
-        print("\nGenerating prediction history CSV...")
-        self.report_controller.export_prediction_history_csv()
-        # print(f"Path: {METRICS_REPORT_PATH}")
-        
-        print("\nGenerating project report...")
+        # print(f"Displaying reports for METRICS, PREDICTION_HISTORY, PROJECT_REPORT...")
+        # self.report_controller.view_reports()
+
+        if os.path.exists(METRICS_REPORT_PATH):
+            print("\nGenerating Metrics Report...")
+            self.report_controller.generate_metrics_report()
+
+            print("Exporting Metrics CSV...")
+            self.report_controller.export_metrics_csv()
+        else:
+            print("\nNo trained models found.")
+            print("Skipping metrics report.")
+
+        if os.path.exists(PREDICTION_HISTORY_PATH):
+            print("\nGenerating Prediction Report...")
+            self.report_controller.generate_prediction_report()
+
+            print("Exporting Prediction History CSV...")
+            self.report_controller.export_prediction_history_csv()
+        else:
+            print("\nNo predictions found.")
+            print("Skipping prediction reports.")
+
+        print("\nGenerating Project Report...")
         self.report_controller.generate_project_report()
-        # print(f"Path: {METRICS_REPORT_PATH}")
-        
-        print(f"Displaying reports for METRICS, PREDICTION_HISTORY, PROJECT_REPORT...")
+
+        print("\nAvailable Reports")
         self.report_controller.view_reports()
