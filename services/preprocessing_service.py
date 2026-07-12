@@ -7,6 +7,8 @@
 # ✔ Save feature dataset
 
 import pandas as pd
+from models.flight import Flight
+from services.flight_service import FlightService
 from utilities.constants import DATASET_PATH, CLEANED_DATASET_PATH, FEATURE_DATASET_PATH
 from utilities.file_handler import FileHandler
 from utilities.logger import ApplicationLogger
@@ -17,6 +19,7 @@ from decorators.execution_time import log_execution_time
 class PreprocessingService:
     def __init__(self):
         self.dataframe: pd.DataFrame = pd.DataFrame()
+        self.flight_service = FlightService()
 
     @log_execution_time
     def load_dataset(self) -> pd.DataFrame:
@@ -100,3 +103,25 @@ class PreprocessingService:
         self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
         FileHandler.save_csv(self.dataframe, FEATURE_DATASET_PATH)
         ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")
+
+    @log_execution_time
+    def populate_flights_table(self):
+        flights: list[Flight] = []
+        for _, row in self.dataframe.iterrows():
+            flights.append(
+                Flight(
+                    airline=row["Airline"],
+                    journey_date=row["Journey_Date"].date(),
+                    source=row["Source"],
+                    destination=row["Destination"],
+                    route=row["Route"],
+                    departure_time=row["Departure_Time"].time(),
+                    arrival_time=row["Arrival_Time"].time(),
+                    duration=row["Duration"],
+                    total_stops=row["Total_Stops"],
+                    additional_information=row["Additional_Information"],
+                    fare=float(row["Fare"]),
+                )
+            )
+        self.flight_service.import_flights(flights)
+        ApplicationLogger.info(f"{len(flights)} flights imported into PostgreSQL.")

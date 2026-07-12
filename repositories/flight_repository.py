@@ -10,9 +10,36 @@ from database.db_connection import DatabaseConnection
 from database.queries import (
     GET_FLIGHT_BY_ID,
     GET_ALL_FLIGHTS,
+    INSERT_FLIGHT,
+    DELETE_ALL_FLIGHTS
 )
 
 class FlightRepository:
+    def insert_flights(self, flights: list[Flight]):
+        try:
+            with DatabaseConnection() as db:
+                values = [
+                    (
+                        flight.airline,
+                        flight.journey_date,
+                        flight.source,
+                        flight.destination,
+                        flight.route,
+                        flight.departure_time,
+                        flight.arrival_time,
+                        flight.duration,
+                        flight.total_stops,
+                        flight.additional_information,
+                        flight.fare,
+                    )
+                    for flight in flights
+                ]
+                db.cursor.executemany(INSERT_FLIGHT, values)
+                ApplicationLogger.info(f"{len(flights)} flights inserted successfully.")
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to insert flights: {error}")
+
     # Convert a database row into a Flight model
     def _map_row_to_flight(self, row: tuple) -> Flight:
         return Flight(
@@ -56,26 +83,36 @@ class FlightRepository:
     # Search flights using optional filters - dynamic search - no constant query - depending on input given by user
     def search_flights(self, airline: str | None = None, source: str | None = None, destination: str | None = None, journey_date: str | None = None) -> list[Flight]:
         try:
-            parameters = []
+            query: str = SEARCH_FLIGHTS
+            parameters: list = []
 
             if airline:
-                SEARCH_FLIGHTS += " AND airline = %s"
+                query += " AND airline = %s"
                 parameters.append(airline)
             if source:
-                SEARCH_FLIGHTS += " AND source = %s"
+                query += " AND source = %s"
                 parameters.append(source)
             if destination:
-                SEARCH_FLIGHTS += " AND destination = %s"
+                query += " AND destination = %s"
                 parameters.append(destination)
             if journey_date:
-                SEARCH_FLIGHTS += " AND journey_date = %s"
+                query += " AND journey_date = %s"
                 parameters.append(journey_date)
-            SEARCH_FLIGHTS += " ORDER BY journey_date;"
+            query += " ORDER BY journey_date;"
 
             with DatabaseConnection() as db:
-                db.cursor.execute(SEARCH_FLIGHTS, tuple(parameters))
+                db.cursor.execute(query, tuple(parameters))
                 rows = db.cursor.fetchall()
                 return [self._map_row_to_flight(row) for row in rows]
         except Error as error:
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to search flights: {error}")
+
+    def delete_all_flights(self):
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(DELETE_ALL_FLIGHTS)
+                ApplicationLogger.info("Existing flights removed.")
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to delete flights: {error}")

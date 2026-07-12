@@ -34,6 +34,9 @@ class PreprocessingController:
             print("Saving feature dataset...")
             self.preprocessing_service.save_feature_dataset()
 
+            print("Populating flights table...")
+            self.preprocessing_service.populate_flights_table()
+
             print("\nDataset preprocessing completed successfully.")
         except Exception as error:
             print(error)

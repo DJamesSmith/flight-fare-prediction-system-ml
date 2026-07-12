@@ -45,6 +45,7 @@ class DatasetValidation:
             for index, row in rows.iterrows():
                 missing_columns = row[row.isnull()].index.tolist()
                 ApplicationLogger.warning(f"Row {index}: Missing -> {missing_columns}")
+                ApplicationLogger.warning(f"Row {index} Data -> {row.to_dict()}")
             raise ValueError(f"Dataset containing missing values found:\n{missing}")
 
     @staticmethod

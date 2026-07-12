@@ -132,6 +132,18 @@ class AdminController:
         self.report_controller.view_reports()
 
 
+# ------------------------------------------------------------
+
 # case 6: self.predictions(user)
 # Question: Should I be able to predict if flights table hasn't been populated ? Which option does predictions depend on ?
 # "1. Predict Flight Fare" should not ask for flightID if flights table hasn't been populated, it should say no flights. Same for "3. Delete Prediction".
+
+# ------------------------------------------------------------
+# Why populate flights table?
+# SELECT * FROM flights;
+# Search Flights:
+# SELECT * FROM flights WHERE source='Delhi';
+# SELECT * FROM flights WHERE airline='IndiGo';
+# SELECT * FROM flights ORDER BY fare;
+# Pagination: LIMIT 20 OFFSET 40
+# Total Flights: COUNT(*)

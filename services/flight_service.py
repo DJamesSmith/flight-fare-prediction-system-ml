@@ -6,9 +6,14 @@
 from models.flight import Flight
 from repositories.flight_repository import FlightRepository
 
+
 class FlightService:
     def __init__(self):
         self.flight_repository: FlightRepository = FlightRepository()
+
+    def import_flights(self, flights: list[Flight]):
+        self.flight_repository.delete_all_flights()
+        self.flight_repository.insert_flights(flights)
 
     def get_flight_by_id(self, flight_id: int) -> Flight | None:
         return self.flight_repository.get_flight_by_id(flight_id)

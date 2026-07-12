@@ -20,9 +20,12 @@ CREATE TABLE IF NOT EXISTS flights(
     arrival_time TIME NOT NULL,
     duration VARCHAR(50) NOT NULL,
     total_stops VARCHAR(30) NOT NULL,
-    additional_information VARCHAR(255)
+    additional_information VARCHAR(255),
+    fare DECIMAL(10,2) NOT NULL
 );
 """
+
+# DECIMAL(10,2): (stores up to 10 digits, 2 decimal places).
 
 CREATE_PREDICTIONS_TABLE = """
 CREATE TABLE IF NOT EXISTS predictions(
@@ -59,9 +62,14 @@ DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
 EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
 
 # -------------- FLIGHT queries --------------
+INSERT_FLIGHT = """
+INSERT INTO flights(airline, journey_date, source, destination, route, departure_time, arrival_time, duration, total_stops, additional_information, fare)
+VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
+"""
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
 SEARCH_FLIGHTS = "SELECT * FROM flights WHERE 1=1"
+DELETE_ALL_FLIGHTS = """DELETE FROM flights;"""
 
 # ------------ PREDICTION queries ------------
 

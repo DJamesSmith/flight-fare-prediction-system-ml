@@ -74,12 +74,9 @@ Libraries involved:
 
 FlightFarePrediction/
 |
-├── data/
-│      cleaned_dataset.csv
-│      feature_dataset.csv
-│
 ├── dataset/
-│      flights.csv
+│      data_train.csv
+│      test_set.csv
 │
 ├── database/
 |       db_connection.py
@@ -110,16 +107,6 @@ FlightFarePrediction/
 │       constants.py
 │       helper.py
 │
-├── trained_models/
-│       flight_model.pkl
-│       encoder.pkl
-│
-├── reports/
-│       graphs/
-│       metrics.csv
-│       prediction_history.csv
-│       project_report.pdf
-│
 ├── controllers/
 │       admin_controller.py
 │       user_controller.py
@@ -128,6 +115,19 @@ FlightFarePrediction/
 │       admin_view.py
 │       user_view.py
 │       menu_view.py
+|
+├── outputs/
+│       data/
+│           cleaned_dataset.csv
+│           feature_dataset.csv
+│       reports/
+│       graphs/
+│           metrics.csv
+│           prediction_history.csv
+│           project_report.pdf
+│       trained_models/
+│           flight_model.pkl
+│           encoder.pkl
 │
 ├── index.py
 │
