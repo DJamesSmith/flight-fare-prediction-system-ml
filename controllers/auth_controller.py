@@ -16,7 +16,10 @@ class AuthController:
         username: str = input("Username : ").strip()
         password: str = input("Password : ").strip()
         try:
-            return self.auth_service.login(username, password)
+            user: User | None = self.auth_service.login(username, password)
+            if user is None:
+                print("\nIncorrect username or password.")
+            return user
         except Exception as error:
             print("error_from_auth_controller", error)
             return None
@@ -110,15 +113,42 @@ class AuthController:
         except Exception as error:
             print(error)
 
+    # def change_password(self):
+    #     try:
+    #         old_password: str = input("Current Password : ")
+    #         new_password: str = input("New Password : ")
+    #         success: bool = self.auth_service.change_password(old_password, new_password)
+    #         if success:
+    #             print("\nPassword updated.")
+    #         else:
+    #             print("\nPassword update failed.")
+    #     except Exception as error:
+    #         print(error)
+
     def change_password(self):
         try:
-            old_password: str = input("Current Password : ")
-            new_password: str = input("New Password : ")
-            success: bool = self.auth_service.change_password(old_password, new_password)
+            # ---------- Verify current password ----------
+            while True:
+                old_password: str = input("Current Password : ").strip()
+                if self.auth_service.verify_current_password(old_password):
+                    break
+                print("Current password is incorrect.")
+            # ---------- New password ----------
+            while True:
+                new_password: str = input("New Password : ").strip()
+                valid, message = RegexValidation.validate_password(new_password)
+                if not valid:
+                    print(message)
+                    continue
+                if new_password == old_password:
+                    print("New password must be different from the current password.")
+                    continue
+                break
+            success: bool = self.auth_service.update_password(new_password)
             if success:
-                print("\nPassword updated.")
+                print("\nPassword updated successfully.")
             else:
-                print("\nPassword update failed.")
+                print("\nUnable to update password.")
         except Exception as error:
             print(error)
 
