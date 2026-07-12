@@ -31,11 +31,11 @@ class PreprocessingController:
             print("Saving cleaned dataset...")
             self.preprocessing_service.save_cleaned_dataset()
 
-            print("Saving feature dataset...")
-            self.preprocessing_service.save_feature_dataset()
-
             print("Populating flights table...")
             self.preprocessing_service.populate_flights_table()
+
+            print("Saving feature dataset...")
+            self.preprocessing_service.save_feature_dataset()
 
             print("\nDataset preprocessing completed successfully.")
         except Exception as error:

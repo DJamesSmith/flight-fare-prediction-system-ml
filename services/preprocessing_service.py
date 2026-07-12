@@ -18,15 +18,16 @@ from decorators.execution_time import log_execution_time
 
 class PreprocessingService:
     def __init__(self):
-        self.dataframe: pd.DataFrame = pd.DataFrame()
         self.flight_service = FlightService()
+        self.cleaned_dataframe: pd.DataFrame = pd.DataFrame()
+        self.feature_dataframe: pd.DataFrame = pd.DataFrame()
 
     @log_execution_time
     def load_dataset(self) -> pd.DataFrame:
         ApplicationLogger.info("Loading dataset.")
-        self.dataframe = FileHandler.read_csv(DATASET_PATH)
-        ApplicationLogger.info(f"Dataset loaded successfully. Records: {len(self.dataframe)}")
-        return self.dataframe
+        self.cleaned_dataframe = FileHandler.read_csv(DATASET_PATH)
+        ApplicationLogger.info(f"Dataset loaded successfully. Records: {len(self.cleaned_dataframe)}")
+        return self.cleaned_dataframe
 
     def rename_columns(self):
         # Kaggle Column: Internal Column
@@ -36,7 +37,7 @@ class PreprocessingService:
             "Additional_Info": "Additional_Information",
             "Price": "Fare"
         }
-        self.dataframe.rename(columns=column_mapping, inplace=True)
+        self.cleaned_dataframe.rename(columns=column_mapping, inplace=True)
         ApplicationLogger.info("Dataset columns renamed successfully.")
 
     # ----------------------------- DATA VALIDATION (start) - Validation before cleaning -----------------------------
@@ -45,8 +46,8 @@ class PreprocessingService:
     @log_execution_time
     def validate_dataset_structure(self):
         DatasetValidation.validate_dataset_exists(DATASET_PATH)
-        DatasetValidation.validate_empty_dataset(self.dataframe)
-        DatasetValidation.validate_required_columns(self.dataframe)
+        DatasetValidation.validate_empty_dataset(self.cleaned_dataframe)
+        DatasetValidation.validate_required_columns(self.cleaned_dataframe)
 
     # -------------------- DATA CLEANING (start) --------------------
     # orchestrates smaller cleaning steps
@@ -60,54 +61,50 @@ class PreprocessingService:
         ApplicationLogger.info("Dataset cleaned successfully.")
 
     def handle_missing_values(self):
-        self.dataframe.dropna(inplace=True)
+        self.cleaned_dataframe.dropna(inplace=True)
         ApplicationLogger.info("Missing values handled successfully.")
 
     def remove_duplicates(self):
-        self.dataframe.drop_duplicates(inplace=True)
+        self.cleaned_dataframe.drop_duplicates(inplace=True)
         ApplicationLogger.info("Duplicate rows removed.")
 
     def trim_whitespace(self):
-        object_columns = self.dataframe.select_dtypes(include="object").columns
-        self.dataframe[object_columns] = (self.dataframe[object_columns].apply(lambda column: column.str.strip()))
+        object_columns = self.cleaned_dataframe.select_dtypes(include="object").columns
+        self.cleaned_dataframe[object_columns] = (self.cleaned_dataframe[object_columns].apply(lambda column: column.str.strip()))
         ApplicationLogger.info("Whitespace removed successfully.")
 
     def standardize_columns(self):
         categorical_columns = ["Airline", "Source", "Destination", "Route", "Total_Stops", "Additional_Information"]
-        for column in categorical_columns: self.dataframe[column] = (self.dataframe[column].str.strip().str.title())
+        for column in categorical_columns: self.cleaned_dataframe[column] = (self.cleaned_dataframe[column].str.strip().str.title())
         ApplicationLogger.info("Categorical columns standardized.")
 
     def convert_data_types(self):
-        self.dataframe["Journey_Date"] = pd.to_datetime(self.dataframe["Journey_Date"], dayfirst=True)
-        self.dataframe["Departure_Time"] = pd.to_datetime(self.dataframe["Departure_Time"], format="%H:%M")
-        self.dataframe["Arrival_Time"] = pd.to_datetime(self.dataframe["Arrival_Time"], format="mixed", dayfirst=True)
-        self.dataframe["Fare"] = self.dataframe["Fare"].astype(float)
+        self.cleaned_dataframe["Journey_Date"] = pd.to_datetime(self.cleaned_dataframe["Journey_Date"], dayfirst=True)
+        self.cleaned_dataframe["Departure_Time"] = pd.to_datetime(self.cleaned_dataframe["Departure_Time"], format="%H:%M")
+        self.cleaned_dataframe["Arrival_Time"] = pd.to_datetime(self.cleaned_dataframe["Arrival_Time"], format="mixed", dayfirst=True)
+        self.cleaned_dataframe["Fare"] = self.cleaned_dataframe["Fare"].astype(float)
         ApplicationLogger.info("Column data types converted successfully.")
 
     # -------------------- DATA CLEANING (end) --------------------
     # Validation after cleaning: Post-clean validation confirms the cleaning process succeeded before feature engineering and model training.
     @log_execution_time
     def validate_cleaned_dataset(self):
-        DatasetValidation.validate_missing_values(self.dataframe)
-        DatasetValidation.validate_duplicate_rows(self.dataframe)
+        DatasetValidation.validate_missing_values(self.cleaned_dataframe)
+        DatasetValidation.validate_duplicate_rows(self.cleaned_dataframe)
         ApplicationLogger.info("Dataset validation completed successfully.")
 
     # ----------------------------- DATA VALIDATION (end) -----------------------------
 
     def save_cleaned_dataset(self):
-        FileHandler.save_csv(self.dataframe, CLEANED_DATASET_PATH)
+        FileHandler.save_csv(self.cleaned_dataframe, CLEANED_DATASET_PATH)
         ApplicationLogger.info(f"Cleaned dataset saved to {CLEANED_DATASET_PATH}")
 
     @log_execution_time
-    def save_feature_dataset(self):
-        self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
-        FileHandler.save_csv(self.dataframe, FEATURE_DATASET_PATH)
-        ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")
-
-    @log_execution_time
     def populate_flights_table(self):
+        print("---->>>>>", self.cleaned_dataframe.columns.tolist())
+        ApplicationLogger.info(f"populating using dataframe: {self.cleaned_dataframe.columns.tolist()}")
         flights: list[Flight] = []
-        for _, row in self.dataframe.iterrows():
+        for _, row in self.cleaned_dataframe.iterrows():
             flights.append(
                 Flight(
                     airline=row["Airline"],
@@ -125,3 +122,9 @@ class PreprocessingService:
             )
         self.flight_service.import_flights(flights)
         ApplicationLogger.info(f"{len(flights)} flights imported into PostgreSQL.")
+
+    @log_execution_time
+    def save_feature_dataset(self):
+        self.feature_dataframe = FeatureTransformer.feature_transform(self.cleaned_dataframe)           # original cleaned dataframe remains untouched
+        FileHandler.save_csv(self.feature_dataframe, FEATURE_DATASET_PATH)
+        ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")

@@ -7,6 +7,8 @@ class FeatureTransformer:
 
     @staticmethod
     def feature_transform(dataframe: pd.DataFrame) -> pd.DataFrame:
+        dataframe = dataframe.copy()        # Since it already returns a new dataframe, I would make it explicit that it works on a copy rather than relying on callers to remember .copy()
+
         # From: Journey_Date - create: Journey_Day, Journey_Month
         dataframe["Journey_Day"] = (dataframe["Journey_Date"].dt.day)
         dataframe["Journey_Month"] = (dataframe["Journey_Date"].dt.month)
