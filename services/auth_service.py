@@ -133,6 +133,13 @@ class AuthService:
     # repository.delete_user() → True / False
     def delete_user(self, user_id: int) -> bool:
         self._require_admin()
+        user: User | None = self.user_repository.get_user_by_id(user_id)
+        if user is None:
+            raise ValueError("User not found.")
+        if user.role == User.ADMIN:
+            raise ValueError("Administrator cannot be deleted.")
+        if user.user_id == self.current_user.user_id:
+            raise ValueError("You cannot delete your own account.")
         success: bool = self.user_repository.delete_user(user_id)
         if success:
             ApplicationLogger.info(f"User ID {user_id} deleted successfully.")

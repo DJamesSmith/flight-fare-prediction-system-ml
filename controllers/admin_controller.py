@@ -38,7 +38,7 @@ class AdminController:
 
             match ch:
                 case 1: self.user_management()
-                case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution
+                case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution; populates the "flights" table data
                 case 3: self.flight_explorer()
                 case 4: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
                 case 5: self.training_controller.train_models()                         # collected execution, Load Dataset → Encode → Split → Train → Evaluate → Compare → Save Best Model → Save Encoder

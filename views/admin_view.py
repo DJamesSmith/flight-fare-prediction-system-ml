@@ -8,12 +8,12 @@ class AdminView:
             "1. User Management\n" \
             "2. Data Preparation Pipeline\n" \
             "3. Flight Explorer\n" \
-            "4. Visualization\n" \
+            "4. Visualization (Dataset Analysis)\n" \
             "5. Train Models\n" \
             "6. Predictions\n" \
             "7. Generate Reports\n" \
             "8. Logout\n")
-        
+
     def user_management(self):
         print("-" * 10, "User Management", "-" * 10, "\n" \
             "1. Create User\n" \
@@ -22,7 +22,7 @@ class AdminView:
             "4. Delete User\n" \
             "5. Change Password\n" \
             "6. Go Back")
-        
+
     def flight_explorer(self):
         print("-" * 10, "Flight Explorer", "-" * 10, "\n" \
             "1. View Flights\n" \
