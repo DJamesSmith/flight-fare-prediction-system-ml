@@ -58,8 +58,31 @@ class AdminView:
             "2. View Users\n" \
             "3. Update User\n" \
             "4. Delete User\n" \
-            "5. Change Password\n\n" \
-        )
+            "5. Change Password\n" \
+            "6. Go Back")
+        
+    def flight_explorer(self):
+        print("-" * 10, "User Management", "-" * 10, "\n" \
+            "1. View Flights\n" \
+            "2. Search Flights\n" \
+            "3. Back")
+        
+
+
+    def dataset_pipeline(self):
+        pass
+
+    def train_models(self):
+        pass
+
+    def model_evaluation(self):
+        pass
+
+    def predictions(self):
+        pass
+
+    def reports(self):
+        pass
 
 
 

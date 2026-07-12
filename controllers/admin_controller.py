@@ -29,12 +29,12 @@ class AdminController:
             self.admin_view.display_admin_menu()
 
             try:
-                choice: int = int(input("Enter your choice : "))
+                ch: int = int(input("Enter your choice : "))
             except ValueError:
                 print("\nPlease enter a valid choice.")
                 continue
 
-            # match choice:
+            # match ch:
             #     # ---------- User Management ----------
             #     case 1: self.auth_controller.create_user()
             #     case 2: self.auth_controller.view_users()
@@ -68,20 +68,62 @@ class AdminController:
             #     case _:
             #         print("\nInvalid choice.")
 
-            match choice:
-                case 1: self.admin_view.user_management()
-                case 2: 
-                case 3: 
-                case 4: 
-                case 5: 
-                case 6: 
-                case 7: 
+            match ch:
+                case 1: self.user_management()
+                case 2: self.flight_explorer()
+                case 3: self.preprocessing_controller.preprocess_dataset() 
+                case 4: self.training_controller.train_models()     
+                case 5: self.model_evaluation()
+                case 6: self.predictions()
+                case 7: self.reports()
                 case 8:
                     self.auth_controller.logout()
                     break
                 case _:
                     print("\nInvalid choice.")
 
-    
-    
-    # def 
+    def user_management(self):
+        while True:
+            self.admin_view.user_management()
+
+            try:
+                ch: int = int(input("Enter your choice : "))
+            except ValueError:
+                print("\nPlease enter a valid choice.")
+                continue
+
+            match ch:
+                case 1: self.auth_controller.create_user()
+                case 2: self.auth_controller.view_users()
+                case 3: self.auth_controller.update_user()
+                case 4: self.auth_controller.delete_user()
+                case 5: self.auth_controller.change_password()
+                case 6: break
+                case _:
+                    print("\nInvalid choice.")
+
+    def flight_explorer(self):
+        while True:
+            self.admin_view.flight_explorer()
+
+            try:
+                ch: int = int(input("Enter your choice : "))
+            except ValueError:
+                print("\nPlease enter a valid choice.")
+                continue
+
+            match ch:
+                case 1: self.flight_controller.view_flights()
+                case 2: self.flight_controller.search_flights()
+                case 3: break
+                case _:
+                    print("\nInvalid choice.")
+
+    def model_evaluation(self):
+        pass
+
+    def predictions(self):
+        pass
+
+    def reports(self):
+        pass
