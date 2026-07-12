@@ -19,11 +19,14 @@ class PreprocessingController:
             print("Renaming dataset columns...")
             self.preprocessing_service.rename_columns()
 
-            print("Validating dataset...")
-            self.preprocessing_service.validate_dataset()
+            print("Validating dataset structure...")
+            self.preprocessing_service.validate_dataset_structure()
 
             print("Cleaning dataset...")
             self.preprocessing_service.clean_dataset()
+
+            print("Validating cleaned dataset...")
+            self.preprocessing_service.validate_cleaned_dataset()
 
             print("Saving cleaned dataset...")
             self.preprocessing_service.save_cleaned_dataset()

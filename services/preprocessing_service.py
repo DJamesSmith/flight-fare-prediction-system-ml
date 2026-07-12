@@ -36,16 +36,16 @@ class PreprocessingService:
         self.dataframe.rename(columns=column_mapping, inplace=True)
         ApplicationLogger.info("Dataset columns renamed successfully.")
 
+    # ----------------------------- DATA VALIDATION (start) - Validation before cleaning -----------------------------
+    # Only validate things that prevent the pipeline from running.
+
     @log_execution_time
-    def validate_dataset(self):
+    def validate_dataset_structure(self):
         DatasetValidation.validate_dataset_exists(DATASET_PATH)
         DatasetValidation.validate_empty_dataset(self.dataframe)
         DatasetValidation.validate_required_columns(self.dataframe)
-        DatasetValidation.validate_missing_values(self.dataframe)
-        DatasetValidation.validate_duplicate_rows(self.dataframe)
-        ApplicationLogger.info("Dataset validation completed successfully.")
 
-    # -------------------- DATA CLEANING --------------------
+    # -------------------- DATA CLEANING (start) --------------------
     # orchestrates smaller cleaning steps
     @log_execution_time
     def clean_dataset(self):
@@ -81,7 +81,15 @@ class PreprocessingService:
         self.dataframe["Fare"] = self.dataframe["Fare"].astype(float)
         ApplicationLogger.info("Column data types converted successfully.")
 
-    # -------------------------------------------------------
+    # -------------------- DATA CLEANING (end) --------------------
+    # Validation after cleaning: Post-clean validation confirms the cleaning process succeeded before feature engineering and model training.
+    @log_execution_time
+    def validate_cleaned_dataset(self):
+        DatasetValidation.validate_missing_values(self.dataframe)
+        DatasetValidation.validate_duplicate_rows(self.dataframe)
+        ApplicationLogger.info("Dataset validation completed successfully.")
+
+    # ----------------------------- DATA VALIDATION (end) -----------------------------
 
     def save_cleaned_dataset(self):
         FileHandler.save_csv(self.dataframe, CLEANED_DATASET_PATH)

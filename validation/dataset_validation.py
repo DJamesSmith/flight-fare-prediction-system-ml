@@ -1,21 +1,22 @@
 import os
 import pandas as pd
-
-REQUIRED_COLUMNS = [
-    "Airline",
-    "Journey_Date",
-    "Source",
-    "Destination",
-    "Route",
-    "Departure_Time",
-    "Arrival_Time",
-    "Duration",
-    "Total_Stops",
-    "Additional_Information",
-    "Fare"
-]
+from utilities.logger import ApplicationLogger
 
 class DatasetValidation:
+    REQUIRED_COLUMNS: list[str] = [
+        "Airline",
+        "Journey_Date",
+        "Source",
+        "Destination",
+        "Route",
+        "Departure_Time",
+        "Arrival_Time",
+        "Duration",
+        "Total_Stops",
+        "Additional_Information",
+        "Fare"
+    ]
+
     @staticmethod
     def validate_dataset_exists(file_path: str):
         if not os.path.exists(file_path):
@@ -28,7 +29,7 @@ class DatasetValidation:
 
     @classmethod
     def validate_required_columns(cls, dataframe: pd.DataFrame):
-        missing_columns = [column for column in cls.REQUIRED_COLUMNS if column not in dataframe.columns]
+        missing_columns: list[str] = [column for column in cls.REQUIRED_COLUMNS if column not in dataframe.columns]
         if missing_columns:
             raise ValueError(f"Missing required columns: {missing_columns}")
 
@@ -36,8 +37,15 @@ class DatasetValidation:
     def validate_missing_values(dataframe: pd.DataFrame):
         missing = dataframe.isnull().sum()
         missing = missing[missing > 0]
+
         if not missing.empty:
-            raise ValueError(f"Missing values found:\n{missing}")
+            ApplicationLogger.warning(f"Missing values detected.\n{missing}")
+            rows = dataframe[dataframe.isnull().any(axis=1)]
+
+            for index, row in rows.iterrows():
+                missing_columns = row[row.isnull()].index.tolist()
+                ApplicationLogger.warning(f"Row {index}: Missing -> {missing_columns}")
+            raise ValueError(f"Dataset containing missing values found:\n{missing}")
 
     @staticmethod
     def validate_duplicate_rows(dataframe: pd.DataFrame):
