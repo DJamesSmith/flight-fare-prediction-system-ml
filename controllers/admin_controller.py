@@ -41,7 +41,7 @@ class AdminController:
                 case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution
                 case 3: self.flight_explorer()
                 case 4: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
-                case 5: self.training_controller.train_models()                         # collected execution
+                case 5: self.training_controller.train_models()                         # collected execution, Load Dataset → Encode → Split → Train → Evaluate → Compare → Save Best Model → Save Encoder
                 case 6: self.predictions(user)
                 case 7: self.generate_reports()
                 case 8:
