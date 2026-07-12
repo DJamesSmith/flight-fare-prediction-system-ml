@@ -18,16 +18,36 @@ class AuthController:
         try:
             return self.auth_service.login(username, password)
         except Exception as error:
-            print("hello exception", error)
+            print("error_from_auth_controller", error)
             return None
 
     def create_user(self):
-        username: str = input("Username : ").strip()
-        password: str = input("Password : ").strip()
-        role: str = input("Role (Admin/User/Guest) : ").strip()
+        while True:
+            username: str = input("Username : ").strip()
+            valid, message = RegexValidation.validate_username(username)
+            if not valid:
+                print(message)
+                continue
+            break
+
+        while True:
+            password: str = input("Password : ").strip()
+            valid, message = RegexValidation.validate_password(password)
+            if not valid:
+                print(message)
+                continue
+            break
+
+        while True:
+            role: str = input("Role (Admin/User/Guest) : ").strip()
+            if not User.is_valid_role(role):
+                print("Role must be Admin, User or Guest.")
+                continue
+            break
+
         try:
-            user = self.auth_service.create_user(username, password, role)
-            print(f"\nUser created successfully.")
+            user: User = self.auth_service.create_user(username=username, password=password, role=role)
+            print("\nUser created successfully.\n")
             user.display_details()
         except Exception as error:
             print(error)
@@ -53,19 +73,19 @@ class AuthController:
                 print("\nUser not found.")
                 return
 
-            username: str = input("Username : ").strip()
+            username: str = input("New Username : ").strip()
             valid, message = RegexValidation.validate_username(username)
             if not valid:
                 print(message)
                 return
 
-            password: str = input("Password : ").strip()
+            password: str = input("New Password : ").strip()
             valid, message = RegexValidation.validate_password(password)
             if not valid:
                 print(message)
                 return
 
-            role: str = input("Role (Admin/User/Guest) : ").strip()
+            role: str = input("Change Role (Admin/User/Guest) : ").strip()
             if not User.is_valid_role(role):
                 print("Invalid role.")
                 return

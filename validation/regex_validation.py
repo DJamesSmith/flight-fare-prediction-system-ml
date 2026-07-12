@@ -3,10 +3,10 @@ import re
 class RegexValidation:
     @staticmethod
     def validate_username(username: str) -> tuple[bool, str]:
-        pattern = r"^[A-Za-z][A-Za-z0-9_]{3,19}$"
+        pattern = r"^[A-Za-z][A-Za-z0-9_]{2,19}$"
         if re.fullmatch(pattern, username):
             return True, ""
-        return False, "Username must start with a letter and contain 4-20 alphanumeric characters."
+        return False, "Username must start with a letter and contain 3-20 alphanumeric characters."
 
     @staticmethod
     def validate_password(password: str) -> tuple[bool, str]:
