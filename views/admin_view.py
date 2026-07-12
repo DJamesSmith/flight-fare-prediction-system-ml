@@ -11,24 +11,25 @@ class AdminView:
         #     "3. Update User\n" \
         #     "4. Delete User\n" \
         #     "5. Change Password\n\n" \
-
         #     "-------------- Flights --------------\n" \
         #     "6. View Flights\n" \
         #     "7. Search Flights\n\n" \
-
         #     "-------------- Dataset --------------\n" \
         #     "8. Prepare Training Dataset\n\n" \
-
         #     "--------------- Model ---------------\n" \
         #     "9. Train ML Models\n\n" \
-
         #     "------------- Prediction -------------\n" \
         #     "12. View Prediction History\n" \
         #     "13. Delete Prediction\n\n" \
-
         #     "----------- Visualizations -----------\n" \
         #     "10. Compare Model Performance\n" \
         #     "11. Predict Flight Fare\n" \
+
+
+            # Complete
+
+
+
 
         #     "--------------- Reports --------------\n" \
         #     "14. Generate Visualizations\n" \
@@ -47,7 +48,7 @@ class AdminView:
             "2. Flight Explorer\n" \
             "3. Dataset Pipeline\n" \
             "4. Train Models\n" \
-            "5. Model Evaluation\n" \
+            "5. Visualization\n" \
             "6. Predictions\n" \
             "7. Reports\n" \
             "8. Logout\n")
@@ -62,27 +63,24 @@ class AdminView:
             "6. Go Back")
         
     def flight_explorer(self):
-        print("-" * 10, "User Management", "-" * 10, "\n" \
+        print("-" * 10, "Flight Explorer", "-" * 10, "\n" \
             "1. View Flights\n" \
             "2. Search Flights\n" \
             "3. Back")
-        
-
-
-    def dataset_pipeline(self):
-        pass
-
-    def train_models(self):
-        pass
-
-    def model_evaluation(self):
-        pass
 
     def predictions(self):
-        pass
+        print("-" * 10, "Predictions", "-" * 10, "\n" \
+            "1. Predict Flight Fare\n" \
+            "2. View Prediction History\n" \
+            "3. Delete Prediction\n" \
+            "4. Back")
 
     def reports(self):
-        pass
+        # print("-" * 10, "Generate Reports", "-" * 10, "\n" \
+        #     "1. \n" \
+        #     "2. \n" \
+        #     "3. \n" \
+        #     "4. Back")
 
 
 

@@ -24,7 +24,7 @@ class AdminController:
         self.visualization_controller: VisualizationController = VisualizationController()
         self.report_controller: ReportController = ReportController()
 
-    def start(self, user: User):
+    def start(self):
         while True:
             self.admin_view.display_admin_menu()
 
@@ -54,6 +54,12 @@ class AdminController:
             #     case 12: self.prediction_controller.delete_prediction(user)
             #     # ---------- Visualizations ----------
             #     case 13: self.visualization_controller.generate_visualizations()    # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
+
+            # Complete
+
+
+
+
             #     # ---------- Reports ----------
             #     case 14: self.report_controller.generate_metrics_report()
             #     case 15: self.report_controller.generate_prediction_report()
@@ -71,10 +77,11 @@ class AdminController:
             match ch:
                 case 1: self.user_management()
                 case 2: self.flight_explorer()
-                case 3: self.preprocessing_controller.preprocess_dataset() 
-                case 4: self.training_controller.train_models()     
-                case 5: self.model_evaluation()
+                case 3: self.preprocessing_controller.preprocess_dataset()
+                case 4: self.training_controller.train_models()
+                case 5: self.visualization_controller.generate_visualizations()
                 case 6: self.predictions()
+
                 case 7: self.reports()
                 case 8:
                     self.auth_controller.logout()
@@ -119,11 +126,41 @@ class AdminController:
                 case _:
                     print("\nInvalid choice.")
 
-    def model_evaluation(self):
-        pass
+    def predictions(self, user: User):
+        while True:
+            self.admin_view.predictions()
 
-    def predictions(self):
-        pass
+            try:
+                ch: int = int(input("Enter your choice : "))
+            except ValueError:
+                print("\nPlease enter a valid choice.")
+                continue
+
+            match ch:
+                case 1: self.prediction_controller.predict_fare(user)
+                case 2: self.prediction_controller.view_prediction_history(user)
+                case 3: self.prediction_controller.delete_prediction(user)
+                case 4: break
+                case _:
+                    print("\nInvalid choice.")
 
     def reports(self):
-        pass
+        print("\nGenerating metrics report...")
+        self.report_controller.generate_metrics_report()
+        
+        print("\nGenerating prediction report...")
+        self.report_controller.generate_prediction_report()
+        
+        print("\nGenerating metrics CSV...")
+        self.report_controller.export_metrics_csv()
+        
+        print("\nGenerating prediction history CSV...")
+        self.report_controller.export_prediction_history_csv()
+        
+        print("\nGenerating project report...")
+        self.report_controller.generate_project_report()
+        
+        print(f"Displaying reports for METRICS, PREDICTION_HISTORY, PROJECT_REPORT")
+        self.report_controller.view_reports()
+        
+

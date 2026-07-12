@@ -89,4 +89,4 @@ class ReportService:
         print("\nAvailable Reports\n")
         for report in reports:
             status = "Exists" if os.path.exists(report) else "Not Generated"
-            print(f"{os.path.basename(report)} : {status}")
+            print(f"{os.path.basename(report)} : {status}")            
