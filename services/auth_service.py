@@ -108,11 +108,14 @@ class AuthService:
 
         existing_user: User | None = self.user_repository.get_user_by_id(user_id)
         if existing_user is None:
-            return False
+            raise ValueError("User not found.")
 
         duplicate_user: User | None = self.user_repository.get_user_by_username(username)
-        if (duplicate_user is not None and duplicate_user.user_id != user_id):
+        if duplicate_user is not None and duplicate_user.user_id != user_id:
             raise ValueError("Username already exists.")
+
+        if role == User.ADMIN and existing_user.role != User.ADMIN and self.user_repository.exists_admin():
+            raise ValueError("Administrator already exists.")
 
         hashed_password: str = HashPassword.hash_password(password)
         updated_user: User = User(user_id=user_id, username=username, password=hashed_password, role=role)

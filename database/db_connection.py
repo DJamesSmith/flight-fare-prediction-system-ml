@@ -53,10 +53,10 @@ def create_tables():
 
 def create_default_admin():
     with DatabaseConnection() as db:
-        db.cursor.execute(GET_ADMIN, ("admin",))
+        db.cursor.execute(GET_ADMIN, ("Mr. Administrator",))
         if db.cursor.fetchone() is None:
             hashed_password: str = HashPassword.hash_password("Admin@123")
-            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("admin", hashed_password, User.ADMIN))
+            db.cursor.execute(INSERT_DEFAULT_ADMIN, ("Mr. Administrator", hashed_password, User.ADMIN))
             ApplicationLogger.info("Default administrator created.")
         else:
             ApplicationLogger.info("Default administrator already exists.")
