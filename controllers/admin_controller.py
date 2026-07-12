@@ -25,7 +25,7 @@ class AdminController:
         self.visualization_controller: VisualizationController = VisualizationController()
         self.report_controller: ReportController = ReportController()
 
-    def start(self):
+    def start(self, user: User):
         while True:
             self.admin_view.display_admin_menu()
 
@@ -39,10 +39,10 @@ class AdminController:
                 case 1: self.user_management()
                 case 2: self.flight_explorer()
                 case 3: self.preprocessing_controller.preprocess_dataset()              # collected execution
-                case 4: self.training_controller.train_models()                         # collected execution
-                case 5: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
-                case 6: self.predictions()
-                case 7: self.reports()
+                case 4: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
+                case 5: self.training_controller.train_models()                         # collected execution
+                case 6: self.predictions(user)
+                case 7: self.generate_reports()
                 case 8:
                     self.auth_controller.logout()
                     break
@@ -104,7 +104,7 @@ class AdminController:
                 case _:
                     print("\nInvalid choice.")
 
-    def reports(self):
+    def generate_reports(self):
         print("\nGenerating metrics report...")
         self.report_controller.generate_metrics_report()
         # print(f"Path: {METRICS_REPORT_PATH}")

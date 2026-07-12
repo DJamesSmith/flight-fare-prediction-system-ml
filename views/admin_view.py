@@ -7,11 +7,11 @@ class AdminView:
         print("-" * 10, "ADMIN MENU", "-" * 10, "\n" \
             "1. User Management\n" \
             "2. Flight Explorer\n" \
-            "3. Dataset Pipeline\n" \
-            "4. Train Models\n" \
-            "5. Visualization\n" \
+            "3. Data Preparation Pipeline\n" \
+            "4. Visualization\n" \
+            "5. Train Models\n" \
             "6. Predictions\n" \
-            "7. Reports\n" \
+            "7. Generate Reports\n" \
             "8. Logout\n")
         
     def user_management(self):
@@ -37,5 +37,8 @@ class AdminView:
             "4. Back")
 
 # Calls made to following methods:
-# 3. PreprocessingService, not FlightService. The preprocessing service only defines methods. They aren't executed until the admin selects Prepare Training Dataset.
+# 3. PreprocessingService, not FlightService. The preprocessing service only defines methods.
+#       a. They aren't executed until the admin selects Prepare Training Dataset.
+#       b. This option populates the data in flights table.
+#       c. Must be selected before options 4, 5, 6, 7. As they're all in order.
 # 4. training doesn't begin until Train ML Models is chosen.
