@@ -1,7 +1,3 @@
-GET_ADMIN = """SELECT user_id FROM users WHERE username = %s;"""
-INSERT_DEFAULT_ADMIN = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s);"""
-EXISTS_ADMIN = """SELECT EXISTS(SELECT 1 FROM users WHERE role = 'Admin');"""
-
 CREATE_USERS_TABLE = """
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,
@@ -49,6 +45,10 @@ CREATE TABLE IF NOT EXISTS predictions(
 """
 
 # --------------- USER queries ---------------
+INSERT_DEFAULT_ADMIN = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s);"""
+GET_ADMIN = """SELECT user_id FROM users WHERE username = %s;"""
+EXISTS_ADMIN = """SELECT EXISTS(SELECT 1 FROM users WHERE role = 'Admin');"""
+
 INSERT_USER = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s) RETURNING user_id, created_at;"""
 GET_USER_BY_ID = """SELECT * FROM users WHERE user_id = %s;"""
 GET_USER_BY_USERNAME = """SELECT * FROM users WHERE username = %s;"""

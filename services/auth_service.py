@@ -108,45 +108,26 @@ class AuthService:
             ApplicationLogger.info(f"Password updated for user '{user.username}'.")
         return success
 
-    # def update_user(self, user_id: int, username: str, password: str, role: str) -> bool:
-    #     self._require_admin()
-    #     self._validate_login_input(username, password)
-    #     if not User.is_valid_role(role):
-    #         raise ValueError("Invalid role.")
+    def update_user(self, user_id: int, username: str, password: str, role: str) -> bool:
+        self._require_admin()
+        self._validate_login_input(username, password)
+        if not User.is_valid_role(role):
+            raise ValueError("Invalid role.")
 
-    #     existing_user: User | None = self.user_repository.get_user_by_id(user_id)
-    #     if existing_user is None:
-    #         return False
+        existing_user: User | None = self.user_repository.get_user_by_id(user_id)
+        if existing_user is None:
+            return False
 
-    #     duplicate_user: User | None = self.user_repository.get_user_by_username(username)
-    #     if (duplicate_user is not None and duplicate_user.user_id != user_id):
-    #         raise ValueError("Username already exists.")
+        duplicate_user: User | None = self.user_repository.get_user_by_username(username)
+        if (duplicate_user is not None and duplicate_user.user_id != user_id):
+            raise ValueError("Username already exists.")
 
-    #     hashed_password: str = HashPassword.hash_password(password)
-    #     updated_user: User = User(user_id=user_id, username=username, password=hashed_password, role=role)
-    #     success: bool = self.user_repository.update_user(updated_user)
-    #     if success:
-    #         ApplicationLogger.info(f"User '{username}' updated successfully.")
-
-    #     return success
-
-    def update_user(self):
-        try:
-            user_id: int = int(input("User ID : "))
-            user: User | None = self.auth_service.user_repository.get_user_by_id(user_id)
-            if user is None:
-                print("\nUser not found.")
-                return
-            username: str = input("Username : ").strip()
-            password: str = input("Password : ").strip()
-            role: str = input("Role (Admin/User/Guest) : ").strip()
-            success: bool = self.auth_service.update_user(user_id=user_id, username=username, password=password, role=role)
-            if success:
-                print("\nUser updated successfully.")
-            else:
-                print("\nUnable to update user.")
-        except Exception as error:
-            print(error)
+        hashed_password: str = HashPassword.hash_password(password)
+        updated_user: User = User(user_id=user_id, username=username, password=hashed_password, role=role)
+        success: bool = self.user_repository.update_user(updated_user)
+        if success:
+            ApplicationLogger.info(f"User '{username}' updated successfully.")
+        return success
 
     # repository.delete_user() → True / False
     def delete_user(self, user_id: int) -> bool:

@@ -6,6 +6,7 @@
 
 from models.user import User
 from services.auth_service import AuthService
+from validation.regex_validation import RegexValidation
 
 class AuthController:
     def __init__(self):
@@ -46,14 +47,35 @@ class AuthController:
     def update_user(self):
         try:
             user_id: int = int(input("User ID : "))
+            user: User | None = self.auth_service.user_repository.get_user_by_id(user_id)
+
+            if user is None:
+                print("\nUser not found.")
+                return
+
             username: str = input("Username : ").strip()
+            valid, message = RegexValidation.validate_username(username)
+            if not valid:
+                print(message)
+                return
+
             password: str = input("Password : ").strip()
+            valid, message = RegexValidation.validate_password(password)
+            if not valid:
+                print(message)
+                return
+
             role: str = input("Role (Admin/User/Guest) : ").strip()
+            if not User.is_valid_role(role):
+                print("Invalid role.")
+                return
+
             success: bool = self.auth_service.update_user(user_id=user_id, username=username, password=password, role=role)
             if success:
                 print("\nUser updated successfully.")
             else:
-                print("\nUser not found.")
+                print("\nUnable to update user.")
+
         except Exception as error:
             print(error)
 

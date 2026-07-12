@@ -23,7 +23,7 @@ from database.queries import (
 
 # Not using __init__() here because it's better to use an active DatabaseConnection() than use it's object.
 class UserRepository:
-    # "_map_row_to_user" -> This method is intended for internal use within the class. Other code should avoid calling it directly.
+    # "_map_row_to_user" -> This method is intended for internal use within the class. Other class methods should avoid calling it directly.
     # Only the repository should know how a database row maps to a User object.
     # The service layer should never call this method directly. Hence, protected is used as a convention signifying Encapsulation.
     def _map_row_to_user(self, row: tuple) -> User:
