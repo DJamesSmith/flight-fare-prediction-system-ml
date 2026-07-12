@@ -38,12 +38,12 @@ class AdminController:
 
             match ch:
                 case 1: self.user_management()
-                case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution; populates the "flights" table data
+                case 2: self.preprocessing_controller.preprocess_dataset()              # collected execution; populates the "flights" table data; Dataset CSV ▶ Dataset Pipeline ▶ Flights table ▶ Flight Explorer ▶ Training ▶ Prediction ▶ Reports
                 case 3: self.flight_explorer()
                 case 4: self.visualization_controller.generate_visualizations()         # Visualizations are primarily for exploratory data analysis (EDA) performed during model development
                 case 5: self.training_controller.train_models()                         # collected execution, Load Dataset → Encode → Split → Train → Evaluate → Compare → Save Best Model → Save Encoder
                 case 6: self.predictions(user)
-                case 7: self.generate_reports()
+                case 7: self.generate_reports()                                         # collected execution
                 case 8:
                     self.auth_controller.logout()
                     break
@@ -84,8 +84,7 @@ class AdminController:
                 case 1: self.flight_controller.view_flights()
                 case 2: self.flight_controller.search_flights()
                 case 3: break
-                case _:
-                    print("\nInvalid choice.")
+                case _: print("\nInvalid choice.")
 
     def predictions(self, user: User):
         while True:
@@ -106,15 +105,6 @@ class AdminController:
                     print("\nInvalid choice.")
 
     def generate_reports(self):
-        # print("\nGenerating prediction history CSV...")
-        # self.report_controller.export_prediction_history_csv()
-        
-        # print("\nGenerating project report...")
-        # self.report_controller.generate_project_report()
-        
-        # print(f"Displaying reports for METRICS, PREDICTION_HISTORY, PROJECT_REPORT...")
-        # self.report_controller.view_reports()
-
         if os.path.exists(METRICS_REPORT_PATH):
             print("\nGenerating Metrics Report...")
             self.report_controller.generate_metrics_report()
