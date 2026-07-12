@@ -71,34 +71,36 @@ class AuthController:
         try:
             user_id: int = int(input("User ID : "))
             user: User | None = self.auth_service.user_repository.get_user_by_id(user_id)
-
             if user is None:
                 print("\nUser not found.")
                 return
 
-            username: str = input("New Username : ").strip()
-            valid, message = RegexValidation.validate_username(username)
-            if not valid:
-                print(message)
-                return
+            while True:
+                username: str = input("New Username : ").strip()
+                valid, message = RegexValidation.validate_username(username)
+                if not valid:
+                    print(message)
+                    continue
+                break
 
-            password: str = input("New Password : ").strip()
-            valid, message = RegexValidation.validate_password(password)
-            if not valid:
-                print(message)
-                return
+            while True:
+                password: str = input("New Password : ").strip()
+                valid, message = RegexValidation.validate_password(password)
+                if not valid:
+                    print(message)
+                    continue
+                break
 
-            role: str = input("Change Role (Admin/User/Guest) : ").strip()
-            if not User.is_valid_role(role):
-                print("Invalid role.")
-                return
+            while True:
+                role: str = input("Change Role (Admin/User/Guest) : ").strip()
+                if not User.is_valid_role(role):
+                    print("Role must be Admin, User or Guest.")
+                    continue
+                break
 
             success: bool = self.auth_service.update_user(user_id=user_id, username=username, password=password, role=role)
             if success:
                 print("\nUser updated successfully.")
-            else:
-                print("\nUnable to update user.")
-
         except Exception as error:
             print(error)
 
