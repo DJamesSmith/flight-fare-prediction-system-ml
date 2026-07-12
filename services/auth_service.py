@@ -83,41 +83,16 @@ class AuthService:
         self._require_admin()
         return self.user_repository.get_all_users()
 
-    # # retrieve user → old password correct? → repository.update_password() → True / False
-    # def change_password(self, old_password: str, new_password: str) -> bool:
-    #     user_id: int = self.current_user.user_id
-    #     self._require_login()
-    #     if (self.current_user.role != User.ADMIN and self.current_user.user_id != user_id):
-    #         raise PermissionError("You are not authorized to change another user's password.")
-
-    #     user: User = self.user_repository.get_user_by_id(user_id)
-    #     if user is None:
-    #         return False
-    #     if not HashPassword.verify_password(old_password, user.password):
-    #         ApplicationLogger.warning("Current password is incorrect.")
-    #         return False
-    #     if old_password == new_password:
-    #         ApplicationLogger.warning("New password must be different from the current password.")
-    #         return False
-    #     valid, message = RegexValidation.validate_password(new_password)
-    #     if not valid:
-    #         ApplicationLogger.warning(message)
-    #         return False
-    #     hashed_password: str = HashPassword.hash_password(new_password)
-    #     success: bool = self.user_repository.update_password(user_id, hashed_password)
-    #     if success:
-    #         ApplicationLogger.info(f"Password updated for user '{user.username}'.")
-    #     return success
-
     def verify_current_password(self, password: str) -> bool:
         self._require_login()
         return HashPassword.verify_password(password, self.current_user.password)
-    
+
     def update_password(self, new_password: str) -> bool:
         self._require_login()
         valid, message = RegexValidation.validate_password(new_password)
         if not valid:
-            raise ValueError(message)
+            ApplicationLogger.warning(message)
+            raise ValueError(f"message says: {message}")
         hashed_password: str = HashPassword.hash_password(new_password)
         success: bool = self.user_repository.update_password(self.current_user.user_id, hashed_password)
         if success:

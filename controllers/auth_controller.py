@@ -113,27 +113,13 @@ class AuthController:
         except Exception as error:
             print(error)
 
-    # def change_password(self):
-    #     try:
-    #         old_password: str = input("Current Password : ")
-    #         new_password: str = input("New Password : ")
-    #         success: bool = self.auth_service.change_password(old_password, new_password)
-    #         if success:
-    #             print("\nPassword updated.")
-    #         else:
-    #             print("\nPassword update failed.")
-    #     except Exception as error:
-    #         print(error)
-
     def change_password(self):
         try:
-            # ---------- Verify current password ----------
             while True:
                 old_password: str = input("Current Password : ").strip()
                 if self.auth_service.verify_current_password(old_password):
                     break
                 print("Current password is incorrect.")
-            # ---------- New password ----------
             while True:
                 new_password: str = input("New Password : ").strip()
                 valid, message = RegexValidation.validate_password(new_password)

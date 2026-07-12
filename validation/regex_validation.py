@@ -13,7 +13,7 @@ class RegexValidation:
         pattern = r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,20}$"
         if re.fullmatch(pattern, password):
             return True, ""
-        return False, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be 8-20 characters long."
+        return False, "\nPassword must contain at least:\n1. one uppercase letter\n2. one lowercase letter\n3. one digit, and\n4. 8 - 20 characters long."
 
     @staticmethod
     def validate_city(city: str) -> tuple[bool, str]:
