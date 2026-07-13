@@ -11,3 +11,5 @@ class BaseRepository:
                 exists = db.cursor.fetchone()[0]
             if not exists:
                 return code
+
+# Introduced to hold shared behavior of flight, user and prediction repos.

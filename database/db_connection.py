@@ -44,5 +44,3 @@ class DatabaseConnection:
             self.cursor.close()
         if self.connection:
             self.connection.close()
-
-# Introduce BaseRepository to hold shared behavior of flight, user and prediction repos.
