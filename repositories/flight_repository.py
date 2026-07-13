@@ -8,6 +8,7 @@ from models.flight import Flight
 from utilities.logger import ApplicationLogger
 from database.db_connection import DatabaseConnection
 from repositories.base_repository import BaseRepository
+from decorators.execution_time import log_execution_time
 from database.queries import (
     INSERT_FLIGHT,
     GET_FLIGHT_BY_ID,
@@ -18,6 +19,7 @@ from database.queries import (
 )
 
 class FlightRepository(BaseRepository):
+    @log_execution_time
     def insert_flights(self, flights: list[Flight]):
         try:
             with DatabaseConnection() as db:
