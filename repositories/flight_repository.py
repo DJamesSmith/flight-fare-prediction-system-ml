@@ -7,20 +7,25 @@ from psycopg2 import Error
 from models.flight import Flight
 from utilities.logger import ApplicationLogger
 from database.db_connection import DatabaseConnection
+from repositories.base_repository import BaseRepository
 from database.queries import (
     INSERT_FLIGHT,
     GET_FLIGHT_BY_ID,
     GET_ALL_FLIGHTS,
     SEARCH_FLIGHTS,
-    DELETE_ALL_FLIGHTS
+    DELETE_ALL_FLIGHTS,
+    EXISTS_FLIGHT_CODE
 )
 
-class FlightRepository:
+class FlightRepository(BaseRepository):
     def insert_flights(self, flights: list[Flight]):
         try:
             with DatabaseConnection() as db:
-                values = [
-                    (
+                values: list[tuple] = []
+                for flight in flights:
+                    flight.flight_code = self.generate_unique_code(EXISTS_FLIGHT_CODE, "flight_code")
+                    values.append((
+                        flight.flight_code,
                         flight.airline,
                         flight.journey_date,
                         flight.source,
@@ -32,9 +37,7 @@ class FlightRepository:
                         flight.total_stops,
                         flight.additional_information,
                         flight.fare,
-                    )
-                    for flight in flights
-                ]
+                    ))
                 db.cursor.executemany(INSERT_FLIGHT, values)
                 ApplicationLogger.info(f"{len(flights)} flights inserted successfully.")
         except Error as error:
@@ -45,16 +48,18 @@ class FlightRepository:
     def _map_row_to_flight(self, row: tuple) -> Flight:
         return Flight(
             flight_id = row[0],
-            airline = row[1],
-            journey_date = row[2],
-            source = row[3],
-            destination = row[4],
-            route = row[5],
-            departure_time = row[6],
-            arrival_time = row[7],
-            duration = row[8],
-            total_stops = row[9],
-            additional_information = row[10],
+            flight_code=row[1],
+            airline = row[2],
+            journey_date = row[3],
+            source = row[4],
+            destination = row[5],
+            route = row[6],
+            departure_time = row[7],
+            arrival_time = row[8],
+            duration = row[9],
+            total_stops = row[10],
+            additional_information = row[11],
+            fare=row[12],
         )
 
     # Retrieve a flight using the flight ID

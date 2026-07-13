@@ -1,7 +1,9 @@
 CREATE_USERS_TABLE = """
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,
+    user_code VARCHAR(6) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL CHECK (role IN ('Admin', 'User', 'Guest')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -11,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE_FLIGHTS_TABLE = """
 CREATE TABLE IF NOT EXISTS flights(
     flight_id SERIAL PRIMARY KEY,
+    flight_code VARCHAR(6) UNIQUE NOT NULL,
     airline VARCHAR(100) NOT NULL,
     journey_date DATE NOT NULL,
     source VARCHAR(100) NOT NULL,
@@ -30,6 +33,7 @@ CREATE TABLE IF NOT EXISTS flights(
 CREATE_PREDICTIONS_TABLE = """
 CREATE TABLE IF NOT EXISTS predictions(
     prediction_id SERIAL PRIMARY KEY,
+    prediction_code VARCHAR(6) UNIQUE NOT NULL,
     user_id INTEGER NOT NULL,
     flight_id INTEGER NOT NULL,
     predicted_fare DECIMAL(10,2) NOT NULL,
@@ -48,32 +52,49 @@ CREATE TABLE IF NOT EXISTS predictions(
 """
 
 # --------------- USER queries ---------------
-INSERT_DEFAULT_ADMIN = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s);"""
+INSERT_DEFAULT_ADMIN = """INSERT INTO users (user_code, username, email, password, role) VALUES (%s, %s, %s, %s, %s);"""           # check this for user_code in db_connection
 EXISTS_ADMIN = """SELECT EXISTS(SELECT 1 FROM users WHERE role = 'Admin');"""
 
-INSERT_USER = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s) RETURNING user_id, created_at;"""
+INSERT_USER = """INSERT INTO users (user_code, username, email, password, role) VALUES (%s, %s, %s, %s, %s) RETURNING user_id, created_at;"""
 GET_USER_BY_ID = """SELECT * FROM users WHERE user_id = %s;"""
 GET_USER_BY_USERNAME = """SELECT * FROM users WHERE username = %s;"""
+GET_USER_BY_EMAIL = """SELECT * FROM users WHERE email = %s;"""
+GET_USER_BY_LOGIN = """SELECT * FROM users WHERE username = %s OR email = %s;"""
 GET_ALL_USERS = """SELECT * FROM users ORDER BY user_id;"""
-UPDATE_USER = """UPDATE users SET username = %s, password = %s, role = %s WHERE user_id = %s;"""
+UPDATE_USER = """UPDATE users SET username = %s, email = %s, password = %s, role = %s WHERE user_id = %s;"""
 UPDATE_PASSWORD = """UPDATE users SET password = %s WHERE user_id = %s;"""
 DELETE_USER = """DELETE FROM users WHERE user_id = %s;"""
-EXISTS_BY_USERNAME = """SELECT EXISTS( SELECT 1 FROM users WHERE username = %s);"""
+
+EXISTS_USER_CODE = """SELECT EXISTS(SELECT 1 FROM users WHERE user_code=%s);"""
 
 # -------------- FLIGHT queries --------------
 INSERT_FLIGHT = """
-INSERT INTO flights(airline, journey_date, source, destination, route, departure_time, arrival_time, duration, total_stops, additional_information, fare)
-VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
+INSERT INTO flights(
+    flight_code,
+    airline,
+    journey_date,
+    source,
+    destination,
+    route,
+    departure_time,
+    arrival_time,
+    duration,
+    total_stops,
+    additional_information,
+    fare)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 """
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
 SEARCH_FLIGHTS = "SELECT * FROM flights WHERE 1=1"
 DELETE_ALL_FLIGHTS = """DELETE FROM flights;"""
+EXISTS_FLIGHT_CODE = """SELECT EXISTS(SELECT 1 FROM flights WHERE flight_code=%s);"""
 
 # ------------ PREDICTION queries ------------
 
-INSERT_PREDICTION = """INSERT INTO predictions (user_id, flight_id, predicted_fare) VALUES (%s, %s, %s) RETURNING prediction_id, prediction_time;"""
+INSERT_PREDICTION = """INSERT INTO predictions (user_id, flight_id, prediction_code, predicted_fare) VALUES (%s, %s, %s, %s) RETURNING prediction_id, prediction_time;"""
 GET_PREDICTION_BY_ID = """SELECT * FROM predictions WHERE prediction_id = %s;"""
 GET_ALL_PREDICTIONS = """SELECT * FROM predictions ORDER BY prediction_time DESC;"""
 DELETE_PREDICTION = """DELETE FROM predictions WHERE prediction_id = %s;"""
 GET_PREDICTIONS_BY_USER = """SELECT * FROM predictions WHERE user_id = %s ORDER BY prediction_time DESC;"""
+EXISTS_PREDICTION_CODE = """SELECT EXISTS(SELECT 1 FROM predictions WHERE prediction_code=%s);"""

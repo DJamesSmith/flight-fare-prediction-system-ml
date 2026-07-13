@@ -4,6 +4,7 @@ from datetime import date, time
 @dataclass
 class Flight:
     flight_id: int | None = None
+    flight_code: str = ""
     airline: str = ""
     journey_date: date = ""
     source: str = ""
@@ -17,7 +18,8 @@ class Flight:
     fare: float | None = None
 
     def display_details(self):
-        print(f"Airline : {self.airline}\n" \
+        print(f"flight Code : {self.flight_code}\n" \
+            f"Airline : {self.airline}\n" \
             f"Journey Date : {self.journey_date}\n" \
             f"Source : {self.source}\n" \
             f"Destination : {self.destination}\n" \
@@ -34,6 +36,7 @@ class Flight:
     # When the ML pipeline is implemented, a pandas DataFrame from Flight objects is to be created
     def to_dictionary(self) -> dict[str, object]:
         return {
+            "flight_code": self.flight_code,
             "Airline": self.airline,
             "Journey_Date": self.journey_date,
             "Source": self.source,

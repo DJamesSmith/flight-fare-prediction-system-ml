@@ -7,6 +7,7 @@
 import getpass
 from models.user import User
 from services.auth_service import AuthService
+from utilities.helper import Helper
 from validation.regex_validation import RegexValidation
 
 class AuthController:
@@ -14,12 +15,12 @@ class AuthController:
         self.auth_service: AuthService = AuthService()
 
     def login(self) -> User | None:
-        username: str = input("Username : ").strip()
+        login_identifier: str = input("Username / Email : ").strip()
         password: str = getpass.getpass("Password : ").strip()
         try:
-            user: User | None = self.auth_service.login(username, password)
+            user: User | None = self.auth_service.login(login_identifier, password)
             if user is None:
-                print("\nIncorrect username or password.")
+                print("\nIncorrect username/email or password.")
             return user
         except Exception as error:
             print("error_from_auth_controller", error)
@@ -29,6 +30,14 @@ class AuthController:
         while True:
             username: str = input("Username : ").strip()
             valid, message = RegexValidation.validate_username(username)
+            if not valid:
+                print(message)
+                continue
+            break
+
+        while True:
+            email: str = input("Email : ").strip()
+            valid, message = RegexValidation.validate_email(email)
             if not valid:
                 print(message)
                 continue
@@ -50,8 +59,8 @@ class AuthController:
             break
 
         try:
-            user: User = self.auth_service.create_user(username=username, password=password, role=role)
-            print(f"\n{role} created successfully.\n")
+            user: User = self.auth_service.create_user(username=username, email=email, password=password, role=role)
+            print(f"\n{role} created successfully at {Helper.format_timestamp()}.\n")
             user.display_details()
         except Exception as error:
             print(error)
@@ -64,14 +73,17 @@ class AuthController:
                 return
 
             print("\n", "-" * 60)
-            print(f"{'ID':<5}{'Username':<20}{'Role':<10}{'Created At':<30}")
+            print(f"{'ID':<5}{'User Code':<15}{'Username':<20}{'Email':<20}{'Role':<10}{'Created At':<30}")
             print("-" * 60)
             for user in users:
+                created_at_formatted = Helper.format_timestamp(user.created_at)
                 print(
                     f"{user.user_id:<5}"
+                    f"{user.user_code:<5}"
                     f"{user.username:<20}"
+                    f"{user.email:<20}"
                     f"{user.role:<10}"
-                    f"{str(user.created_at):<30}"
+                    f"{str(created_at_formatted):<30}"
                 )
             print("-" * 60)
         except Exception as error:
@@ -94,6 +106,14 @@ class AuthController:
                 break
 
             while True:
+                email: str = input("New Email : ").strip()
+                valid, message = RegexValidation.validate_email(email)
+                if not valid:
+                    print(message)
+                    continue
+                break
+
+            while True:
                 password: str = input("New Password : ").strip()
                 valid, message = RegexValidation.validate_password(password)
                 if not valid:
@@ -108,7 +128,7 @@ class AuthController:
                     continue
                 break
 
-            success: bool = self.auth_service.update_user(user_id=user_id, username=username, password=password, role=role)
+            success: bool = self.auth_service.update_user(user_id=user_id, username=username, email=email, password=password, role=role)
             if success:
                 print("\nUser updated successfully.")
         except Exception as error:

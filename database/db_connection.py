@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from models.user import User
 from utilities.logger import ApplicationLogger
 from utilities.password_hasher import HashPassword
+from repositories.base_repository import BaseRepository
 from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, INSERT_DEFAULT_ADMIN, EXISTS_ADMIN
 
 load_dotenv()
@@ -60,6 +61,7 @@ def create_default_admin():
             return
 
         hashed_password: str = HashPassword.hash_password("Admin@123")
+        User.user_code = BaseRepository.generate_unique_code(EXISTS_USER_CODE, "user_code")
         db.cursor.execute(INSERT_DEFAULT_ADMIN, ("adminX", hashed_password, User.ADMIN))
         ApplicationLogger.info("Default administrator created.")
 

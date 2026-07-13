@@ -41,26 +41,25 @@ class AuthService:
             ApplicationLogger.warning(message)
             raise ValueError(message)
 
-    """username + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
-    Flow: validate_credentials() → get_user_by_username() → store current_user → return User"""
-    def login(self, username: str, password: str) -> User | None:
-        if not username.strip() or not password.strip():
-            raise ValueError("Incorrect username or password.")
-        user: User = self.user_repository.get_user_by_username(username)
+    """login_identifier + password → authenticate() → returns User → user.role == "Admin" || user.role == "User" or || user.role == "Guest"
+    Flow: validate_credentials() → get_user_by_login() → store current_user → return User"""
+    def login(self, login_identifier: str, password: str) -> User | None:
+        if not login_identifier.strip() or not password.strip():
+            raise ValueError("Incorrect username/email or password.")
+        user: User = self.user_repository.get_user_by_login(login_identifier)
 
         if user is None:
-            ApplicationLogger.warning(f"Failed login attempt for username '{username}'.")
+            ApplicationLogger.warning(f"Failed login attempt for '{login_identifier}'.")
             return None
         if not HashPassword.verify_password(password, user.password):
-            ApplicationLogger.warning(f"Invalid password for username '{username}'.")
+            ApplicationLogger.warning(f"Invalid password for '{login_identifier}'.")
             return None
 
         self.current_user = user
         ApplicationLogger.info(f"User '{user.username}' logged in successfully as {user.role}.")
         return user
 
-    # validate username → exists_by_username() → create User object → repository.create_user() → return created user
-    def create_user(self, username: str, password: str, role: str) -> User:
+    def create_user(self, username: str, email: str, password: str, role: str) -> User:
         self._require_admin()
         self._validate_login_input(username, password)
 
@@ -70,11 +69,14 @@ class AuthService:
         if not User.is_valid_role(role):
             raise ValueError("Role must be either 'Admin', 'User' or 'Guest'.")
 
-        if self.user_repository.exists_by_username(username):
+        if self.user_repository.get_user_by_username(username):
             raise ValueError("Username already exists.")
 
+        if self.user_repository.get_user_by_email(email):
+            raise ValueError("Email already exists.")
+
         hashed_password: str = HashPassword.hash_password(password)
-        new_user: User = User(username = username, password = hashed_password, role = role)
+        new_user: User = User(username = username, email=email, password = hashed_password, role = role)
         created_user: User = self.user_repository.create_user(new_user)
         ApplicationLogger.info(f"User '{username}' created successfully.")
         return created_user
@@ -100,7 +102,7 @@ class AuthService:
             ApplicationLogger.info(f"Password updated for user '{self.current_user.username}'.")
         return success
 
-    def update_user(self, user_id: int, username: str, password: str, role: str) -> bool:
+    def update_user(self, user_id: int, username: str, email: str, password: str, role: str) -> bool:
         self._require_admin()
         self._validate_login_input(username, password)
         if not User.is_valid_role(role):
@@ -110,15 +112,19 @@ class AuthService:
         if existing_user is None:
             raise ValueError("User not found.")
 
-        duplicate_user: User | None = self.user_repository.get_user_by_username(username)
-        if duplicate_user is not None and duplicate_user.user_id != user_id:
+        duplicate_username: User | None = self.user_repository.get_user_by_username(username)
+        if duplicate_username is not None and duplicate_username.user_id != user_id:
             raise ValueError("Username already exists.")
+
+        duplicate_email: User | None = self.user_repository.get_user_by_email(email)
+        if duplicate_email is not None and duplicate_email.user_id != user_id:
+            raise ValueError("Email already exists.")
 
         if role == User.ADMIN and existing_user.role != User.ADMIN and self.user_repository.exists_admin():
             raise ValueError("Administrator already exists.")
 
         hashed_password: str = HashPassword.hash_password(password)
-        updated_user: User = User(user_id=user_id, username=username, password=hashed_password, role=role)
+        updated_user: User = User(user_id=user_id, username=username, email=email, password=hashed_password, role=role)
         success: bool = self.user_repository.update_user(updated_user)
         if success:
             ApplicationLogger.info(f"User '{username}' updated successfully.")

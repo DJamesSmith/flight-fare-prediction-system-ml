@@ -4,6 +4,7 @@ from datetime import datetime
 @dataclass
 class Prediction:
     prediction_id: int | None = None
+    prediction_code: str = ""
     user_id: int = 0
     flight_id: int = 0
     predicted_fare: float = 0.0
@@ -11,6 +12,7 @@ class Prediction:
 
     def display_prediction(self):
         print(f"Prediction ID : {self.prediction_id}")
+        print(f"Prediction Code : {self.prediction_code}")
         print(f"User ID : {self.user_id}")
         print(f"Flight ID : {self.flight_id}")
         print(f"Predicted Fare : ₹{self.predicted_fare}")

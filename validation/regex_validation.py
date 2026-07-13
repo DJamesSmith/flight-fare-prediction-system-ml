@@ -9,6 +9,23 @@ class RegexValidation:
         return False, "Username must start with a letter and contain 3-20 alphanumeric characters."
 
     @staticmethod
+    def validate_email(email: str) -> tuple[bool, str]:
+        pattern = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,7}"
+        if re.fullmatch(pattern, email):
+            return True, ""
+        return False, (
+            "Invalid email address.\n"
+            "Valid Email criterion:\n"
+            "- Must contain a username before the '@' symbol.\n"
+            "- Must contain exactly one '@' symbol.\n"
+            "- Must contain a valid domain name after the '@' symbol.\n"
+            "- Must end with a valid domain extension (2-7 letters), e.g., .com or .org.\n"
+            "- Username may contain letters, numbers, '.', '_', '%', '+', and '-'.\n"
+            "- Domain name may contain letters, numbers, '.', and '-'.\n"
+            "- Example: john.doe@example.com"
+        )
+
+    @staticmethod
     def validate_password(password: str) -> tuple[bool, str]:
         pattern = r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,20}$"
         if re.fullmatch(pattern, password):

@@ -3,7 +3,14 @@ from datetime import datetime
 class Helper:
     @staticmethod
     def current_timestamp():
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return datetime.now().strftime("%d %B %Y %I:%M %p")
+    
+    @staticmethod
+    def format_timestamp(timestamp):
+        # Converts a datetime object to the desired format
+        if isinstance(timestamp, datetime):
+            return timestamp.strftime("%d %B %Y %I:%M %p")
+        return str(timestamp)  # Fallback for string timestamps
 
     @staticmethod
     def print_separator():
