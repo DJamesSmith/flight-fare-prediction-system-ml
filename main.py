@@ -5,10 +5,10 @@
 # Exit application.
 
 from controllers.application_controller import ApplicationController
-from database.db_connection import initialize_database
+from database.db_initializer import DatabaseInitializer
 
 if __name__ == "__main__":
-    initialize_database()
+    DatabaseInitializer.initialize_database()
 
     app: ApplicationController = ApplicationController()
     app.start_app()

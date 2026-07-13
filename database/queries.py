@@ -1,7 +1,7 @@
 CREATE_USERS_TABLE = """
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,
-    user_code VARCHAR(6) UNIQUE NOT NULL,
+    user_code VARCHAR(8) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE_FLIGHTS_TABLE = """
 CREATE TABLE IF NOT EXISTS flights(
     flight_id SERIAL PRIMARY KEY,
-    flight_code VARCHAR(6) UNIQUE NOT NULL,
+    flight_code VARCHAR(8) UNIQUE NOT NULL,
     airline VARCHAR(100) NOT NULL,
     journey_date DATE NOT NULL,
     source VARCHAR(100) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS flights(
 CREATE_PREDICTIONS_TABLE = """
 CREATE TABLE IF NOT EXISTS predictions(
     prediction_id SERIAL PRIMARY KEY,
-    prediction_code VARCHAR(6) UNIQUE NOT NULL,
+    prediction_code VARCHAR(8) UNIQUE NOT NULL,
     user_id INTEGER NOT NULL,
     flight_id INTEGER NOT NULL,
     predicted_fare DECIMAL(10,2) NOT NULL,

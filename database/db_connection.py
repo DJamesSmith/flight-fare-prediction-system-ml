@@ -5,13 +5,8 @@
 
 import os
 import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
-from models.user import User
 from utilities.logger import ApplicationLogger
-from utilities.password_hasher import HashPassword
-from repositories.base_repository import BaseRepository
-from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, INSERT_DEFAULT_ADMIN, EXISTS_ADMIN, EXISTS_USER_CODE
 
 load_dotenv()
 
@@ -21,55 +16,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 
-# Creates the project database if it does not already exist
-def create_database():
-    connection = psycopg2.connect(
-        host=DB_HOST,
-        database="postgres",
-        user=DB_USER,
-        password=DB_PASSWORD,
-        port=DB_PORT
-    )
-
-    connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cursor = connection.cursor()
-    cursor.execute("SELECT 1 FROM pg_database WHERE datname=%s;", (DB_NAME,))
-    database_exists = cursor.fetchone()
-    if not database_exists:
-        cursor.execute(f"CREATE DATABASE {DB_NAME}")
-        print(f"Database '{DB_NAME}' created successfully.")
-    else:
-        print(f"Database '{DB_NAME}' already exists.")
-
-    cursor.close()
-    connection.close()
-
-# Creates all required project tables
-def create_tables():
-    with DatabaseConnection() as db:
-        db.cursor.execute(CREATE_USERS_TABLE)
-        db.cursor.execute(CREATE_FLIGHTS_TABLE)
-        db.cursor.execute(CREATE_PREDICTIONS_TABLE)
-    ApplicationLogger.info("All database tables are ready.")
-
-def create_default_admin():
-    with DatabaseConnection() as db:
-        db.cursor.execute(EXISTS_ADMIN)
-        admin_exists: bool = db.cursor.fetchone()[0]
-        if admin_exists:
-            ApplicationLogger.info("Administrator already exists.")
-            return
-
-        hashed_password: str = HashPassword.hash_password("Admin@123")
-        User.user_code = BaseRepository.generate_unique_code(EXISTS_USER_CODE, "user_code")
-        db.cursor.execute(INSERT_DEFAULT_ADMIN, ("adminX", hashed_password, User.ADMIN))
-        ApplicationLogger.info("Default administrator created.")
-
-def initialize_database():
-    create_database()
-    create_tables()
-    create_default_admin()
-
+# Context manager responsible only for opening and closing PostgreSQL connections
 # Custom Context Manager responsible only for opening and closing PostgreSQL connections
 class DatabaseConnection:
     def __init__(self):
@@ -89,16 +36,13 @@ class DatabaseConnection:
 
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_type:
-            ApplicationLogger.warning(f"Database Transaction rolled back: {exc_value}")
             self.connection.rollback()
+            ApplicationLogger.warning(f"Database transaction rolled back: {exc_value}")
         else:
             self.connection.commit()
-
         if self.cursor:
             self.cursor.close()
-
         if self.connection:
             self.connection.close()
-
 
 # Introduce BaseRepository to hold shared behavior of flight, user and prediction repos.

@@ -2,7 +2,8 @@ from database.db_connection import DatabaseConnection
 from utilities.id_generator import IDGenerator
 
 class BaseRepository:
-    def generate_unique_code(self, exists_query: str) -> str:
+    @staticmethod
+    def generate_unique_code(exists_query: str) -> str:
         while True:
             code: str = IDGenerator.generate()
             with DatabaseConnection() as db:
