@@ -11,15 +11,14 @@ flight_fare_env\Scripts\activate
 Step 2.
 Then install the required libraries
 Start with:
-pip install pandas numpy matplotlib scikit-learn
+pip install pandas matplotlib scikit-learn reportlab psycopg2
 
-Note: Pandas depends on NumPy, so if you install only pandas that'll install numpy too automatically.
+Note: Pandas automatically installs NumPy dependency, because numpy is dependent on pandas.
 
 Later, if you decide to use XGBoost:
 pip install xgboost
 
-Generate requirements.txt
-Once everything is installed:
+Generate requirements.txt (Once everything is installed):
 pip freeze > requirements.txt
 
 Your requirements.txt will look something like:

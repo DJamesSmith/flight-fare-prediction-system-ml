@@ -139,11 +139,4 @@ class AdminController:
 # "1. Predict Flight Fare" should not ask for flightID if flights table hasn't been populated, it should say no flights. Same for "3. Delete Prediction".
 
 # ------------------------------------------------------------
-# Why populate flights table?
-# SELECT * FROM flights;
-# Search Flights:
-# SELECT * FROM flights WHERE source='Delhi';
-# SELECT * FROM flights WHERE airline='IndiGo';
-# SELECT * FROM flights ORDER BY fare;
-# Pagination: LIMIT 20 OFFSET 40
-# Total Flights: COUNT(*)
+# Why populate flight table ? What are we using the flight table for ?

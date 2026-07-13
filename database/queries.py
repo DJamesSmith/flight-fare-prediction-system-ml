@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS predictions(
 
 # --------------- USER queries ---------------
 INSERT_DEFAULT_ADMIN = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s);"""
-GET_ADMIN = """SELECT user_id FROM users WHERE username = %s;"""
 EXISTS_ADMIN = """SELECT EXISTS(SELECT 1 FROM users WHERE role = 'Admin');"""
 
 INSERT_USER = """INSERT INTO users (username, password, role) VALUES (%s, %s, %s) RETURNING user_id, created_at;"""

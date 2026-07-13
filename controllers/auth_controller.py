@@ -4,6 +4,7 @@
 # 3. print results
 # 4. return the logged-in user
 
+import getpass
 from models.user import User
 from services.auth_service import AuthService
 from validation.regex_validation import RegexValidation
@@ -14,7 +15,7 @@ class AuthController:
 
     def login(self) -> User | None:
         username: str = input("Username : ").strip()
-        password: str = input("Password : ").strip()
+        password: str = getpass.getpass("Password : ").strip()
         try:
             user: User | None = self.auth_service.login(username, password)
             if user is None:
