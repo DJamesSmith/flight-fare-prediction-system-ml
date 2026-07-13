@@ -23,7 +23,7 @@ class FlightRepository(BaseRepository):
             with DatabaseConnection() as db:
                 values: list[tuple] = []
                 for flight in flights:
-                    flight.flight_code = self.generate_unique_code(EXISTS_FLIGHT_CODE, "flight_code")
+                    flight.flight_code = self.generate_unique_code(EXISTS_FLIGHT_CODE)
                     values.append((
                         flight.flight_code,
                         flight.airline,
