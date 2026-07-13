@@ -11,7 +11,7 @@ from models.user import User
 from utilities.logger import ApplicationLogger
 from utilities.password_hasher import HashPassword
 from repositories.base_repository import BaseRepository
-from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, INSERT_DEFAULT_ADMIN, EXISTS_ADMIN
+from database.queries import CREATE_USERS_TABLE, CREATE_FLIGHTS_TABLE, CREATE_PREDICTIONS_TABLE, INSERT_DEFAULT_ADMIN, EXISTS_ADMIN, EXISTS_USER_CODE
 
 load_dotenv()
 
