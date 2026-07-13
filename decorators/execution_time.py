@@ -9,7 +9,7 @@ MODEL_EXECUTION_TIMES: dict[str, float] = {}
 def log_execution_time(view_func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(view_func)
     def wrapper(*args: tuple, **kwargs: dict) -> Any:
-        print("ARGS values: ", *args, "\nKWARGS dict: ", **kwargs)
+        # print("ARGS values: ", *args, "\nKWARGS dict: ", **kwargs)
         start_time: float = time.perf_counter()
         result: object = view_func(*args, **kwargs)
         end_time: float = time.perf_counter()
