@@ -72,20 +72,20 @@ class AuthController:
                 print("\nNo users found.")
                 return
 
-            print("\n", "-" * 60)
-            print(f"{'ID':<5}{'User Code':<15}{'Username':<20}{'Email':<20}{'Role':<10}{'Created At':<30}")
-            print("-" * 60)
+            print("\n", "-" * 100)
+            print(f"{'ID':<5}{'User Code':<15}{'Username':<15}{'Email':<40}{'Role':<10}{'Created At':<30}")
+            print("-" * 100)
             for user in users:
                 created_at_formatted = Helper.format_timestamp(user.created_at)
                 print(
                     f"{user.user_id:<5}"
-                    f"{user.user_code:<5}"
-                    f"{user.username:<20}"
-                    f"{user.email:<20}"
+                    f"{user.user_code:<15}"
+                    f"{user.username:<15}"
+                    f"{user.email:<40}"
                     f"{user.role:<10}"
                     f"{str(created_at_formatted):<30}"
                 )
-            print("-" * 60)
+            print("-" * 100)
         except Exception as error:
             print(error)
 
@@ -130,7 +130,7 @@ class AuthController:
 
             success: bool = self.auth_service.update_user(user_id=user_id, username=username, email=email, password=password, role=role)
             if success:
-                print("\nUser updated successfully.")
+                print(f"\n{role} updated successfully.")
         except Exception as error:
             print(error)
 

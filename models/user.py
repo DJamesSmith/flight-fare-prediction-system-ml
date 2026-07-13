@@ -21,7 +21,7 @@ class User:
         print(f"User ID : {self.user_id}")
         print(f"User Code : {self.user_code}")
         print(f"Username : {self.username}")
-        print(f"Email : {self.username}")
+        print(f"Email : {self.email}")
         print(f"Password : {self.password}")
         print(f"Role : {self.role}")
         print(f"Created at : {self.created_at}")
