@@ -3,6 +3,6 @@ import string
 
 class IDGenerator:
     @staticmethod
-    def generate(length: int = 8) -> str:
+    def generate(length: int = 6) -> str:
         characters = string.ascii_uppercase + string.digits
         return "".join(random.choices(characters, k=length))

@@ -23,9 +23,10 @@ class FlightRepository(BaseRepository):
     def insert_flights(self, flights: list[Flight]):
         try:
             with DatabaseConnection() as db:
+                generated_codes: list[str] = self.generate_bulk_codes(EXISTS_FLIGHT_CODE, len(flights))
                 values: list[tuple] = []
-                for flight in flights:
-                    flight.flight_code = self.generate_unique_code(EXISTS_FLIGHT_CODE)
+                for flight, code in zip(flights, generated_codes):
+                    flight.flight_code = code
                     values.append((
                         flight.flight_code,
                         flight.airline,
