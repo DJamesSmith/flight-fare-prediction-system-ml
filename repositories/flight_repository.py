@@ -15,7 +15,9 @@ from database.queries import (
     GET_ALL_FLIGHTS,
     SEARCH_FLIGHTS,
     DELETE_ALL_FLIGHTS,
-    EXISTS_FLIGHT_CODE
+    TRUNCATE_FLIGHTS,
+    EXISTS_FLIGHT_CODE,
+    COUNT_FLIGHTS
 )
 
 class FlightRepository(BaseRepository):
@@ -117,11 +119,20 @@ class FlightRepository(BaseRepository):
             ApplicationLogger.error(str(error))
             raise RuntimeError(f"Unable to search flights: {error}")
 
-    def delete_all_flights(self):
+    def flights_exist(self) -> bool:
         try:
             with DatabaseConnection() as db:
-                db.cursor.execute(DELETE_ALL_FLIGHTS)
-                ApplicationLogger.info("Existing flights removed.")
+                db.cursor.execute(COUNT_FLIGHTS)
+                return db.cursor.fetchone()[0] > 0
         except Error as error:
             ApplicationLogger.error(str(error))
-            raise RuntimeError(f"Unable to delete flights: {error}")
+            raise RuntimeError(f"Unable to determine whether flights exist: {error}")
+
+    def truncate_flights(self):
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(TRUNCATE_FLIGHTS)
+                ApplicationLogger.info("Flights table truncated successfully.")
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to truncate flights table: {error}")

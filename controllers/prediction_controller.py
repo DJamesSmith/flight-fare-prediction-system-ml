@@ -18,7 +18,7 @@ class PredictionController:
         self.prediction_service: PredictionService = PredictionService()
 
     # Predict fare for one flight
-    def predict_fare(self, current_user: User):
+    def predict_fare(self, current_user: User):         # hello
         try:
             flight_id: int = int(input("Enter Flight ID : "))
 

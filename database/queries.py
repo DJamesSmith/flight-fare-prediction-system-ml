@@ -87,7 +87,9 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
 SEARCH_FLIGHTS = "SELECT * FROM flights WHERE 1=1"
-DELETE_ALL_FLIGHTS = """DELETE FROM flights;"""
+# DELETE_ALL_FLIGHTS = """DELETE FROM flights;"""
+COUNT_FLIGHTS = """SELECT COUNT(*) FROM flights;"""
+TRUNCATE_FLIGHTS = """TRUNCATE TABLE flights RESTART IDENTITY CASCADE;"""
 EXISTS_FLIGHT_CODE = """SELECT EXISTS(SELECT 1 FROM flights WHERE flight_code=%s);"""
 
 # ------------ PREDICTION queries ------------

@@ -22,6 +22,9 @@ class PreprocessingService:
         self.cleaned_dataframe: pd.DataFrame = pd.DataFrame()
         self.feature_dataframe: pd.DataFrame = pd.DataFrame()
 
+    def dataset_already_processed(self) -> bool:
+        return self.flight_service.flights_exist()
+
     @log_execution_time
     def load_dataset(self) -> pd.DataFrame:
         ApplicationLogger.info("Loading dataset.")
@@ -101,8 +104,7 @@ class PreprocessingService:
 
     @log_execution_time
     def populate_flights_table(self):
-        print("---->>>>>", self.cleaned_dataframe.columns.tolist())
-        ApplicationLogger.info(f"populating using dataframe: {self.cleaned_dataframe.columns.tolist()}")
+        ApplicationLogger.info(f"Populating flights table using dataframe: {self.cleaned_dataframe.columns.tolist()}")
         flights: list[Flight] = []
         for _, row in self.cleaned_dataframe.iterrows():
             flights.append(
@@ -118,8 +120,8 @@ class PreprocessingService:
                     total_stops=row["Total_Stops"],
                     additional_information=row["Additional_Information"],
                     fare=float(row["Fare"]),
-                )
-            )
+                ))
+        self.flight_service.truncate_flights()
         self.flight_service.import_flights(flights)
         ApplicationLogger.info(f"{len(flights)} flights imported into PostgreSQL.")
 
