@@ -44,7 +44,7 @@ class AuthController:
             break
 
         while True:
-            password: str = input("Password : ").strip()
+            password: str = getpass.getpass("Password : ").strip()
             valid, message = RegexValidation.validate_password(password)
             if not valid:
                 print(message)
@@ -148,12 +148,12 @@ class AuthController:
     def change_password(self):
         try:
             while True:
-                old_password: str = input("Current Password : ").strip()
+                old_password: str = getpass.getpass("Current Password : ").strip()
                 if self.auth_service.verify_current_password(old_password):
                     break
                 print("Current password is incorrect.")
             while True:
-                new_password: str = input("New Password : ").strip()
+                new_password: str = getpass.getpass("New Password : ").strip()
                 valid, message = RegexValidation.validate_password(new_password)
                 if not valid:
                     print(message)

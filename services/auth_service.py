@@ -88,9 +88,15 @@ class AuthService:
     def get_user_by_id(self, user_id: int) -> User | None:
         return self.user_repository.get_user_by_id(user_id)
 
+    # def verify_current_password(self, password: str) -> bool:
+    #     self._require_login()
+    #     return HashPassword.verify_password(password, self.current_user.password)
+
     def verify_current_password(self, password: str) -> bool:
         self._require_login()
-        return HashPassword.verify_password(password, self.current_user.password)
+        if not password.strip():
+            return False
+        return HashPassword.verify_password(password=password, hashed_password=self.current_user.password)
 
     def update_password(self, new_password: str) -> bool:
         self._require_login()
@@ -99,7 +105,7 @@ class AuthService:
             ApplicationLogger.warning(message)
             raise ValueError(f"message says: {message}")
         hashed_password: str = HashPassword.hash_password(new_password)
-        success: bool = self.user_repository.update_password(self.current_user.user_id, hashed_password)
+        success: bool = self.user_repository.update_password(user_id=self.current_user.user_id, new_password=hashed_password)
         if success:
             self.current_user.password = hashed_password
             ApplicationLogger.info(f"Password updated for user '{self.current_user.username}'.")
