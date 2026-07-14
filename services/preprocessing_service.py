@@ -83,7 +83,7 @@ class PreprocessingService:
 
     def convert_data_types(self):
         self.cleaned_dataframe["Journey_Date"] = pd.to_datetime(self.cleaned_dataframe["Journey_Date"], dayfirst=True)
-        self.cleaned_dataframe["Departure_Time"] = pd.to_datetime(self.cleaned_dataframe["Departure_Time"], format="%H:%M")
+        self.cleaned_dataframe["Departure_Time"] = pd.to_datetime(self.cleaned_dataframe["Departure_Time"], format="mixed")
         self.cleaned_dataframe["Arrival_Time"] = pd.to_datetime(self.cleaned_dataframe["Arrival_Time"], format="mixed", dayfirst=True)
         self.cleaned_dataframe["Fare"] = self.cleaned_dataframe["Fare"].astype(float)
         ApplicationLogger.info("Column data types converted successfully.")
