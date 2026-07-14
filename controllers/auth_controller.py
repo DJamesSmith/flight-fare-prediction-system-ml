@@ -92,7 +92,7 @@ class AuthController:
     def update_user(self):
         try:
             user_id: int = int(input("User ID : "))
-            user: User | None = self.auth_service.user_repository.get_user_by_id(user_id)
+            user: User | None = self.auth_service.get_user_by_id(user_id)
             if user is None:
                 print("\nUser not found.")
                 return
