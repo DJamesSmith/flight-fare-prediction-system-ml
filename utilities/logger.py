@@ -21,5 +21,9 @@ class ApplicationLogger:
     def error(message: str):
         logging.error(message)
 
+    @staticmethod
+    def debug(message: str):
+        logging.debug(message)
+
 # How to use:
 # ApplicationLogger.info("Model trained successfully.")
