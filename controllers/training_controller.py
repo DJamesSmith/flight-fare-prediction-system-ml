@@ -9,7 +9,6 @@
 
 from services.training_service import TrainingService
 
-
 class TrainingController:
     def __init__(self):
         self.training_service: TrainingService = TrainingService()

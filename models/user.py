@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import ClassVar
 from datetime import datetime
+from utilities.helper import Helper
 
 @dataclass
 class User:
@@ -24,7 +25,7 @@ class User:
         print(f"Email : {self.email}")
         print(f"Password : {self.password}")
         print(f"Role : {self.role}")
-        print(f"Created at : {self.created_at}")
+        print(f"Created at : {Helper.format_timestamp(self.created_at)}")
 
     @classmethod
     def is_valid_role(cls, role):

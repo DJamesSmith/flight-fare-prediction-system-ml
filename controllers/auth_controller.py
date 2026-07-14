@@ -60,7 +60,7 @@ class AuthController:
 
         try:
             user: User = self.auth_service.create_user(username=username, email=email, password=password, role=role)
-            print(f"\n{role} created successfully at {Helper.format_timestamp()}.\n")
+            print(f"\n{role} created successfully at {Helper.format_timestamp(user.created_at)}.\n")
             user.display_details()
         except Exception as error:
             print(error)

@@ -36,7 +36,7 @@ class UserRepository(BaseRepository):
     def create_user(self, user: User) -> User:
         try:
             with DatabaseConnection() as db:
-                user.user_code = self.generate_unique_code(EXISTS_USER_CODE, "user_code")
+                user.user_code = self.generate_unique_code(EXISTS_USER_CODE)
                 db.cursor.execute(INSERT_USER, (user.user_code, user.username, user.email, user.password, user.role))
                 result = db.cursor.fetchone()
                 user.user_id = result[0]
