@@ -92,7 +92,7 @@ EXISTS_FLIGHT_CODE = """SELECT EXISTS(SELECT 1 FROM flights WHERE flight_code=%s
 
 # ------------ PREDICTION queries ------------
 
-INSERT_PREDICTION = """INSERT INTO predictions (user_id, flight_id, prediction_code, predicted_fare) VALUES (%s, %s, %s, %s) RETURNING prediction_id, prediction_time;"""
+INSERT_PREDICTION = """INSERT INTO predictions (prediction_code, user_id, flight_id, predicted_fare) VALUES (%s, %s, %s, %s) RETURNING prediction_id, prediction_time;"""
 GET_PREDICTION_BY_ID = """SELECT * FROM predictions WHERE prediction_id = %s;"""
 GET_ALL_PREDICTIONS = """SELECT * FROM predictions ORDER BY prediction_time DESC;"""
 DELETE_PREDICTION = """DELETE FROM predictions WHERE prediction_id = %s;"""

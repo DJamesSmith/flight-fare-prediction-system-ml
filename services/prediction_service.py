@@ -23,19 +23,6 @@ class PredictionService:
         self.encoder: OrdinalEncoder | None = None
         self.feature_columns: list[str] = []
 
-    # def _load_model(self):
-    #     if self.model is not None:
-    #         return
-
-    #     if not FileHandler.file_exists(MODEL_PATH):
-    #         raise FileNotFoundError("No trained model found.\nPlease train a model first.\nAdmin Menu -> Train ML Models")
-    #     if not FileHandler.file_exists(ENCODER_PATH):
-    #         raise FileNotFoundError("Encoder not found.\nPlease train a model first.")
-
-    #     self.model = FileHandler.load_pickle(MODEL_PATH)
-    #     encoder_data: dict[str, object] = FileHandler.load_pickle(ENCODER_PATH)
-    #     self.encoder = encoder_data["encoder"]
-    #     self.feature_columns = encoder_data["feature_columns"]
     def _load_model(self) -> None:
         if self.model is not None:
             return

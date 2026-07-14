@@ -3,7 +3,7 @@
 # Batch Prediction
 # Prediction History
 # Delete Prediction
-
+import traceback
 from models.user import User
 from models.flight import Flight
 from models.prediction import Prediction
@@ -34,6 +34,7 @@ class PredictionController:
             print("\nNo trained model found.\nPlease train a model first.\nAdmin Menu -> Train ML Models")
         except Exception as error:
             print(error)
+            traceback.print_exc()
 
     # Batch Prediction Placeholder
     def batch_prediction(self):

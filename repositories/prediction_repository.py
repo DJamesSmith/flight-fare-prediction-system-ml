@@ -34,7 +34,7 @@ class PredictionRepository(BaseRepository):
         try:
             with DatabaseConnection() as db:
                 prediction.prediction_code = self.generate_unique_code(EXISTS_PREDICTION_CODE)
-                db.cursor.execute(INSERT_PREDICTION, (prediction.user_id, prediction.flight_id, prediction.predicted_fare,))
+                db.cursor.execute(INSERT_PREDICTION, (prediction.prediction_code, prediction.user_id, prediction.flight_id, prediction.predicted_fare,))
                 result = db.cursor.fetchone()
                 prediction.prediction_id = result[0]
                 prediction.prediction_time = result[1]
