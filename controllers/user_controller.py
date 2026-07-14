@@ -38,7 +38,7 @@ class UserController:
                 # ---------- Flights ----------
                 case 1: self.flight_controller.search_flights()
                 # ---------- Prediction ----------
-                case 2: self.prediction_controller.predict_fare(user)
+                case 2: self.prediction_controller.predict_custom_fare(user)
                 case 3: self.prediction_controller.view_prediction_history(user)
                 case 4: self.report_controller.export_prediction_history_csv()
                 case 5: self.prediction_controller.delete_prediction(user)

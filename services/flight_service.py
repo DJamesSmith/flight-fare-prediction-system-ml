@@ -17,6 +17,9 @@ class FlightService:
     def truncate_flights(self):
         self.flight_repository.truncate_flights()
 
+    def find_prediction_candidates(self, airline: str, source: str, destination: str, journey_date) -> list[Flight]:
+        return self.flight_repository.find_prediction_candidates(airline=airline, source=source, destination=destination, journey_date=journey_date)
+
     def get_flight_by_id(self, flight_id: int) -> Flight | None:
         return self.flight_repository.get_flight_by_id(flight_id)
 

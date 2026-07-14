@@ -16,7 +16,8 @@ from database.queries import (
     SEARCH_FLIGHTS,
     TRUNCATE_FLIGHTS,
     EXISTS_FLIGHT_CODE,
-    COUNT_FLIGHTS
+    COUNT_FLIGHTS,
+    SEARCH_FLIGHTS_FOR_PREDICTION
 )
 
 class FlightRepository(BaseRepository):
@@ -65,6 +66,17 @@ class FlightRepository(BaseRepository):
             additional_information = row[11],
             fare=row[12],
         )
+
+    # create_custom_prediction
+    def find_prediction_candidates(self, airline: str, source: str, destination: str, journey_date: str) -> list[Flight]:
+        try:
+            with DatabaseConnection() as db:
+                db.cursor.execute(SEARCH_FLIGHTS_FOR_PREDICTION, (airline, source, destination, journey_date))
+                rows = db.cursor.fetchall()
+                return [self._map_row_to_flight(row) for row in rows]
+        except Error as error:
+            ApplicationLogger.error(str(error))
+            raise RuntimeError(f"Unable to search flights: {error}")
 
     # Retrieve a flight using the flight ID
     def get_flight_by_id(self, flight_id: int) -> Flight | None:

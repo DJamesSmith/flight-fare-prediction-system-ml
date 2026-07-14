@@ -87,10 +87,28 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 GET_FLIGHT_BY_ID = """SELECT * FROM flights WHERE flight_id = %s;"""
 GET_ALL_FLIGHTS = """SELECT * FROM flights ORDER BY flight_id;"""
 SEARCH_FLIGHTS = "SELECT * FROM flights WHERE 1=1"
-# DELETE_ALL_FLIGHTS = """DELETE FROM flights;"""
 COUNT_FLIGHTS = """SELECT COUNT(*) FROM flights;"""
 TRUNCATE_FLIGHTS = """TRUNCATE TABLE flights RESTART IDENTITY CASCADE;"""
 EXISTS_FLIGHT_CODE = """SELECT EXISTS(SELECT 1 FROM flights WHERE flight_code=%s);"""
+SEARCH_FLIGHTS_FOR_PREDICTION = """
+    SELECT *
+    FROM flights
+    WHERE airline = %s
+    AND source = %s
+    AND destination = %s
+    AND journey_date = %s
+    ORDER BY departure_time;
+"""
+
+# The quickest way to find reliable test cases, run:
+# SELECT airline,
+#        journey_date,
+#        source,
+#        destination,
+#        COUNT(*) AS total
+# FROM flights
+# GROUP BY airline, journey_date, source, destination
+# ORDER BY total DESC;
 
 # ------------ PREDICTION queries ------------
 
@@ -100,3 +118,23 @@ GET_ALL_PREDICTIONS = """SELECT * FROM predictions ORDER BY prediction_time DESC
 DELETE_PREDICTION = """DELETE FROM predictions WHERE prediction_id = %s;"""
 GET_PREDICTIONS_BY_USER = """SELECT * FROM predictions WHERE user_id = %s ORDER BY prediction_time DESC;"""
 EXISTS_PREDICTION_CODE = """SELECT EXISTS(SELECT 1 FROM predictions WHERE prediction_code=%s);"""
+# ------------------------------------------------------------------------------------------------
+
+
+# Available Airlines:
+
+# 1. Air India
+# 2. IndiGo
+# 3. Jet Airways
+# 4. SpiceJet
+# 5. Vistara
+# 6. Multiple Carriers
+
+# ------------------------------------------------------------------------------------------------
+
+# Multiple Flights match:
+
+# Enter Airline : Air India
+# Enter Journey Date : 06/03/2019
+# Enter Source : Delhi
+# Enter Destination : Cochin

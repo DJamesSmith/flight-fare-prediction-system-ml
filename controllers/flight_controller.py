@@ -72,8 +72,23 @@ class FlightController:
                 return
 
             print(f"\n{len(flights)} flight(s) found.\n")
+            print(f"\n{len(flights)} flight(s) found.\n")
+            print("+----+--------+----------------------+------------+-------------+------------+------------+----------+-----------+")
+            print("| ID | Code   | Airline              | Source     | Destination | Departure  | Arrival    | Duration | Stops     |")
+            print("+----+--------+----------------------+------------+-------------+------------+------------+----------+-----------+")
+
             for flight in flights:
-                print("-" * 50)
-                flight.display_details()
+                print(
+                    f"| {flight.flight_id:<4} "
+                    f"| {flight.flight_code:<6} "
+                    f"| {flight.airline:<20} "
+                    f"| {flight.source:<10} "
+                    f"| {flight.destination:<11} "
+                    f"| {str(flight.departure_time):<10} "
+                    f"| {str(flight.arrival_time):<10} "
+                    f"| {flight.duration:<8} "
+                    f"| {flight.total_stops:<9} |"
+                )
+            print("+----+--------+----------------------+------------+-------------+------------+------------+----------+-----------+")
         except Exception as error:
             print(error)
