@@ -34,7 +34,7 @@ class PredictionController:
             print("\nNo trained model found.\nPlease train a model first.\nAdmin Menu -> Train ML Models")
         except Exception as error:
             print(error)
-            traceback.print_exc()
+            # traceback.print_exc()
 
     # Batch Prediction Placeholder
     def batch_prediction(self):

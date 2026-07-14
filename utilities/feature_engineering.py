@@ -6,15 +6,15 @@ class FeatureTransformer:
     def feature_transform(dataframe: pd.DataFrame) -> pd.DataFrame:
         dataframe = dataframe.copy()        # Since it already returns a new dataframe, I would make it explicit that it works on a copy rather than relying on callers to remember .copy()
 
-        print("\nBefore conversion")
-        print(dataframe.dtypes)
+        # print(f"\nBefore conversion:\n{dataframe.dtypes}")
+        ApplicationLogger.debug(f"\nBefore conversion:\n{dataframe.dtypes}")
 
         dataframe["Journey_Date"] = pd.to_datetime(dataframe["Journey_Date"], errors="raise")
         dataframe["Departure_Time"] = pd.to_datetime(dataframe["Departure_Time"].astype(str), format="%H:%M:%S", errors="raise")
         dataframe["Arrival_Time"] = pd.to_datetime(dataframe["Arrival_Time"].astype(str), format="%H:%M:%S", errors="raise")
 
-        print("\nAfter conversion")
-        print(dataframe.dtypes)
+        # print(f"\nAfter conversion:\n{dataframe.dtypes}")
+        ApplicationLogger.debug(f"\nAfter conversion:\n{dataframe.dtypes}")
 
         # From: Journey_Date - create: Journey_Day, Journey_Month
         dataframe["Journey_Day"] = dataframe["Journey_Date"].dt.day
@@ -40,11 +40,11 @@ class FeatureTransformer:
             "3 Stops": 3,
             "4 Stops": 4
         }
-        dataframe["Total_Stops"] = (dataframe["Total_Stops"].replace(stop_mapping))
+        dataframe["Total_Stops"] = dataframe["Total_Stops"].map(stop_mapping)
         dataframe.drop(columns=["Journey_Date", "Departure_Time", "Arrival_Time", "Duration"], inplace=True)
         ApplicationLogger.info("Feature engineering completed successfully.")
         return dataframe
-    
+
 # How to use:
 # self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
 
