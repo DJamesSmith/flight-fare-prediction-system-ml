@@ -15,7 +15,8 @@ class PreprocessingController:
                 "\nThe dataset has already been preprocessed.\n\n"
                 "Reprocessing will:\n"
                 "- Delete all existing flight records\n"
-                "- Delete all prediction records\n"
+                "- Delete all prediction records associated with those flights\n"
+                "- Reset flight IDs\n"
                 "- Rebuild the cleaned dataset\n"
                 "- Rebuild the feature dataset\n"
                 "- Repopulate the flights table\n\n"
@@ -30,10 +31,11 @@ class PreprocessingController:
                 return
 
             match ch:
-                case 1: 
+                case 1: pass
+                case 2:
                     print("\nDataset preprocessing cancelled.")
                     return
-                case 2:
+                case _:
                     print("\nInvalid choice.")
                     return
         self._run_preprocessing_pipeline()
