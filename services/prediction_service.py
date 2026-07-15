@@ -50,8 +50,8 @@ class PredictionService:
         dataframe = self.encode_features(dataframe)
         dataframe = dataframe[self.feature_columns]
         predicted_fare = float(self.model.predict(dataframe)[0])
-        prediction = Prediction(user_id=user_id,flight_id=flight.flight_id,predicted_fare=round(predicted_fare, 2))
-        prediction = (self.prediction_repository.create_prediction(prediction))
+        prediction = Prediction(user_id=user_id, flight_id=flight.flight_id, predicted_fare=round(predicted_fare, 2))
+        prediction = self.prediction_repository.create_prediction(prediction)
         ApplicationLogger.info("Prediction generated successfully.")
         return prediction
 
