@@ -8,7 +8,6 @@
 # ✔ Save Best Model
 
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.base import RegressorMixin
 from sklearn.model_selection import train_test_split

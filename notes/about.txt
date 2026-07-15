@@ -474,3 +474,15 @@ On completion of project, make this more organized for documentation purpose.
 
 dion.manipal account access
 Application Flow document URL: https://docs.google.com/document/d/1x_Yua5uF1hhR0zBuqt6vXcHLsmtJTP4mUcojd2UWToA/edit?usp=sharing
+
+----------------------------------------------------------------------------------------------------
+
+
+1. Should I be able to predict if flights table hasn't been populated ? Which option does predictions depend on ?
+    Say you've cleaned the data with ADMIN Menu's "2. Data Preparation Pipeline", this populates the flight but you don't train the model yet.
+    The files .pkl haven't yet been created. Should you be able to predict ?
+    Answer's no, you should not be able to predict, if prediction's being done, what files is the predictions being based on ?
+    Isn't it supposed to be based on th e.pkl files? My program is following that process.
+2. Note: You cannot predict a flight fare if you don't train the models first. You cannot train the models if you don't create a feature_dataset.csv file.
+    feature_dataset.csv file is only created after data preprocessing pipeline completes execution. The dataset preprocessing pipeline is
+    what creates the feature_dataset.csv file.

@@ -6,7 +6,6 @@ class IDGenerator:
     def generate(length: int = 6) -> str:
         characters = string.ascii_uppercase + string.digits
         result: str = "".join(random.choices(characters, k=length))
-        print(result)
         return result
 
 # 36 × 36 × 36 × 36 × 36 × 36 = 2,176,782,336

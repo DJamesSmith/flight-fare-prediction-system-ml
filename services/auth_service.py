@@ -88,10 +88,6 @@ class AuthService:
     def get_user_by_id(self, user_id: int) -> User | None:
         return self.user_repository.get_user_by_id(user_id)
 
-    # def verify_current_password(self, password: str) -> bool:
-    #     self._require_login()
-    #     return HashPassword.verify_password(password, self.current_user.password)
-
     def verify_current_password(self, password: str) -> bool:
         self._require_login()
         if not password.strip():

@@ -130,13 +130,3 @@ class AdminController:
 
         print("\nAvailable Reports")
         self.report_controller.view_reports()
-
-
-# ------------------------------------------------------------
-
-# case 6: self.predictions(user)
-# Question: Should I be able to predict if flights table hasn't been populated ? Which option does predictions depend on ?
-# "1. Predict Flight Fare" should not ask for flightID if flights table hasn't been populated, it should say no flights. Same for "3. Delete Prediction".
-
-# ------------------------------------------------------------
-# Why populate flight table ? What are we using the flight table for ?
