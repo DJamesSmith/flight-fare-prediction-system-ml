@@ -50,19 +50,27 @@ The project follows a modular MVC-inspired architecture to improve code organiza
 flight-fare-prediction-system-ml/
 │
 ├── controllers/
+├── core_python_env/
 ├── database/
+├── dataset/
+├── decorators/
 ├── models/
 ├── notes/
+├── original_dataset_data_train/
+├── outputs/
+├── repositories/
 ├── services/
 ├── utilities/
 ├── validation/
 ├── views/
-├── Flight Fare Prediction_SRS.pdf
-├── main.py
-├── requirements.txt
-├── README.md
+├── .env
+├── .gitignore
+├── flight_fare_prediction_SRS.pdf
+├── flight_fare_prediction.log
 ├── LICENSE
-└── .gitignore
+├── main.py
+├── README.md
+└── requirements.txt
 ```
 
 ---
