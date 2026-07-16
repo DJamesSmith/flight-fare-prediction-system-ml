@@ -130,3 +130,8 @@ class PreprocessingService:
         self.feature_dataframe = FeatureTransformer.feature_transform(self.cleaned_dataframe)           # original cleaned dataframe remains untouched
         FileHandler.save_csv(self.feature_dataframe, FEATURE_DATASET_PATH)
         ApplicationLogger.info(f"Feature dataset saved to {FEATURE_DATASET_PATH}")
+
+
+# After this process it'll product 2 files for training the models:
+# 1. cleaned dataset
+# 2. feature dataset
