@@ -140,6 +140,6 @@ class PreprocessingService:
 
 
 # from FlightService we're using 3 methods:
-# 1. flights_exist()
-# 2. truncate_flights(): used in 
+# 1. flights_exist(): used here in dataset_already_processed()
+# 2. truncate_flights(): used here in populate_flights_table()
 # 3. import_flights(flights): used in populate_flights_table()
