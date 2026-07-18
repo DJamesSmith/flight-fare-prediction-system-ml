@@ -43,10 +43,10 @@ class PredictionController:
             source = input("Enter Source : ").strip()
             destination = input("Enter Destination : ").strip()
 
-            print(f"Before conversion date: {journey_date}")                        # 06/05/2019
+            # print(f"Before conversion date: {journey_date}")                        # 06/05/2019
             from datetime import datetime
             journey_date = datetime.strptime(journey_date, "%d/%m/%Y").date()
-            print(f"After conversion date: {journey_date}")                         # 2019-05-06
+            # print(f"After conversion date: {journey_date}")                         # 2019-05-06
 
             flights = self.flight_service.find_prediction_candidates(airline=airline, source=source, destination=destination, journey_date=journey_date)
             if not flights:
