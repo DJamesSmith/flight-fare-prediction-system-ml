@@ -143,3 +143,16 @@ class PreprocessingService:
 # 1. flights_exist(): used here in dataset_already_processed()
 # 2. truncate_flights(): used here in populate_flights_table()
 # 3. import_flights(flights): used in populate_flights_table()
+
+
+# ____________________________________________________________
+
+# | Name  | Age | City    |
+# | ----- | --- | ------- |
+# | John  | 25  | Kolkata |
+# | Alice | 30  | Delhi   |
+# | Bob   | 28  | Mumbai  |
+
+# 1. Each record in the dataset above represents one row.
+# 2. In Pandas, if we select a single row, it is represented as a Series because it contains values from multiple columns.
+# 3. When all these rows are combined into a tabular structure with columns, they form a DataFrame
