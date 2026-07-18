@@ -54,7 +54,7 @@ class PredictionController:
                 return
 
             if len(flights) == 1:
-                prediction = (self.prediction_service.create_prediction(current_user.user_id,flights[0]))
+                prediction = (self.prediction_service.create_prediction(current_user.user_id, flights[0]))
                 print("\nPrediction Generated Successfully\n")
                 prediction.display_prediction()
                 return

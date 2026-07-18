@@ -71,8 +71,14 @@ class FlightRepository(BaseRepository):
     def find_prediction_candidates(self, airline: str, source: str, destination: str, journey_date: str) -> list[Flight]:
         try:
             with DatabaseConnection() as db:
+                # print("\nSearching with:")
+                # print(f"Airline      : '{airline}'")
+                # print(f"Source       : '{source}'")
+                # print(f"Destination  : '{destination}'")
+                # print(f"Journey Date : '{journey_date}'")
                 db.cursor.execute(SEARCH_FLIGHTS_FOR_PREDICTION, (airline, source, destination, journey_date))
                 rows = db.cursor.fetchall()
+                # print(f"Rows found: {len(rows)}")
                 return [self._map_row_to_flight(row) for row in rows]
         except Error as error:
             ApplicationLogger.error(str(error))
