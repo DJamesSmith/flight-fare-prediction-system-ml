@@ -7,7 +7,7 @@ import traceback
 from models.user import User
 from models.flight import Flight
 from models.prediction import Prediction
-
+from utilities.helper import Helper
 from services.flight_service import FlightService
 from services.prediction_service import PredictionService
 
@@ -44,8 +44,7 @@ class PredictionController:
             destination = input("Enter Destination : ").strip()
 
             # print(f"Before conversion date: {journey_date}")                        # 06/05/2019
-            from datetime import datetime
-            journey_date = datetime.strptime(journey_date, "%d/%m/%Y").date()
+            journey_date = Helper.parse_date(journey_date)
             # print(f"After conversion date: {journey_date}")                         # 2019-05-06
 
             flights = self.flight_service.find_prediction_candidates(airline=airline, source=source, destination=destination, journey_date=journey_date)
@@ -87,7 +86,7 @@ class PredictionController:
         except FileNotFoundError:
             print("\nNo trained model found.\nPlease train a model first.")
         except ValueError:
-            print("\nInvalid date format.")
+            print("\nInvalid date format. Date must be in DD/MM/YYYY format.")
         except Exception as error:
             print(error)
 

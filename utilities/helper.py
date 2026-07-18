@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 class Helper:
     @staticmethod
@@ -11,6 +11,12 @@ class Helper:
         if isinstance(timestamp, datetime):
             return timestamp.strftime("%d %B %Y %I:%M %p")
         return str(timestamp)  # Fallback for string timestamps
+
+    @staticmethod
+    def parse_date(date_string: str | None) -> date:
+        if not date_string:
+            return None
+        return datetime.strptime(date_string.strip(), "%d/%m/%Y").date()
 
     @staticmethod
     def print_separator():

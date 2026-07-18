@@ -3,8 +3,10 @@
 # 2. Search Flights
 # 3. Import Dataset (Admin)
 
+from datetime import date
 from models.flight import Flight
 from services.flight_service import FlightService
+from utilities.helper import Helper
 
 class FlightController:
     def __init__(self):
@@ -64,7 +66,8 @@ class FlightController:
             airline: str | None = input("Airline : ").strip() or None
             source: str | None = input("Source : ").strip() or None
             destination: str | None = input("Destination : ").strip() or None
-            journey_date: str | None = input("Journey Date (DD/MM/YYYY) : ").strip() or None
+            journey_date_input: str = input("Journey Date (DD/MM/YYYY) : ").strip()
+            journey_date: date | None = Helper.parse_date(journey_date_input) if journey_date_input else None
             flights: list[Flight] = self.flight_service.search_flights(airline=airline, source=source, destination=destination, journey_date=journey_date)
 
             if not flights:
