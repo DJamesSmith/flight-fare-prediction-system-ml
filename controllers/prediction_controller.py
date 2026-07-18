@@ -59,13 +59,14 @@ class PredictionController:
                 return
             print("\nMatching Flights\n")
 
-            print("+----+------------+------------+----------+-----------+")
-            print("| No | Departure  | Arrival    | Duration | Stops     |")
-            print("+----+------------+------------+----------+-----------+")
+            print("+-------+-----------+------------+------------+----------+-----------+")
+            print("| Index | Flight No | Departure  | Arrival    | Duration | Stops     |")            # +2
+            print("+-------+-----------+------------+------------+----------+-----------+")
 
             for index, flight in enumerate(flights, start=1):
                 print(
-                    f"| {index:<2} "
+                    f"| {index:<5} "
+                    f"| {flight.flight_id:<9} "
                     f"| {str(flight.departure_time):<10} "
                     f"| {str(flight.arrival_time):<10} "
                     f"| {flight.duration:<8} "
@@ -74,7 +75,7 @@ class PredictionController:
 
             print("+----+------------+------------+----------+-----------+")
 
-            choice: int = int(input("\nChoose Flight Number : "))
+            choice: int = int(input("\nChoose index number : "))
             if choice < 1 or choice > len(flights):
                 print("\nInvalid choice.")
                 return
