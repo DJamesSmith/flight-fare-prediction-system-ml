@@ -138,3 +138,9 @@ EXISTS_PREDICTION_CODE = """SELECT EXISTS(SELECT 1 FROM predictions WHERE predic
 # Enter Journey Date : 06/03/2019
 # Enter Source : Delhi
 # Enter Destination : Cochin
+
+# Enter Airline : Indigo
+# Enter Journey Date (DD/MM/YYYY) : 18/04/2019
+# Enter Source : Kolkata
+# Enter Destination : Banglore
+

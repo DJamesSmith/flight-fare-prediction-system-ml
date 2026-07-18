@@ -1,6 +1,7 @@
 from controllers.auth_controller import AuthController
 from controllers.admin_controller import AdminController
 from controllers.user_controller import UserController
+from controllers.guest_controller import GuestController
 from utilities.logger import ApplicationLogger
 
 class ApplicationController:
@@ -8,6 +9,7 @@ class ApplicationController:
         self.auth_controller: AuthController = AuthController()
         self.admin_controller: AdminController = AdminController(self.auth_controller)
         self.user_controller: UserController = UserController(self.auth_controller)
+        self.guest_controller: GuestController = GuestController(self.auth_controller)
 
     def start_app(self):
         while True:
@@ -32,8 +34,10 @@ class ApplicationController:
 
                     if user.role.lower() == "admin":
                         self.admin_controller.start(user)
-                    else:
+                    elif user.role.lower() == "user":
                         self.user_controller.start(user)
+                    else:
+                        self.guest_controller.start(user)
                 case 2:
                     print("\nThank you for using Flight Fare Prediction System.")
                     ApplicationLogger.info("Application terminated.")
