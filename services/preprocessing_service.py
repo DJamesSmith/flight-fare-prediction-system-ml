@@ -135,3 +135,11 @@ class PreprocessingService:
 # After this process it'll product 2 files for training the models:
 # 1. cleaned dataset
 # 2. feature dataset
+
+
+
+
+# from FlightService we're using 3 methods:
+# 1. flights_exist()
+# 2. truncate_flights(): used in 
+# 3. import_flights(flights): used in populate_flights_table()
