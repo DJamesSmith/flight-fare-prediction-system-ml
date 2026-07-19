@@ -31,14 +31,5 @@ class FileHandler:
     def create_directory(directory_path: str):
         os.makedirs(directory_path, exist_ok=True)
 
-
 # pd.read_csv() - internally opens the file, reads it, parses it, and closes it automatically.
 # df.to_csv() - opens, writes, flushes, and closes the file.
-
-# ------------------------------------------------------------------------
-
-# Adding more functionality as the project grows:
-# save_pickle()
-# load_pickle()
-# create_directory()
-# file_exists()
