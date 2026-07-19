@@ -40,7 +40,7 @@ class DatasetValidation:
 
         if not missing.empty:
             ApplicationLogger.warning(f"Missing values detected.\n{missing}")
-            rows = dataframe[dataframe.isnull().any(axis=1)]
+            rows = dataframe[dataframe.isnull().any(axis=1)]                    # returns "Entire bad rows" or missing values in columns / Series
 
             for index, row in rows.iterrows():
                 missing_columns = row[row.isnull()].index.tolist()
