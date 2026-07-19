@@ -58,9 +58,6 @@ class PredictionService:
     def get_prediction_by_id(self, prediction_id: int) -> Prediction | None:
         return (self.prediction_repository.get_prediction_by_id(prediction_id))
 
-    # def get_prediction_history(self, user_id: int) -> list[Prediction]:
-    #     return (self.prediction_repository.get_predictions_by_user(user_id))
-
     def get_prediction_history(self, current_user: User) -> list[Prediction]:
         if current_user.role == User.ADMIN:
             return self.prediction_repository.get_all_predictions()

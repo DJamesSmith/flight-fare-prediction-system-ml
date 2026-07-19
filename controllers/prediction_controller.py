@@ -98,7 +98,6 @@ class PredictionController:
     # View Prediction History
     def view_prediction_history(self, current_user: User):
         try:
-            # predictions: list[Prediction] = self.prediction_service.get_prediction_history(current_user.user_id)
             predictions: list[Prediction] = self.prediction_service.get_prediction_history(current_user)
             if not predictions:
                 print("\nNo prediction history found.")
