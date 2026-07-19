@@ -42,27 +42,3 @@ class FileHandler:
 # load_pickle()
 # create_directory()
 # file_exists()
-
-# Why add these now?
-# Later, in training_service.py, instead of writing:
-# import pickle
-# with open(MODEL_PATH, "wb") as file:
-#     pickle.dump(model, file)
-# you simply write:
-# FileHandler.save_pickle(model, MODEL_PATH)
-
-# Instead of
-# with open(MODEL_PATH, "rb") as file:
-#     model = pickle.load(file)
-# you write
-# model = FileHandler.load_pickle(MODEL_PATH)
-
-# Instead of
-# if os.path.exists(DATASET_PATH):
-# you write
-# if FileHandler.file_exists(DATASET_PATH):
-
-# Instead of
-# os.makedirs("reports/graphs", exist_ok=True)
-# you write
-# FileHandler.create_directory("reports/graphs")
