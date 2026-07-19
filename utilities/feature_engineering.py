@@ -66,9 +66,6 @@ class FeatureTransformer:
         return dataframe
 
 
-# How to use:
-# self.dataframe = FeatureTransformer.feature_transform(self.dataframe)
-
 # 1. airline
 # 2. journey_date
 # 3. source

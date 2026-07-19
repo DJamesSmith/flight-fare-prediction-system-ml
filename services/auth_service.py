@@ -17,8 +17,6 @@ class AuthService:
         self.user_repository: UserRepository = UserRepository()
         self.current_user: User | None = None
 
-    """Returns the currently logged-in user
-    How to use: current_user = authentication_service.get_current_user()"""
     def get_current_user(self) -> User | None:
         return self.current_user
 

@@ -137,8 +137,6 @@ class PreprocessingService:
 # 2. feature dataset
 
 
-
-
 # from FlightService we're using 3 methods:
 # 1. flights_exist(): used here in dataset_already_processed()
 # 2. truncate_flights(): used here in populate_flights_table()
