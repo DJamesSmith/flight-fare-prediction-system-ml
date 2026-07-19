@@ -98,24 +98,26 @@ class PredictionController:
     # View Prediction History
     def view_prediction_history(self, current_user: User):
         try:
-            predictions: list[Prediction] = self.prediction_service.get_prediction_history(current_user.user_id)
+            # predictions: list[Prediction] = self.prediction_service.get_prediction_history(current_user.user_id)
+            predictions: list[Prediction] = self.prediction_service.get_prediction_history(current_user)
             if not predictions:
                 print("\nNo prediction history found.")
                 return
 
             print("\nPrediction History\n")
-            print("+----+--------+--------+----------------+---------------------+")
-            print("| ID | Code   | Flight | Predicted Fare | Prediction Time     |")
-            print("+----+--------+--------+----------------+---------------------+")
+            print("+----+--------+--------+---------+----------------+-----------------------+")
+            print("| ID | Code   | Flight | User ID | Predicted Fare | Prediction Time       |")        # +2
+            print("+----+--------+--------+---------+----------------+-----------------------+")
             for prediction in predictions:
                 print(
                     f"| {prediction.prediction_id:<2} "
                     f"| {prediction.prediction_code:<6} "
                     f"| {prediction.flight_id:<6} "
+                    f"| {prediction.user_id:<7} "
                     f"| ₹{prediction.predicted_fare:<13.2f} "
-                    f"| {str(prediction.prediction_time):<19} |"
+                    f"| {str(Helper.format_timestamp(prediction.prediction_time)):<19} |"
                 )
-            print("+----+--------+--------+----------------+---------------------+")
+            print("+----+--------+--------+---------+----------------+-----------------------+")
         except Exception as error:
             print(error)
 
