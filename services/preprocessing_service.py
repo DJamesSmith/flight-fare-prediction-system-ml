@@ -28,7 +28,7 @@ class PreprocessingService:
     @log_execution_time
     def load_dataset(self) -> pd.DataFrame:
         ApplicationLogger.info("Loading dataset.")
-        self.cleaned_dataframe = FileHandler.read_csv(DATASET_PATH)
+        self.cleaned_dataframe = FileHandler.read_csv(DATASET_PATH)         # 10463 rows, cleaned_dataframe type is     <class 'pandas.core.frame.DataFrame'>
         ApplicationLogger.info(f"Dataset loaded successfully. Records: {len(self.cleaned_dataframe)}")
         return self.cleaned_dataframe
 
@@ -62,14 +62,17 @@ class PreprocessingService:
         self.standardize_columns()
         self.convert_data_types()
         ApplicationLogger.info("Dataset cleaned successfully.")
+        print(f"after clean_dataset ------->> : {len(self.cleaned_dataframe)}")                     # 10683 original length
 
     def handle_missing_values(self):
         self.cleaned_dataframe.dropna(inplace=True)
         ApplicationLogger.info("Missing values handled successfully.")
+        print(f"after handle_missing_values ------->> : {len(self.cleaned_dataframe)}")             # 10682
 
     def remove_duplicates(self):
         self.cleaned_dataframe.drop_duplicates(inplace=True)
         ApplicationLogger.info("Duplicate rows removed.")
+        print(f"after remove_duplicates ------->> : {len(self.cleaned_dataframe)}")                 # 10462
 
     def trim_whitespace(self):
         object_columns = self.cleaned_dataframe.select_dtypes(include="object").columns
@@ -154,3 +157,21 @@ class PreprocessingService:
 # 1. Each record in the dataset above represents one row.
 # 2. In Pandas, if we select a single row, it is represented as a Series because it contains values from multiple columns.
 # 3. When all these rows are combined into a tabular structure with columns, they form a DataFrame
+
+# ____________________________________________________________
+
+# A DataFrame object has many built-in methods:
+# rename()
+# drop()
+# dropna()
+# drop_duplicates()
+# astype()
+# merge()
+# join()
+# sort_values()
+# head()
+# tail()
+# describe()
+# info()
+# copy()
+# to_csv()
